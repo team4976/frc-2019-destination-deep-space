@@ -1,4 +1,4 @@
-package ca._4976.deepspace;
+package ca._4976.destinationdeepspace;
 
 import edu.wpi.first.wpilibj.Joystick;
 

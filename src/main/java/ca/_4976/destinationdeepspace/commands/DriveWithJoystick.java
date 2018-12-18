@@ -1,6 +1,6 @@
-package ca._4976.deepspace.commands;
+package ca._4976.destinationdeepspace.commands;
 
-import ca._4976.deepspace.Robot;
+import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystick extends Command {
@@ -11,7 +11,5 @@ public class DriveWithJoystick extends Command {
 
     @Override protected boolean isFinished() { return false; }
 
-    @Override protected void end() {
-        Robot.drive.stop();
-    }
+    @Override protected void end() { Robot.drive.stop(); }
 }

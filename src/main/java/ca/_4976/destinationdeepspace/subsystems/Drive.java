@@ -1,6 +1,6 @@
-package ca._4976.deepspace.subsystems;
+package ca._4976.destinationdeepspace.subsystems;
 
-import ca._4976.deepspace.commands.DriveWithJoystick;
+import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;

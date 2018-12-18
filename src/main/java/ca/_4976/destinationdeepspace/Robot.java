@@ -1,6 +1,6 @@
-package ca._4976.deepspace;
+package ca._4976.destinationdeepspace;
 
-import ca._4976.deepspace.subsystems.Drive;
+import ca._4976.destinationdeepspace.subsystems.Drive;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
