@@ -19,8 +19,6 @@ public class Drive extends Subsystem {
 
     public boolean userControlEnabled = true;
 
-    public void setUserControlEnabled(boolean enabled) { userControlEnabled = enabled; }
-
     public double applyDeadband(double x) {
 
         if (Math.abs(x) > deadband) {
