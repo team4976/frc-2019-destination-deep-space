@@ -1,45 +1,80 @@
 plugins {
-    id "java"
-    id "eclipse"
-    id "idea"
-    id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
+    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'java-gradle-plugin'
+    id 'idea'
+    id 'maven-publish'
+    id 'groovy'
 }
 
-def TEAM = 4976
-def ROBOT_CLASS = "ca._4976.destinationdeepspace.Robot"
-
-// Define my targets (RoboRIO) and artifacts (deployable files)
-// This is added by GradleRIO's backing project EmbeddedTools.
-deploy {
-    targets {
-        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
-            team = 4976
-        }
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
     }
-    artifacts {
-        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
-            targets << "roborio"
-        }
-    }
+    mavenLocal()
 }
 
-// Defining my dependencies. In this case, WPILib (+ friends), CTRE Phoenix (Talon SRX)
-// and NavX.
 dependencies {
-    compile wpilib()
-    compile ctre()
-    compile navx()
-    compile openrio.powerup.matchData()
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'edu.wpi.first:gradle-cpp-vscode:0.7.1'
+
+    compile project(':ToolchainPlugin')
+
+    compile 'com.jcraft:jsch:0.1.53'
+
+    testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
+        exclude group: 'org.codehaus.groovy'
+    }
+    testCompile gradleTestKit()
 }
 
-// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
-// in order to make them all available at runtime. Also adding the manifest so WPILib
-// knows where to look for our Robot Class.
-jar {
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
+archivesBaseName = "GradleRIO"
+
+allprojects {
+    group = "edu.wpi.first"
+    version = "2019.1.1-beta-4a"
+
+    if (project.hasProperty('publishVersion')) {
+        version = project.publishVersion
+    }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.9'
+pluginBundle {
+    website = 'https://github.com/wpilibsuite/GradleRIO'
+    vcsUrl = 'https://github.com/wpilibsuite/GradleRIO'
+    description = 'Managing FRC projects, the Gradle way (2019+)'
+    tags = ['frc', 'wpilib', 'gradlerio']
+}
+
+gradlePlugin {
+    plugins {
+        gradleRio {
+            id = 'edu.wpi.first.GradleRIO'
+            displayName = 'GradleRIO'
+            implementationClass = 'edu.wpi.first.gradlerio.GradleRIOPlugin'
+        }
+    }
+}
+
+apply from: 'versionupdates.gradle'
+
+tasks.register('PatchExamples') {
+    doLast {
+        String regex = "(id\\s*?[\\\"|\\']edu\\.wpi\\.first\\.GradleRIO[\\\"|\\'].*?version\\s*?[\\\"|\\'])(.+?)([\\\"|\\'])";
+
+        def examplesFolder = file("$rootDir/examples")
+        examplesFolder.eachFile { File file ->
+            if (file.isDirectory() && file.name != '_archived') {
+                def buildGradleFile = new File(file, 'build.gradle')
+                if (buildGradleFile.exists() && buildGradleFile.isFile()) {
+                    def text = buildGradleFile.text
+                    text = text.replaceAll(regex, "id \"edu.wpi.first.GradleRIO\" version \"${version}\" ")
+                    buildGradleFile.text = text
+                }
+            }
+        }
+    }
+}
+
+wrapper {
+    gradleVersion = '5.0'
 }
