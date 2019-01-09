@@ -1,9 +1,9 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.subsystems.Drive;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 
     public static OI oi;
     public static Drive drive;
@@ -12,7 +12,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() { }
 
     @Override
-    public void disabledInit() { }
+    public void disabledInit() {
+    }
 
     @Override
     public void autonomousInit() { }

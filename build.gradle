@@ -1,80 +1,63 @@
 plugins {
-    id 'com.gradle.plugin-publish' version '0.10.0'
-    id 'java-gradle-plugin'
-    id 'idea'
-    id 'maven-publish'
-    id 'groovy'
+    id "java"
+    id "idea"
+    id "edu.wpi.first.GradleRIO" version "2019.1.1"
 }
 
+def ROBOT_MAIN_CLASS = "frc.robot.Main"
+
+// Define my targets (RoboRIO) and artifacts (deployable files)
+// This is added by GradleRIO's backing project EmbeddedTools.
+deploy {
+    targets {
+        roboRIO("roborio") {
+            // Team number is loaded either from the .wpilib/wpilib_preferences.json
+            // or from command line. If not found an exception will be thrown.
+            // You can use getTeamOrDefault(team) instead of getTeamNumber if you
+            // want to store a team number in this file.
+            team = frc.getTeamNumber()
+        }
+    }
+    artifacts {
+        frcJavaArtifact('frcJava') {
+            targets << "roborio"
+            // Debug can be overridden by command line, for use with VSCode
+            debug = frc.getDebugOrDefault(false)
+        }
+        // Built in artifact to deploy arbitrary files to the roboRIO.
+        fileTreeArtifact('frcStaticFileDeploy') {
+            // The directory below is the local directory to deploy
+            files = fileTree(dir: 'src/main/deploy')
+            // Deploy to RoboRIO target, into /home/lvuser/deploy
+            targets << "roborio"
+            directory = '/home/lvuser/deploy'
+        }
+    }
+}
+
+// Set this to true to enable desktop support.
+def includeDesktopSupport = true
+
+// Maven central needed for JUnit
 repositories {
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
-    mavenLocal()
+    mavenCentral()
 }
 
+// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+// Also defines JUnit 4.
 dependencies {
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'edu.wpi.first:gradle-cpp-vscode:0.7.1'
-
-    compile project(':ToolchainPlugin')
-
-    compile 'com.jcraft:jsch:0.1.53'
-
-    testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
-        exclude group: 'org.codehaus.groovy'
-    }
-    testCompile gradleTestKit()
+    compile wpi.deps.wpilib()
+    compile wpi.deps.vendor.java()
+    nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
+    nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+    testCompile 'junit:junit:4.12'
 }
 
-archivesBaseName = "GradleRIO"
-
-allprojects {
-    group = "edu.wpi.first"
-    version = "2019.1.1-beta-4a"
-
-    if (project.hasProperty('publishVersion')) {
-        version = project.publishVersion
-    }
+// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
+// in order to make them all available at runtime. Also adding the manifest so WPILib
+// knows where to look for our Robot Class.
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
-pluginBundle {
-    website = 'https://github.com/wpilibsuite/GradleRIO'
-    vcsUrl = 'https://github.com/wpilibsuite/GradleRIO'
-    description = 'Managing FRC projects, the Gradle way (2019+)'
-    tags = ['frc', 'wpilib', 'gradlerio']
-}
-
-gradlePlugin {
-    plugins {
-        gradleRio {
-            id = 'edu.wpi.first.GradleRIO'
-            displayName = 'GradleRIO'
-            implementationClass = 'edu.wpi.first.gradlerio.GradleRIOPlugin'
-        }
-    }
-}
-
-apply from: 'versionupdates.gradle'
-
-tasks.register('PatchExamples') {
-    doLast {
-        String regex = "(id\\s*?[\\\"|\\']edu\\.wpi\\.first\\.GradleRIO[\\\"|\\'].*?version\\s*?[\\\"|\\'])(.+?)([\\\"|\\'])";
-
-        def examplesFolder = file("$rootDir/examples")
-        examplesFolder.eachFile { File file ->
-            if (file.isDirectory() && file.name != '_archived') {
-                def buildGradleFile = new File(file, 'build.gradle')
-                if (buildGradleFile.exists() && buildGradleFile.isFile()) {
-                    def text = buildGradleFile.text
-                    text = text.replaceAll(regex, "id \"edu.wpi.first.GradleRIO\" version \"${version}\" ")
-                    buildGradleFile.text = text
-                }
-            }
-        }
-    }
-}
-
-wrapper {
-    gradleVersion = '5.0'
-}
