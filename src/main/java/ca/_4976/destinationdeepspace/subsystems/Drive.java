@@ -10,10 +10,10 @@ import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 
 public class Drive extends Subsystem {
 
-    VictorSPX LF = new VictorSPX(4);
-    VictorSPX LB = new VictorSPX(1);
-    VictorSPX RF = new VictorSPX(2);
-    VictorSPX RB = new VictorSPX(3);
+    TalonSRX LF = new TalonSRX(4);
+    TalonSRX LB = new TalonSRX(1);
+    TalonSRX RF = new TalonSRX(2);
+    TalonSRX RB = new TalonSRX(3);
 
     double deadband = 0.10;
     double throttle, turn, leftOutput, rightOutput;
