@@ -23,7 +23,6 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         oi = new OI();
         drive = new Drive();
-        Scheduler.getInstance().run();
     }
 
     @Override
@@ -43,11 +42,17 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() { }
     
     @Override
-    public void autonomousPeriodic() { }
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     @Override
-    public void teleopPeriodic() { }
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     @Override
-    public void testPeriodic() { }
+    public void testPeriodic() {
+        Scheduler.getInstance().run();
+    }
 }
