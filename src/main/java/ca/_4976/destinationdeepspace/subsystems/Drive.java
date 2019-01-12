@@ -1,6 +1,7 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,7 +10,7 @@ import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 
 public class Drive extends Subsystem {
 
-    VictorSPX LF = new VictorSPX(0);
+    VictorSPX LF = new VictorSPX(4);
     VictorSPX LB = new VictorSPX(1);
     VictorSPX RF = new VictorSPX(2);
     VictorSPX RB = new VictorSPX(3);
