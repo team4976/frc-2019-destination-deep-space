@@ -4,6 +4,8 @@ import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,6 +18,8 @@ public class Drive extends Subsystem {
     VictorSPX RF = new VictorSPX(1);
     TalonSRX LB = new TalonSRX(2);
     TalonSRX RB = new TalonSRX(3);
+    Encoder right = new Encoder(0,1);
+    Encoder left = new Encoder(2, 3);
 
     double deadband = 0.10;
     double throttle, turn, leftOutput, rightOutput;
@@ -59,6 +63,9 @@ public class Drive extends Subsystem {
 
     public void arcadeDrive(Joystick joy){
 
+        double rightEncoder = -right.get();
+        double leftEncoder = left.get();
+
         if (userControlEnabled) {
             throttle = joy.getRawAxis(3) - joy.getRawAxis(2);
             turn = joy.getRawAxis(0);
@@ -70,6 +77,7 @@ public class Drive extends Subsystem {
             rightOutput = regularize(-throttle + turn);
 
             drive(leftOutput, rightOutput);
+            System.out.println(rightEncoder+", "+leftEncoder);
         }
     }
 
