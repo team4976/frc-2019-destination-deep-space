@@ -1,18 +1,20 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 
 public class Drive extends Subsystem {
 
-    TalonSRX LF = new TalonSRX(4);
-    TalonSRX LB = new TalonSRX(1);
-    TalonSRX RF = new TalonSRX(2);
+    VictorSPX LF = new VictorSPX(4);
+    VictorSPX RF = new VictorSPX(1);
+    TalonSRX LB = new TalonSRX(2);
     TalonSRX RB = new TalonSRX(3);
 
     double deadband = 0.10;
@@ -48,10 +50,10 @@ public class Drive extends Subsystem {
     }
 
     public void drive(double leftOutput, double rightOutput){
-        LF.set(PercentOutput, leftOutput);
+        LF.set(ControlMode.PercentOutput, leftOutput);
         LB.follow(LF);
 
-        RF.set(PercentOutput, rightOutput);
+        RF.set(ControlMode.PercentOutput, rightOutput);
         RB.follow(RF);
     }
 
