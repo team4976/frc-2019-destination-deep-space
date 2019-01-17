@@ -18,7 +18,7 @@ public class Drive extends Subsystem {
     double deadband = 0.10;
     double throttle, turn, leftOutput, rightOutput;
 
-    public boolean userControlEnabled = true;
+    public boolean userControlEnabled = true, visionTarget = false;
 
     public double applyDeadband(double x) {
 
@@ -49,23 +49,29 @@ public class Drive extends Subsystem {
 
     public void drive(double leftOutput, double rightOutput){
         LF.set(PercentOutput, leftOutput);
-        LB.follow(LF);
+        LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.follow(RF);
+        RB.set(PercentOutput, rightOutput);
     }
 
     public void arcadeDrive(Joystick joy){
 
         if (userControlEnabled) {
-            throttle = joy.getRawAxis(3) - joy.getRawAxis(2);
+            throttle = joy.getRawAxis(2) - joy.getRawAxis(3);
             turn = joy.getRawAxis(0);
 
-            throttle = applyDeadband(joy.getRawAxis(3) - joy.getRawAxis(2));
+            throttle = applyDeadband(joy.getRawAxis(2) - joy.getRawAxis(3));
             turn = applyDeadband(joy.getRawAxis(0));
 
-            leftOutput = regularize(throttle + turn);
-            rightOutput = regularize(-throttle + turn);
+            if(!visionTarget) {
+                leftOutput = regularize(throttle + turn);
+                rightOutput = regularize(-throttle + turn);
+            }
+            else {
+                leftOutput = regularize(throttle);
+                rightOutput = regularize(-throttle);
+            }
 
             drive(leftOutput, rightOutput);
         }
