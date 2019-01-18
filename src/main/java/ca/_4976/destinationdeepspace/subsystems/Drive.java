@@ -18,7 +18,7 @@ public class Drive extends Subsystem {
     double deadband = 0.10;
     double throttle, turn, leftOutput, rightOutput;
 
-    public boolean userControlEnabled = true;
+    public boolean userControlEnabled = true, visonOveride = false;
 
     public double applyDeadband(double x) {
 
@@ -61,8 +61,14 @@ public class Drive extends Subsystem {
             throttle = applyDeadband(joy.getRawAxis(2) - joy.getRawAxis(3));
             turn = applyDeadband(joy.getRawAxis(0));
 
-            leftOutput = regularize(throttle + turn);
-            rightOutput = regularize(-throttle + turn);
+            if (visonOveride) {
+                leftOutput = regularize(throttle);
+                rightOutput = regularize(-throttle);
+            }
+            else {
+                leftOutput = regularize(throttle + turn);
+                rightOutput = regularize(-throttle + turn);
+            }
 
             drive(leftOutput, rightOutput);
         }
