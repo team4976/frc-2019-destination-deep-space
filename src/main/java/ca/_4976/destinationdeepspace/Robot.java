@@ -1,13 +1,9 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.subsystems.Drive;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
+import ca._4976.destinationdeepspace.subsystems.ShooterCock;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
@@ -18,6 +14,7 @@ public class Robot extends TimedRobot {
 
     public static OI oi;
     public static Drive drive;
+    public static ShooterCock shooterCock;
 
     private Scheduler scheduler;
 
@@ -25,6 +22,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         oi = new OI();
         drive = new Drive();
+        shooterCock = new ShooterCock();
         scheduler = Scheduler.getInstance();
     }
 
