@@ -4,10 +4,7 @@ import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Reverse extends Command {
-    @Override
-    protected void execute(){
-        Robot.shooterCock.reverseDaddy();
-    }
+
     @Override
     protected boolean isFinished() {
         return false;
