@@ -15,8 +15,8 @@ public final class OI {
     OI() {
 
         new JoystickButton(driver, 1).whenPressed(new Shoot()); //press once, shoots ball
-        new JoystickButton(driver, 2).whileHeld(new Reverse()); //hold down to reverse shooting motors
-        new JoystickButton(operator, 3).whenPressed(new StopShooting()); //stop the motors
+        new JoystickButton(driver, 2).whenPressed(new Reverse()); //hold down to reverse shooting motors
+        new JoystickButton(driver, 3).whenPressed(new StopShooting()); //stop the motors
 
     }
 }
