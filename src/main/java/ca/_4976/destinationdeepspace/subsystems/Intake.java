@@ -3,11 +3,10 @@ package ca._4976.destinationdeepspace.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import ca._4976.destinationdeepspace.Robot;
 
-public class Vision extends Subsystem {
+public class Intake  extends Subsystem {
 
-    NetworkTable vision = NetworkTableInstance.getDefault().getTable("Vision");
+    NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
     @Override
     protected void initDefaultCommand() {

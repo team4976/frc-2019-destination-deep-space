@@ -1,7 +1,11 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.subsystems.Climber;
 import ca._4976.destinationdeepspace.subsystems.Drive;
+import ca._4976.destinationdeepspace.subsystems.Intake;
 import ca._4976.destinationdeepspace.subsystems.Shooter;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,6 +19,8 @@ public class Robot extends TimedRobot {
     public static OI oi;
     public static Drive drive;
     public static Shooter shooter;
+    public static Intake intake;
+    public static Climber climber;
 
     private Scheduler scheduler;
 
@@ -23,6 +29,9 @@ public class Robot extends TimedRobot {
         oi = new OI();
         drive = new Drive();
         shooter = new Shooter();
+        intake = new Intake();
+        climber = new Climber();
+
         scheduler = Scheduler.getInstance();
     }
 
