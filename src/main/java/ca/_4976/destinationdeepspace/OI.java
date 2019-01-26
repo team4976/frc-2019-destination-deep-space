@@ -1,6 +1,9 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.Climb;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 // The operator interface of the robot, it has been simplified from the real
 // robot to allow control with a single Xbox joystick. As a result, not all
@@ -25,5 +28,7 @@ public final class OI {
         else if (driver.getPOV() == 90){}
         else if (driver.getPOV() == 180){}
         else if (driver.getPOV() == 270){}
+
+        new JoystickButton(driver, 3).whenPressed(new Climb());
     }
 }
