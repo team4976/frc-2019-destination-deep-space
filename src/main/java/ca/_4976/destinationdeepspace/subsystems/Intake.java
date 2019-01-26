@@ -4,7 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Intake  extends Subsystem {
+public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 

@@ -8,7 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Shooter  extends Subsystem {
+public class Shooter extends Subsystem {
 
     NetworkTable shooter = NetworkTableInstance.getDefault().getTable("Shooter");
 
