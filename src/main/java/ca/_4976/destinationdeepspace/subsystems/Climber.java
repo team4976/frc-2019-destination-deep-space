@@ -2,12 +2,9 @@ package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,6 +39,7 @@ public class Climber extends Subsystem {
     @Override
     protected void initDefaultCommand() {}
 
+    //Starts the auto-climb sequence
     public void beginClimb(){
         intakeSpin();
         while (true){
@@ -52,6 +50,7 @@ public class Climber extends Subsystem {
         }
     }
 
+    //Drops the foot
     public void footDrop(){
         footMotor.set(ControlMode.PercentOutput, 0.6);
         while (true){
@@ -62,6 +61,7 @@ public class Climber extends Subsystem {
         }
     }
 
+    //Retracts the foot
     public void footReverse(){
         footMotor.set(ControlMode.PercentOutput, - 0.6);
         while (true){
@@ -72,10 +72,13 @@ public class Climber extends Subsystem {
         }
     }
 
+    //Drives a distance equivalent to the length of the bot
     public void driveALittle(){
         drive();
         while (true){
-            //ADD A REAL VALUE HERE...
+
+            //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
+
             if (distanceEncoder.get() == 5){
                 stopDriving();
                 footReverse();
@@ -83,16 +86,21 @@ public class Climber extends Subsystem {
         }
     }
 
+    //Drives a distance equivalent to the width of the foot,
+    //to push the robot onto the platform.
     public void driveALittleMore(){
         drive();
         while (true){
-            //ADD A REAL VALUE HERE...
+
+            //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
+
             if (distanceEncoder.get() == 1){
                 stopDriving();
             }
         }
     }
 
+    //Drives the bot
     public void drive(){
         RF.set(ControlMode.PercentOutput, 0.5);
         RB.set(ControlMode.PercentOutput, 0.5);
@@ -101,6 +109,7 @@ public class Climber extends Subsystem {
         LB.set(ControlMode.PercentOutput, 0.5);
     }
 
+    //Stops the bot from moving
     public void stopDriving(){
         RF.set(ControlMode.PercentOutput, 0.0);
         RB.set(ControlMode.PercentOutput, 0.0);
@@ -109,20 +118,24 @@ public class Climber extends Subsystem {
         LB.set(ControlMode.PercentOutput, 0.0);
     }
 
+    //Stops the foot from moving more than it should
     public void footStop(){
         footMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
+    //Spins both intake motors forward
     public void intakeSpin(){
         intake1.set(ControlMode.PercentOutput, 0.6);
         intake2.set(ControlMode.PercentOutput, 0.6);
     }
 
+    //Stops the intake motors from spinning
     public void intakeStop(){
         intake1.set(ControlMode.PercentOutput, 0.0);
         intake2.set(ControlMode.PercentOutput, 0.0);
     }
 
+    //Driver override
     public void stopClimbing(){
 
     }
