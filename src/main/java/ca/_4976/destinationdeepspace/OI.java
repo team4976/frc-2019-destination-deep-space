@@ -1,5 +1,8 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.DisablePID;
+import ca._4976.destinationdeepspace.commands.EnablePID;
+import ca._4976.destinationdeepspace.commands.ResetEncoders;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -14,6 +17,10 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
+
+        new JoystickButton(driver, 1).whenPressed(new ResetEncoders());
+        new JoystickButton(driver, 2).whenPressed(new EnablePID());
+        new JoystickButton(driver, 3).whenPressed(new DisablePID());
 
         //Dpad sensor for operator controller
         if (operator.getPOV() == 0){}

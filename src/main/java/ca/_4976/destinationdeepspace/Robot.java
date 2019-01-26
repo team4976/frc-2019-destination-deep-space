@@ -27,12 +27,14 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        drive = new Drive();
+        drive = new Drive("Drive", 0.00009, 0.000001, 0);
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
 
         scheduler = Scheduler.getInstance();
+
+        drive.resetEncoders();
     }
 
     @Override
@@ -60,7 +62,9 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() { }
 
     @Override
-    public void teleopPeriodic() { }
+    public void teleopPeriodic() {
+        drive.printEncoders();
+    }
 
     @Override
     public void testPeriodic() { }
