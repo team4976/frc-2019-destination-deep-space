@@ -34,7 +34,7 @@ public class Climber extends Subsystem {
     DigitalInput upperFootLimitSwitch = new DigitalInput(3);
 
     //The encoder with which encoder values will be obtained
-    Encoder distanceEncoder = new Encoder(0,1,false,Encoder.EncodingType.k4X);
+    Encoder distanceEncoder = new Encoder(0,1,false, Encoder.EncodingType.k4X);
 
     @Override
     protected void initDefaultCommand() {}
