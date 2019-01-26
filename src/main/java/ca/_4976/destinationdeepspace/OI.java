@@ -1,7 +1,6 @@
 package ca._4976.destinationdeepspace;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 // The operator interface of the robot, it has been simplified from the real
 // robot to allow control with a single Xbox joystick. As a result, not all
