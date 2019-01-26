@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Shoot extends Command {
     @Override
     protected void initialize(){
-        Robot.shooterCock.shootDaddy();
+        Robot.shooter.shootDaddy();
     }
     @Override
     protected boolean isFinished() {

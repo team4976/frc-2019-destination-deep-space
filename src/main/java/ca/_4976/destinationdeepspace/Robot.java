@@ -1,7 +1,7 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.subsystems.Drive;
-import ca._4976.destinationdeepspace.subsystems.ShooterCock;
+import ca._4976.destinationdeepspace.subsystems.Shooter;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
 
     public static OI oi;
     public static Drive drive;
-    public static ShooterCock shooterCock;
+    public static Shooter shooter;
 
     private Scheduler scheduler;
 
@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         oi = new OI();
         drive = new Drive();
-        shooterCock = new ShooterCock();
+        shooter = new Shooter();
         scheduler = Scheduler.getInstance();
     }
 

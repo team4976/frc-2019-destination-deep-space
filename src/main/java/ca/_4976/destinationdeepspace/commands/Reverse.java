@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Reverse extends Command {
     @Override
     protected void execute(){
-        Robot.shooterCock.reverseDaddy();
+        Robot.shooter.reverseDaddy();
     }
     @Override
     protected boolean isFinished() {
