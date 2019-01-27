@@ -14,5 +14,5 @@ public class Climb extends Command {
 
     @Override protected boolean isFinished() { return false; }
 
-    @Override protected void end() { Robot.climber.stopClimbing(); }
+    @Override protected void end() {  }
 }

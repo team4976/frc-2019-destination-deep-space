@@ -1,6 +1,8 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.Climb;
+import ca._4976.destinationdeepspace.commands.ClimbButtonPress;
+import ca._4976.destinationdeepspace.commands.ClimbShoulderPress;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public final class OI {
 
     public Joystick driver = new Joystick(0);
-
     public Joystick operator = new Joystick(1);
 
     OI() {
@@ -29,6 +30,8 @@ public final class OI {
         else if (driver.getPOV() == 180){}
         else if (driver.getPOV() == 270){}
 
-        new JoystickButton(driver, 3).whenPressed(new Climb());
+        new JoystickButton(driver, 6).whenPressed(new ClimbShoulderPress());
+        new JoystickButton(driver, 1).whenPressed(new ClimbButtonPress());
+
     }
 }
