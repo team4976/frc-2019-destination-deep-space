@@ -32,6 +32,8 @@ public final class OI {
 
         new JoystickButton(driver, 6).whenPressed(new ClimbShoulderPress());
         new JoystickButton(driver, 1).whenPressed(new ClimbButtonPress());
+        new JoystickButton(driver, 6).whenPressed(new ClimbShoulderPress());
+        new JoystickButton(driver, 1).whenPressed(new ClimbButtonPress());
 
     }
 }

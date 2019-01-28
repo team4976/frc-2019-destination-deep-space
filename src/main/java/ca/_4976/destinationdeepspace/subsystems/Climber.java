@@ -41,6 +41,7 @@ public class Climber extends Subsystem {
 
     //Starts the auto-climb sequence
     public void beginClimb(){
+        Robot.isOtherwiseClimbing = true;
         intakeSpin();
         while (true){
             if (chassisLimitSwitch.get()) {
@@ -137,6 +138,13 @@ public class Climber extends Subsystem {
 
     //Driver override
     public void stopClimbing(){
+        intake1.set(ControlMode.PercentOutput, 0.0);
+        intake2.set(ControlMode.PercentOutput, 0.0);
 
+        RF.set(ControlMode.PercentOutput, 0.0);
+        RB.set(ControlMode.PercentOutput, 0.0);
+
+        LF.set(ControlMode.PercentOutput, 0.0);
+        LB.set(ControlMode.PercentOutput, 0.0);
     }
 }
