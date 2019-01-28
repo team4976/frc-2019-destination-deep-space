@@ -146,5 +146,7 @@ public class Climber extends Subsystem {
 
         LF.set(ControlMode.PercentOutput, 0.0);
         LB.set(ControlMode.PercentOutput, 0.0);
+
+        Robot.isOtherwiseClimbing = false;
     }
 }
