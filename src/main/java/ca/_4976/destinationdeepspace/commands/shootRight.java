@@ -10,6 +10,6 @@ public class shootRight extends Command {
     }
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 }

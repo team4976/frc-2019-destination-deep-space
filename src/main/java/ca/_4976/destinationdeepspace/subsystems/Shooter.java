@@ -12,11 +12,11 @@ import javafx.scene.transform.Rotate;
 public class Shooter extends Subsystem {
 
     NetworkTable shooter = NetworkTableInstance.getDefault().getTable("Shooter");
-    DoubleSolenoid rightBananna = new DoubleSolenoid(10,0,1);
-    DoubleSolenoid leftBananna = new DoubleSolenoid(10,2,3);
+    DoubleSolenoid rightBananna = new DoubleSolenoid(10,1,0);
+    DoubleSolenoid leftBananna = new DoubleSolenoid(10,3,2);
     DoubleSolenoid hood = new DoubleSolenoid(10,4,5);
     TalonSRX rightShooter = new TalonSRX(7);
-    TalonSRX leftShooter = new TalonSRX(1);
+    TalonSRX leftShooter = new TalonSRX(8);
     DigitalInput checkIfBall = new DigitalInput(0);//sensor to determine if a ball is in the shooter
 
     //A whole bunch of flags
@@ -27,17 +27,19 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable;
+    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable=1.0;
 
     @Override
     protected void initDefaultCommand() {
-
+        rightBananna.set(DoubleSolenoid.Value.kReverse);
+        leftBananna.set(DoubleSolenoid.Value.kReverse);
     }
     public void areYouShootingHigh(){
         shootingHigh = true;
     }
     public void shootHighRight(){
         rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+        leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
         rightBananna.set(DoubleSolenoid.Value.kForward);
         right = true;
         leftBananna.set(DoubleSolenoid.Value.kForward);
@@ -53,7 +55,7 @@ public class Shooter extends Subsystem {
         else {
             rightBananna.set(DoubleSolenoid.Value.kForward);
             right = true;
-            rightShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+            rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
             Timer.delay(1.0);
             //if (!isThereABall) Robot.shooter.reset();
             Robot.shooter.reset();
@@ -61,6 +63,7 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+        rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
         rightBananna.set(DoubleSolenoid.Value.kForward);
         right = true;
         leftBananna.set(DoubleSolenoid.Value.kForward);

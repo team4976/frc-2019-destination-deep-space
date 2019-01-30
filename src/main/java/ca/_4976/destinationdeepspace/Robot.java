@@ -1,9 +1,6 @@
 package ca._4976.destinationdeepspace;
 
-import ca._4976.destinationdeepspace.subsystems.Climber;
-import ca._4976.destinationdeepspace.subsystems.Drive;
-import ca._4976.destinationdeepspace.subsystems.Intake;
-import ca._4976.destinationdeepspace.subsystems.Shooter;
+import ca._4976.destinationdeepspace.subsystems.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -60,7 +57,21 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() { }
 
     @Override
-    public void teleopPeriodic() { }
+    public void teleopPeriodic() {
+        if (Robot.oi.driver.getPOV() == 0){
+            System.out.println("uppy");
+            Robot.shooter.areYouShootingHigh();
+        }
+        else if (Robot.oi.driver.getPOV() == 90){}
+        else if (Robot.oi.driver.getPOV() == 180){}
+        else if (Robot.oi.driver.getPOV() == 270){}
+
+        //Dpad sensor for driver controller
+        if (Robot.oi.operator.getPOV() == 0){}
+        else if (Robot.oi.operator.getPOV() == 90){}
+        else if (Robot.oi.operator.getPOV() == 180){}
+        else if (Robot.oi.operator.getPOV() == 270){}
+    }
 
     @Override
     public void testPeriodic() { }
