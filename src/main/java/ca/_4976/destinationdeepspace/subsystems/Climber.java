@@ -77,10 +77,7 @@ public class Climber extends Subsystem {
     public void driveALittle(){
         drive();
         while (true){
-
-            //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
-
-            if (distanceEncoder.get() == 14){
+            if (distanceEncoder.get() == 224){
                 stopDriving();
                 footReverse();
             }
@@ -92,10 +89,7 @@ public class Climber extends Subsystem {
     public void driveALittleMore(){
         drive();
         while (true){
-
-            //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
-
-            if (distanceEncoder.get() == 2){
+            if (distanceEncoder.get() == 17){
                 stopDriving();
             }
         }
