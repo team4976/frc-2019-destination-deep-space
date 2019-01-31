@@ -80,7 +80,7 @@ public class Climber extends Subsystem {
 
             //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
 
-            if (distanceEncoder.get() == 5){
+            if (distanceEncoder.get() == 14){
                 stopDriving();
                 footReverse();
             }
@@ -95,7 +95,7 @@ public class Climber extends Subsystem {
 
             //ALL ENCODER VALUES ARE JUST PLACEHOLDERS
 
-            if (distanceEncoder.get() == 1){
+            if (distanceEncoder.get() == 2){
                 stopDriving();
             }
         }
@@ -149,4 +149,5 @@ public class Climber extends Subsystem {
 
         Robot.isOtherwiseClimbing = false;
     }
+
 }
