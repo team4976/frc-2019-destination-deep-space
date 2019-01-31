@@ -92,7 +92,7 @@ public class Drive extends PIDSubsystem {
         LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.set(PercentOutput, leftOutput);
+        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
