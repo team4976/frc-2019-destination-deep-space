@@ -71,7 +71,7 @@ public class Drive extends Subsystem {
         LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.set(PercentOutput, leftOutput);
+        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
