@@ -104,12 +104,12 @@ public class Drive extends PIDSubsystem {
             // Save the left stick value
             turn = applyDeadband(joy.getRawAxis(0));
 
-            // Save the throttle values as the left and right outputs
+            // Sets the motor outputs to the throttle value
             if (visonOveride) {
                 leftOutput = regularize(throttle);
                 rightOutput = regularize(-throttle);
             }
-            // Save the combined turn and throttle values as the left and right outputs
+            // Sets the motor outputs to the throttle and turn values combined
             else {
                 leftOutput = regularize(throttle + turn);
                 rightOutput = regularize(-throttle + turn);
