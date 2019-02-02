@@ -71,7 +71,7 @@ public class Drive extends Subsystem {
         LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.set(PercentOutput, leftOutput);
+        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
@@ -81,7 +81,7 @@ public class Drive extends Subsystem {
             // Save the left and right trigger values as a combined value
             throttle = applyDeadband(joy.getRawAxis(2) - joy.getRawAxis(3));
             // Save the left stick value
-            turn = applyDeadband(joy.getRawAxis(0));
+            turn = applyDeadband(-joy.getRawAxis(0));
 
             // Save the throttle values as the left and right outputs
             if (visonOveride) {

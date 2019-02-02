@@ -27,12 +27,13 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable=1.0;
+    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable=0.8;
 
     @Override
     protected void initDefaultCommand() {
         rightBananna.set(DoubleSolenoid.Value.kReverse);
         leftBananna.set(DoubleSolenoid.Value.kReverse);
+        hood.set(DoubleSolenoid.Value.kForward);
     }
     public void areYouShootingHigh(){
         shootingHigh = true;
@@ -53,9 +54,10 @@ public class Shooter extends Subsystem {
     public void shootLowRight(){
         if(shootingHigh)Robot.shooter.shootHighRight();
         else {
+            rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+            Timer.delay(1.0);
             rightBananna.set(DoubleSolenoid.Value.kForward);
             right = true;
-            rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
             Timer.delay(1.0);
             //if (!isThereABall) Robot.shooter.reset();
             Robot.shooter.reset();
