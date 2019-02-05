@@ -19,8 +19,8 @@ public class Drive extends Subsystem {
     NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
 
     // Left drive motor controllers
-    TalonSRX LF = new TalonSRX(4);
-    TalonSRX LB = new TalonSRX(1);
+    VictorSPX LF = new VictorSPX(4);
+    VictorSPX LB = new VictorSPX(1);
 
     // Right drive motor controllers
     TalonSRX RF = new TalonSRX(2);
@@ -71,7 +71,7 @@ public class Drive extends Subsystem {
         LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.set(PercentOutput, leftOutput);
+        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
@@ -85,13 +85,13 @@ public class Drive extends Subsystem {
 
             // Save the throttle values as the left and right outputs
             if (visonOveride) {
-                leftOutput = regularize(throttle);
-                rightOutput = regularize(-throttle);
+                leftOutput = regularize(-throttle);
+                rightOutput = regularize(throttle);
             }
             // Save the combined turn and throttle values as the left and right outputs
             else {
-                leftOutput = regularize(throttle + turn);
-                rightOutput = regularize(-throttle + turn);
+                leftOutput = regularize(-throttle + turn);
+                rightOutput = regularize(throttle + turn);
             }
 
             drive(leftOutput, rightOutput);
