@@ -1,5 +1,7 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.shootLeft;
+import ca._4976.destinationdeepspace.commands.shootRight;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -14,17 +16,9 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
-
+        new JoystickButton(driver, 2).whenPressed(new shootRight());
+        new JoystickButton(driver, 3).whenPressed(new shootLeft());
         //Dpad sensor for operator controller
-        if (operator.getPOV() == 0){}
-        else if (operator.getPOV() == 90){}
-        else if (operator.getPOV() == 180){}
-        else if (operator.getPOV() == 270){}
 
-        //Dpad sensor for driver controller
-        if (driver.getPOV() == 0){}
-        else if (driver.getPOV() == 90){}
-        else if (driver.getPOV() == 180){}
-        else if (driver.getPOV() == 270){}
     }
 }
