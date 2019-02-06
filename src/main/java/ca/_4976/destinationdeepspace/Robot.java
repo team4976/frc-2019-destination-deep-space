@@ -22,9 +22,6 @@ public class Robot extends TimedRobot {
     public static Intake intake;
     public static Climber climber;
 
-    public static boolean bumperDown = false;
-    public static boolean isOtherwiseClimbing = false;
-
     private Scheduler scheduler;
 
     @Override

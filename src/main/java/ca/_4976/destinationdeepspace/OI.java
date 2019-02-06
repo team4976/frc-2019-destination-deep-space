@@ -2,6 +2,7 @@ package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,22 +17,19 @@ public final class OI {
 
     OI() {
 
+        new JoystickButton(operator, 7);
         //Dpad sensor for operator controller
-        if (operator.getPOV() == 0){}
-        else if (operator.getPOV() == 90){}
-        else if (operator.getPOV() == 180){}
-        else if (operator.getPOV() == 270){}
+        if (operator.getPOV() == 0) {
+        } else if (operator.getPOV() == 90) {
+        } else if (operator.getPOV() == 180) {
+        } else if (operator.getPOV() == 270) {
+        }
 
         //Dpad sensor for driver controller
-        if (driver.getPOV() == 0){}
-        else if (driver.getPOV() == 90){}
-        else if (driver.getPOV() == 180){}
-        else if (driver.getPOV() == 270){}
-
-        new JoystickButton(driver, 6).whenPressed(new ClimbShoulderPress());
-        new JoystickButton(driver, 1).whenPressed(new ClimbButtonPress());
-        new JoystickButton(driver, 6).whenReleased(new ClimbShoulderRelease());
-        new JoystickButton(driver, 1).whenReleased(new ClimbButtonRelease());
-
+        if (driver.getPOV() == 0) {
+        } else if (driver.getPOV() == 90) {
+        } else if (driver.getPOV() == 180) {
+        } else if (driver.getPOV() == 270) {
+        }
     }
 }
