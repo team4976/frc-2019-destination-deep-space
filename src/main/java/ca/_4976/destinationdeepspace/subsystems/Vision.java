@@ -1,83 +1,52 @@
 package ca._4976.destinationdeepspace.subsystems;
 
-
-
 import edu.wpi.first.networktables.NetworkTableInstance;
-
 import edu.wpi.first.wpilibj.Sendable;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import edu.wpi.first.networktables.NetworkTable;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
-
-
 
 public class Vision extends Subsystem implements Sendable {
 
-
+    double distance, angA2, nx, ny, vpw, vph, actualX, actualY, k;
 
     NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableEntry tx = visionValues.getEntry("tx");
-
     NetworkTableEntry ty = visionValues.getEntry("ty");
-
     NetworkTableEntry ta = visionValues.getEntry("ta");
 
-
-
     @Override
-
     protected void initDefaultCommand() {}
 
-
-
-    public void periodicRead (){
-
+    public void periodicRead(){
         double x = tx.getDouble(0.0);
-
         double y = ty.getDouble(0.0);
-
         double area = ta.getDouble(0.0);
 
-        //System.out.println("X Value: " + x);
+//        nx = (1/160.0) * (x - 159.5);
+//        ny = (1/120.0) * (119.5 - y);
+//
+//        vpw = 2.0*Math.tan(27);
+//        vph = 2.0*Math.tan(20.5);
+//
+//        actualX = vpw/2 * nx;
+//        actualY = vph/2 * ny;
+//
+//        angA2 = Math.atan2(1,x);
+//
+//        distance = (1-.36)/Math.tan(0.959931+angA2);
+//
+//        System.out.println("Y Value: " + Math.toDegrees(angA2));
 
-        //System.out.println("Y Value: " + y);
+        distance = 1.5/Math.sqrt(area);
 
-        //System.out.println("A Value: " + area);
+        System.out.println("Distance: " + distance);
+    }
 
-        if(x > 3){
-
-            System.out.println("Move left");
-
-        } else if (x < -3){
-
-            System.out.println("Move right");
-
-        } else if (x < 3 && x > -3){
-
-            System.out.println("Centered horizontally");
-
-        }
-
-
-
-        if(y > 3){
-
-            System.out.println("Move down");
-
-        } else if(y < -3){
-
-            System.out.println("Move up");
-
-        } else if(y < 3 && y > -3){
-
-            System.out.println("Centered vertically");
-
-        }
-
+    public double readXValue(){
+        double x = tx.getDouble(0);
+        return x;
     }
 
 }
