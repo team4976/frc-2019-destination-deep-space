@@ -1,9 +1,6 @@
 package ca._4976.destinationdeepspace;
 
-import ca._4976.destinationdeepspace.subsystems.Climber;
-import ca._4976.destinationdeepspace.subsystems.Drive;
-import ca._4976.destinationdeepspace.subsystems.Intake;
-import ca._4976.destinationdeepspace.subsystems.Shooter;
+import ca._4976.destinationdeepspace.subsystems.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -21,6 +18,7 @@ public class Robot extends TimedRobot {
     public static Shooter shooter;
     public static Intake intake;
     public static Climber climber;
+    public static Vision vision;
 
     private Scheduler scheduler;
 
@@ -31,6 +29,7 @@ public class Robot extends TimedRobot {
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
+        vision = new Vision();
 
         scheduler = Scheduler.getInstance();
     }
@@ -60,7 +59,7 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() { }
 
     @Override
-    public void teleopPeriodic() { }
+    public void teleopPeriodic() { vision.periodicRead(); }
 
     @Override
     public void testPeriodic() { }
