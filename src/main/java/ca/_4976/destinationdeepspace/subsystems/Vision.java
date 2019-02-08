@@ -2,6 +2,7 @@ package ca._4976.destinationdeepspace.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -15,6 +16,8 @@ public class Vision extends Subsystem implements Sendable {
     NetworkTableEntry tx = visionValues.getEntry("tx");
     NetworkTableEntry ty = visionValues.getEntry("ty");
     NetworkTableEntry ta = visionValues.getEntry("ta");
+
+    Servo camera = new Servo(1);
 
     @Override
     protected void initDefaultCommand() {}
@@ -44,6 +47,18 @@ public class Vision extends Subsystem implements Sendable {
     public double readXValue(){
         double x = tx.getDouble(0);
         return x;
+    }
+
+    public void cameraLeft() {
+        camera.setAngle(0);
+    }
+
+    public void cameraForwards() {
+        camera.setAngle(90);
+    }
+
+    public void cameraRight() {
+        camera.setAngle(180);
     }
 
 }
