@@ -18,7 +18,18 @@ public final class OI {
     OI() {
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
+
         //Dpad sensor for operator controller
+        if (operator.getPOV() == 0){}
+        else if (operator.getPOV() == 90){}
+        else if (operator.getPOV() == 180){}
+        else if (operator.getPOV() == 270){}
+
+        //Dpad sensor for driver controller
+        if (driver.getPOV() == 0){}
+        else if (driver.getPOV() == 90){}
+        else if (driver.getPOV() == 180){}
+        else if (driver.getPOV() == 270){}
 
     }
 }
