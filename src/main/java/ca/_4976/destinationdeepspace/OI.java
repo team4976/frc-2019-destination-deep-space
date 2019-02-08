@@ -17,7 +17,6 @@ public final class OI {
 
     OI() {
 
-        new JoystickButton(operator, 7);
         //Dpad sensor for operator controller
         if (operator.getPOV() == 0) {
         } else if (operator.getPOV() == 90) {
