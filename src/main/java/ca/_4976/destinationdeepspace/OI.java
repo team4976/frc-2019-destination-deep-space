@@ -2,6 +2,9 @@ package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 // The operator interface of the robot, it has been simplified from the real
@@ -15,6 +18,12 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
+
+        new JoystickButton(driver,4).whileHeld(new intakeFromGround());
+
+        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
+        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup());
+        new JoystickButton(operator, 4).whenPressed(new intakeHome());
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
 

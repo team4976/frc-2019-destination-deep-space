@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class Vision extends Subsystem implements Sendable {
 
-    double distance, angA2, nx, ny, vpw, vph, actualX, actualY;
+    double distance, angA2, nx, ny, vpw, vph, actualX, actualY, k;
 
     NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -27,23 +27,29 @@ public class Vision extends Subsystem implements Sendable {
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
 
-        nx = (1/160.0) * (x - 159.5);
-        ny = (1/120.0) * (119.5 - y);
+//        nx = (1/160.0) * (x - 159.5);
+//        ny = (1/120.0) * (119.5 - y);
+//
+//        vpw = 2.0*Math.tan(27);
+//        vph = 2.0*Math.tan(20.5);
+//
+//        actualX = vpw/2 * nx;
+//        actualY = vph/2 * ny;
+//
+//        angA2 = Math.atan2(1,x);
+//
+//        distance = (1-.36)/Math.tan(0.959931+angA2);
+//
+//        System.out.println("Y Value: " + Math.toDegrees(angA2));
 
-        vpw = 2.0*Math.tan(27);
-        vph = 2.0*Math.tan(20.5);
+        distance = 1.5/Math.sqrt(area);
 
-        actualX = vpw/2 * nx;
-        actualY = vph/2 * ny;
-
-        angA2 = Math.atan2(1,x);
-
-        distance = ( - 1)/Math.tan(0+angA2);
-
-        System.out.println("Y Value: " + y);
         System.out.println("Distance: " + distance);
     }
 
+    public double readXValue(){
+        double x = tx.getDouble(0);
+        return x;
     public double readXValue(){
         double x = tx.getDouble(0);
         return x;
