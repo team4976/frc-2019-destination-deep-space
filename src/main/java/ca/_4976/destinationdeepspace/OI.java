@@ -31,7 +31,9 @@ public final class OI {
         }
 
         //Dpad sensor for driver controller
-        if (driver.getPOV() == 0){}
+        if (driver.getPOV() == 0){
+            Robot.shooter.areYouShootingHigh();
+        }
         else if (driver.getPOV() == 90){}
         else if (driver.getPOV() == 180){}
         else if (driver.getPOV() == 270){}
