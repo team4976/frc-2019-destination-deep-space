@@ -1,7 +1,6 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -9,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
+import static com.ctre.phoenix.motorcontrol.ControlMode.Position;
 
 // The DriveTrain subsystem controls the robot's chassis and reads in
 // information about it's speed and posit ion.
@@ -21,10 +21,10 @@ public class Drive extends Subsystem {
     // Left drive motor controllers
     VictorSPX LF = new VictorSPX(45);
     VictorSPX RF = new VictorSPX(46);
-//test change
+    //test change
     // Right drive motor controllers
-    TalonSRX LB = new TalonSRX(49);
-    TalonSRX RB = new TalonSRX(44);
+    VictorSPX LB = new VictorSPX(49);
+    VictorSPX RB = new VictorSPX(44);
 
     // The deadband percentage value
     double deadband = 0.10;
@@ -33,6 +33,8 @@ public class Drive extends Subsystem {
     double throttle, turn, leftOutput, rightOutput;
     // Control flags
     public boolean userControlEnabled = true, visonOveride = false;
+    //Error range
+    public double errorRange = 0.05;
 
 
     // Applies the deadband to the joystick outputs
@@ -41,40 +43,34 @@ public class Drive extends Subsystem {
         if (Math.abs(x) > deadband) {
             if (x > 0.0) {
                 return (x - deadband) / (1.0 - deadband);
-            }
-            else {
+            } else {
                 return (x + deadband) / (1.0 - deadband);
             }
-        }
-        else {
+        } else {
             return 0.0;
         }
     }
 
     // Checks if a value is above 1 or below -1 and sets them to 1 and -1 respectively
-    public double regularize(double x){
+    public double regularize(double x) {
         if (x > 1.0) {
             return 1.0;
-        }
-        else if (x < -1.0){
+        } else if (x < -1.0) {
             return -1.0;
-        }
-        else {
+        } else {
             return x;
         }
     }
 
     // Sets the motor controllers to the calculated outputs
-    public void drive(double leftOutput, double rightOutput){
+    public void drive(double leftOutput, double rightOutput) {
         LF.set(PercentOutput, leftOutput);
-        LB.set(PercentOutput, leftOutput);
 
         RF.set(PercentOutput, rightOutput);
-        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
-    public void arcadeDrive(Joystick joy){
+    public void arcadeDrive(Joystick joy) {
 
         if (userControlEnabled) {
             // Save the left and right trigger values as a combined value
@@ -98,19 +94,40 @@ public class Drive extends Subsystem {
     }
 
     // Sets the drive outputs to zero
-    public void stop(){
+    public void stop() {
         drive(0, 0);
     }
 
     // Set vision override enabled or disabled
-    public void setVisonOveride(boolean enabled) { visonOveride = enabled; }
+    public void setVisonOveride(boolean enabled) {
+        visonOveride = enabled;
+    }
 
     //Set user control enabled or disabled
-    public void setUserControlEnabled(boolean enabled) { userControlEnabled = enabled; }
+    public void setUserControlEnabled(boolean enabled) {
+        userControlEnabled = enabled;
+    }
 
     // Used to create looping joystick input
+
+    //Drives to an encoder position
+    public boolean driveToEncoderPos(double RightPos, double LeftPos) {
+        RF.set(Position, RightPos);
+        LF.set(Position, LeftPos);
+        if (LF.getClosedLoopError() >= LeftPos * (1 - errorRange) && LF.getClosedLoopError() <= LeftPos * (1 + errorRange)) {
+            if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
+                LF.set(PercentOutput, 0);
+                RF.set(PercentOutput, 0);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     protected void initDefaultCommand() {
+        RB.follow(RF);
+        LB.follow(LF);
         setDefaultCommand(new DriveWithJoystick());
     }
 }

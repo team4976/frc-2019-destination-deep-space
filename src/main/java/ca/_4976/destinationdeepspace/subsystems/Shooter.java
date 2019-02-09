@@ -3,11 +3,11 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import javafx.scene.transform.Rotate;
+
+import static com.ctre.phoenix.motorcontrol.ControlMode.*;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 public class Shooter extends Subsystem {
 
@@ -33,14 +33,14 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable=0.8;
+    public double Rpm =0.8;//TODO: Change the value acording to the vision code
 
     @Override
     protected void initDefaultCommand() {
         //Sets the start position
-        rightBananna.set(DoubleSolenoid.Value.kReverse);
-        leftBananna.set(DoubleSolenoid.Value.kReverse);
-        hood.set(DoubleSolenoid.Value.kForward);
+        rightBananna.set(kReverse);
+        leftBananna.set(kReverse);
+        hood.set(kForward);
     }
 
     public void areYouShootingHigh(){
@@ -50,18 +50,18 @@ public class Shooter extends Subsystem {
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Set speed
-        rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code
-        leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code
+        rightShooter.set(Velocity, Rpm);
+        leftShooter.set(Velocity, -Rpm);
         //Delay used to get the shooter up to speed
-        if(hoodFlag)hood.set(DoubleSolenoid.Value.kReverse);
+        if(hoodFlag)hood.set(kReverse);
         hoodFlag = false;
 
         Timer.delay(1.0);
         //Set all the timgs to shoot right
 
-        rightBananna.set(DoubleSolenoid.Value.kForward);
+        rightBananna.set(kForward);
         right = true;
-        leftBananna.set(DoubleSolenoid.Value.kForward);
+        leftBananna.set(kForward);
         left = true;
 
 
@@ -78,11 +78,11 @@ public class Shooter extends Subsystem {
         //Else continue shooting low
         else {
             //Sets the speed
-            rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code
+            rightShooter.set(Velocity, Rpm);
            //Delay used to get the shooter up to speed
             Timer.delay(1.0);
             //Sets the right bannan to shoot low right
-            rightBananna.set(DoubleSolenoid.Value.kForward);
+            rightBananna.set(kForward);
             right = true;
             //Delay used to fire ball before reset
             Timer.delay(1.0);
@@ -92,17 +92,17 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Sets the speed
-        leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code
-        rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code\
+        leftShooter.set(Velocity, -Rpm);
+        rightShooter.set(Velocity, Rpm);
         //Sets the hood
-        if(!hoodFlag)hood.set(DoubleSolenoid.Value.kForward);
+        if(!hoodFlag)hood.set(kForward);
         hoodFlag = true;
         //Delay used to spin motor before shoot
         Timer.delay(1.0);
         //Sets all of the bannas to shoot hight left
-        rightBananna.set(DoubleSolenoid.Value.kForward);
+        rightBananna.set(kForward);
         right = true;
-        leftBananna.set(DoubleSolenoid.Value.kForward);
+        leftBananna.set(kForward);
         left = true;
 
         //Delay used to fire ball before reset
@@ -118,10 +118,10 @@ public class Shooter extends Subsystem {
         //Else continues shooting low
         else {
             //Sets the speed
-            leftShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);//TODO: Change the value acording to the vision code\
+            leftShooter.set(Velocity, Rpm);
             Timer.delay(1.0);
             //Sets left bannan to shoot left low
-            leftBananna.set(DoubleSolenoid.Value.kForward);
+            leftBananna.set(kForward);
             left = true;
           //Delay used to shoot ball before reset
             Timer.delay(1.0);
@@ -133,26 +133,26 @@ public class Shooter extends Subsystem {
     //Resets the hood pos along with the rest of the shooter
     public void reset(){
         //Resets the motors
-        rightShooter.set(ControlMode.PercentOutput, 0.0);
-        leftShooter.set(ControlMode.PercentOutput, 0.0);
+        rightShooter.set(PercentOutput, 0.0);
+        leftShooter.set(PercentOutput, 0.0);
 
         //Drops bannanas down from up position
         if(left && right){
-            leftBananna.set(DoubleSolenoid.Value.kReverse);
+            leftBananna.set(kReverse);
             left = false;
-            rightBananna.set(DoubleSolenoid.Value.kReverse);
+            rightBananna.set(kReverse);
             right = false;
         }
 
         //Resets only left banan
         else if(left&&!right){
-            leftBananna.set(DoubleSolenoid.Value.kReverse);
+            leftBananna.set(kReverse);
             left = false;
         }
 
         //Resets only ight banan
         else if(!left&&right){
-            rightBananna.set(DoubleSolenoid.Value.kReverse);
+            rightBananna.set(kReverse);
             right = false;
         }
 

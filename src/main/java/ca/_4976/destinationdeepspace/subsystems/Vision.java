@@ -44,7 +44,6 @@ public class Vision extends Subsystem implements Sendable {
 
         distance = 1.5/Math.sqrt(area);
 
-        System.out.println("Distance: " + distance);
     }
 
 //    public double readXValue(){

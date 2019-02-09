@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
+import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
+
 public class Intake extends PIDSubsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
@@ -27,19 +29,19 @@ public class Intake extends PIDSubsystem {
     @Override
     protected void initDefaultCommand() {
         hatchPanelPickUp.set(DoubleSolenoid.Value.kForward);
-        intakeArmSlave.follow(intakeArm);
+//        intakeArmSlave.follow(intakeArm);
     }
     public void choose(){
         if(HP) Robot.intake.releaseGear();HP = false;
         if(!HP)Robot.intake.holdGear();HP = true;
     }
     public void pickUpBall(){
-        intakeMotor1.set(ControlMode.PercentOutput, 0.5);
-        intakeMotor2.set(ControlMode.PercentOutput, -0.5);
+        intakeMotor1.set(PercentOutput, -0.5);
+        intakeMotor2.set(PercentOutput, 0.5);
     }
     public void end(){
-        intakeMotor1.set(ControlMode.PercentOutput, 0.0);
-        intakeMotor2.set(ControlMode.PercentOutput, 0.0);
+        intakeMotor1.set(PercentOutput, 0.0);
+        intakeMotor2.set(PercentOutput, 0.0);
     }
     public void holdGear(){
         hatchPanelPickUp.set(DoubleSolenoid.Value.kForward);
@@ -51,11 +53,15 @@ public class Intake extends PIDSubsystem {
 
     }
     public void disablePID(){intakeController.disable();}
-    public void setSetpointHome(){intakeSetpoint = 172; intakeController.enable();}
+    public void setSetpointHome(){
+        intakeSetpoint = 172; intakeController.enable();
+        }
     public void setSetpointHP(){intakeSetpoint = 83; intakeController.enable();}
-    public void setSetpointClimb(){intakeSetpoint = 17; intakeController.enable();}
+    public void setSetpointClimb(){
+        intakeSetpoint = 17; intakeController.enable();
+        }
     public void moveIntake(double output){
-        intakeArm.set(ControlMode.PercentOutput, output);
+        intakeArm.set(PercentOutput, output);
     }
     public PIDController intakeController;
     private final PIDOutput intakeOutput = this::usePIDOutput;

@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
         oi = new OI();
         drive = new Drive();
         shooter = new Shooter();
-        intake = new Intake();
+        intake = new Intake("Shooter", 0, 0, 0);
         climber = new Climber();
         vision = new Vision();
 
