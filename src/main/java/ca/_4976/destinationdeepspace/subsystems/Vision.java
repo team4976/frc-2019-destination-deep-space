@@ -47,13 +47,13 @@ public class Vision extends Subsystem implements Sendable {
         System.out.println("Distance: " + distance);
     }
 
-    public double readXValue(){
-        double x = tx.getDouble(0);
-        return x;
-    public double readXValue(){
-        double x = tx.getDouble(0);
-        return x;
-    }
+//    public double readXValue(){
+//        double x = tx.getDouble(0);
+//        return x;
+//    public double readXValue(){
+//        double x = tx.getDouble(0);
+//        return x;
+//    }
 
     public void cameraLeft() {
         camera.setAngle(0);
@@ -66,5 +66,4 @@ public class Vision extends Subsystem implements Sendable {
     public void cameraRight() {
         camera.setAngle(180);
     }
-
 }
