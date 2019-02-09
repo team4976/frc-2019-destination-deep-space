@@ -17,22 +17,21 @@ public class Intake extends PIDSubsystem {
 
     DoubleSolenoid hatchPanelPickUp = new DoubleSolenoid(6,7);
     boolean HP = true;
-    TalonSRX intakeMover = new TalonSRX(11);
-    TalonSRX intakeMoverSlave = new TalonSRX(12);
-    TalonSRX intakeBall = new TalonSRX(13);
+    TalonSRX intakeArm = new TalonSRX(43);
+    TalonSRX intakeArmSlave = new TalonSRX(42);
     AnalogInput cherrySensor = new AnalogInput(2);
-    TalonSRX intakeMotor1 = new TalonSRX(14);
-    TalonSRX intakeMotor2 = new TalonSRX(15);
+    TalonSRX intakeMotor1 = new TalonSRX(39);
+    TalonSRX intakeMotor2 = new TalonSRX(38);
     double intakeSetpoint;
 
     @Override
     protected void initDefaultCommand() {
         hatchPanelPickUp.set(DoubleSolenoid.Value.kForward);
-        intakeMoverSlave.follow(intakeMover);
+        intakeArmSlave.follow(intakeArm);
     }
     public void choose(){
-        if(HP) Robot.intake.releaseGear();
-        if(!HP)Robot.intake.holdGear();
+        if(HP) Robot.intake.releaseGear();HP = false;
+        if(!HP)Robot.intake.holdGear();HP = true;
     }
     public void pickUpBall(){
         intakeMotor1.set(ControlMode.PercentOutput, 0.5);
@@ -56,7 +55,7 @@ public class Intake extends PIDSubsystem {
     public void setSetpointHP(){intakeSetpoint = 83; intakeController.enable();}
     public void setSetpointClimb(){intakeSetpoint = 17; intakeController.enable();}
     public void moveIntake(double output){
-        intakeMover.set(ControlMode.PercentOutput, output);
+        intakeArm.set(ControlMode.PercentOutput, output);
     }
     public PIDController intakeController;
     private final PIDOutput intakeOutput = this::usePIDOutput;

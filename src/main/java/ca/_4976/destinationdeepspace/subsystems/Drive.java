@@ -19,19 +19,18 @@ public class Drive extends Subsystem {
     NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
 
     // Left drive motor controllers
-    VictorSPX LF = new VictorSPX(4);
-    VictorSPX LB = new VictorSPX(1);
+    VictorSPX LF = new VictorSPX(45);
+    VictorSPX RF = new VictorSPX(46);
 //test change
     // Right drive motor controllers
-    TalonSRX RF = new TalonSRX(2);
-    TalonSRX RB = new TalonSRX(3);
+    TalonSRX LB = new TalonSRX(49);
+    TalonSRX RB = new TalonSRX(44);
 
     // The deadband percentage value
     double deadband = 0.10;
 
     // Variables used in the drive calculations
     double throttle, turn, leftOutput, rightOutput;
-
     // Control flags
     public boolean userControlEnabled = true, visonOveride = false;
 

@@ -20,7 +20,7 @@ public final class OI {
     OI() {
 
         new JoystickButton(driver,4).whileHeld(new intakeFromGround());
-
+        new JoystickButton(driver, 1).whenPressed(new HP());
         new JoystickButton(operator, 1).whenPressed(new intakeClimb());
         new JoystickButton(operator, 2).whenPressed(new intakeHPPickup());
         new JoystickButton(operator, 4).whenPressed(new intakeHome());

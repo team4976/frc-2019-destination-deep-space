@@ -19,8 +19,8 @@ public class Shooter extends Subsystem {
     DoubleSolenoid hood = new DoubleSolenoid(10,4,5);
 
     //Shooter talons
-    TalonSRX rightShooter = new TalonSRX(7);
-    TalonSRX leftShooter = new TalonSRX(8);
+    TalonSRX rightShooter = new TalonSRX(47);
+    TalonSRX leftShooter = new TalonSRX(48);
 
     //Is the hood left or right
     boolean hoodFlag = false;
