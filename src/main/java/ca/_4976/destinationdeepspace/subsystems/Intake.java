@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
-
+//TODO: add sensor based movment
 public class Intake extends PIDSubsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
@@ -78,5 +78,18 @@ public class Intake extends PIDSubsystem {
     @Override
     protected void usePIDOutput(double output) {
         moveIntake(output);
+    }
+
+    public void tempintakeDown(){
+        intakeArm.set(PercentOutput, 0.3);
+        intakeArmSlave.set(PercentOutput, 0.3);
+    }
+    public void tempIntakeUp() {
+        intakeArm.set(PercentOutput, -0.3);
+        intakeArmSlave.set(PercentOutput, -0.3);
+    }
+    public void tempIntakeStop() {
+        intakeArm.set(PercentOutput, 0);
+        intakeArmSlave.set(PercentOutput, 0);
     }
 }

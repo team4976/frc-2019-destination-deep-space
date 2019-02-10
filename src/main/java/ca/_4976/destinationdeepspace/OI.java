@@ -21,9 +21,15 @@ public final class OI {
 
         new JoystickButton(driver,4).whileHeld(new intakeFromGround());
         new JoystickButton(driver, 1).whenPressed(new HP());
-        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
-        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup());
-        new JoystickButton(operator, 4).whenPressed(new intakeHome());
+
+//        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
+//        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup()); //TODO: Re add sensor based movemnt
+//        new JoystickButton(operator, 4).whenPressed(new intakeHome());
+        new JoystickButton(operator, 1).whenPressed(new TempIntakDown());
+        new JoystickButton(operator, 1).whenReleased(new TempIntakeStop());
+        new JoystickButton(operator, 4).whenPressed(new TempIntakeUp());
+        new JoystickButton(operator, 4).whenReleased(new TempIntakeStop());
+
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
 
