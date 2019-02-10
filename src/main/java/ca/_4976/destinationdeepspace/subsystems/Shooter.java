@@ -12,11 +12,11 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 public class Shooter extends Subsystem {
 
     //Lift the bottom panel of the shooter
-    DoubleSolenoid rightBananna = new DoubleSolenoid(10,1,0);
-    DoubleSolenoid leftBananna = new DoubleSolenoid(10,3,2);
+    Solenoid LeftBanana = new Solenoid(40, 1);
+    Solenoid RightBanana = new Solenoid(40, 0);
 
     //Shoot left or right by switching hood pos while shooting high
-    DoubleSolenoid hood = new DoubleSolenoid(10,4,5);
+    Solenoid hood = new Solenoid(40, 4);
 
     //Shooter talons
     TalonSRX rightShooter = new TalonSRX(47);
@@ -30,17 +30,17 @@ public class Shooter extends Subsystem {
     boolean left = false;
 
     //If shooting high
-    boolean shootingHigh = false;
+    boolean shootingHigh = true;
 
     //Jakes complicated value
-    public double Rpm =0.8;//TODO: Change the value acording to the vision code
+    public double Rpm =0.2;//TODO: Change the value acording to the vision code
 
     @Override
     protected void initDefaultCommand() {
         //Sets the start position
-        rightBananna.set(kReverse);
-        leftBananna.set(kReverse);
-        hood.set(kForward);
+        RightBanana.set(false);
+        LeftBanana.set(false);
+        hood.set(true);
     }
 
     public void areYouShootingHigh(){
@@ -50,18 +50,18 @@ public class Shooter extends Subsystem {
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Set speed
-        rightShooter.set(PercentOutput, Rpm);
-        leftShooter.set(PercentOutput, -Rpm);
+        rightShooter.set(PercentOutput, -Rpm);
+        leftShooter.set(PercentOutput, Rpm);
         //Delay used to get the shooter up to speed
-        if(hoodFlag)hood.set(kReverse);
+        if(hoodFlag)hood.set(false);
         hoodFlag = false;
 
         Timer.delay(1.0);
         //Set all the timgs to shoot right
 
-        rightBananna.set(kForward);
+        RightBanana.set(true);
         right = true;
-        leftBananna.set(kForward);
+        LeftBanana.set(true);
         left = true;
 
 
@@ -82,7 +82,7 @@ public class Shooter extends Subsystem {
            //Delay used to get the shooter up to speed
             Timer.delay(1.0);
             //Sets the right bannan to shoot low right
-            rightBananna.set(kForward);
+            RightBanana.set(true);
             right = true;
             //Delay used to fire ball before reset
             Timer.delay(1.0);
@@ -92,17 +92,17 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Sets the speed
-        leftShooter.set(PercentOutput, -Rpm);
-        rightShooter.set(PercentOutput, Rpm);
+        leftShooter.set(PercentOutput, Rpm);
+        rightShooter.set(PercentOutput, -Rpm);
         //Sets the hood
-        if(!hoodFlag)hood.set(kForward);
+        if(!hoodFlag)hood.set(true);
         hoodFlag = true;
         //Delay used to spin motor before shoot
         Timer.delay(1.0);
         //Sets all of the bannas to shoot hight left
-        rightBananna.set(kForward);
+        RightBanana.set(true);
         right = true;
-        leftBananna.set(kForward);
+        LeftBanana.set(true);
         left = true;
 
         //Delay used to fire ball before reset
@@ -118,10 +118,10 @@ public class Shooter extends Subsystem {
         //Else continues shooting low
         else {
             //Sets the speed
-            leftShooter.set(PercentOutput, Rpm);
+            leftShooter.set(PercentOutput, -Rpm);
             Timer.delay(1.0);
             //Sets left bannan to shoot left low
-            leftBananna.set(kForward);
+            LeftBanana.set(true);
             left = true;
           //Delay used to shoot ball before reset
             Timer.delay(1.0);
@@ -138,21 +138,21 @@ public class Shooter extends Subsystem {
 
         //Drops bannanas down from up position
         if(left && right){
-            leftBananna.set(kReverse);
+            LeftBanana.set(false);
             left = false;
-            rightBananna.set(kReverse);
+            RightBanana.set(false);
             right = false;
         }
 
         //Resets only left banan
         else if(left&&!right){
-            leftBananna.set(kReverse);
+            LeftBanana.set(false);
             left = false;
         }
 
         //Resets only ight banan
         else if(!left&&right){
-            rightBananna.set(kReverse);
+            RightBanana.set(false);
             right = false;
         }
 

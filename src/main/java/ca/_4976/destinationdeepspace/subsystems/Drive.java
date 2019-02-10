@@ -1,6 +1,7 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,8 +20,8 @@ public class Drive extends Subsystem {
     NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
 
     // Left drive motor controllers
-    VictorSPX LF = new VictorSPX(45);
-    VictorSPX RF = new VictorSPX(46);
+    TalonSRX LF = new TalonSRX(46);
+    TalonSRX RF = new TalonSRX(45);
     //test change
     // Right drive motor controllers
     VictorSPX LB = new VictorSPX(49);
@@ -65,8 +66,9 @@ public class Drive extends Subsystem {
     // Sets the motor controllers to the calculated outputs
     public void drive(double leftOutput, double rightOutput) {
         LF.set(PercentOutput, leftOutput);
-
+        LB.set(PercentOutput, leftOutput);
         RF.set(PercentOutput, rightOutput);
+        RB.set(PercentOutput, rightOutput);
     }
 
     // Drive output calculations
@@ -118,7 +120,9 @@ public class Drive extends Subsystem {
         if (LF.getClosedLoopError() >= LeftPos * (1 - errorRange) && LF.getClosedLoopError() <= LeftPos * (1 + errorRange)) {
             if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
                 LF.set(PercentOutput, 0);
+                LB.set(PercentOutput, 0);
                 RF.set(PercentOutput, 0);
+                RB.set(PercentOutput, 0);
                 setUserControlEnabled(true);
             }
         }
@@ -126,8 +130,6 @@ public class Drive extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        RB.follow(RF);
-        LB.follow(LF);
         setDefaultCommand(new DriveWithJoystick());
     }
 }

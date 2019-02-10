@@ -40,6 +40,7 @@ public final class OI {
         else if (operator.getPOV() == 90){
             new SetCameraRight();
         }
+
         else if (operator.getPOV() == 180){}
         else if (operator.getPOV() == 270){
             new SetCameraLeft();
@@ -47,7 +48,8 @@ public final class OI {
 
         //Dpad sensor for driver controller
         if (driver.getPOV() == 0){
-            Robot.shooter.areYouShootingHigh();
+
+            System.out.println("Dpa worked");
         }
         else if (driver.getPOV() == 90){}
         else if (driver.getPOV() == 180){}

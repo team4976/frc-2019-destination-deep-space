@@ -36,8 +36,8 @@ public class Intake extends PIDSubsystem {
         if(!HP)Robot.intake.holdGear();HP = true;
     }
     public void pickUpBall(){
-        intakeMotor1.set(PercentOutput, -0.5);
-        intakeMotor2.set(PercentOutput, 0.5);
+        intakeMotor1.set(PercentOutput, -1);
+        intakeMotor2.set(PercentOutput, 1);
     }
     public void end(){
         intakeMotor1.set(PercentOutput, 0.0);
@@ -82,11 +82,11 @@ public class Intake extends PIDSubsystem {
 
     public void tempintakeDown(){
         intakeArm.set(PercentOutput, 0.3);
-        intakeArmSlave.set(PercentOutput, 0.3);
+        intakeArmSlave.set(PercentOutput, -0.3);
     }
     public void tempIntakeUp() {
         intakeArm.set(PercentOutput, -0.3);
-        intakeArmSlave.set(PercentOutput, -0.3);
+        intakeArmSlave.set(PercentOutput, 0.3);
     }
     public void tempIntakeStop() {
         intakeArm.set(PercentOutput, 0);

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TempIntakeStop extends Command {
     @Override
     protected void initialize(){
-        Robot.shooter.shootLowLeft();
+        Robot.intake.tempIntakeStop();
     }
     @Override
     protected boolean isFinished() {
