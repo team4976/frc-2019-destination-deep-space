@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class shootLeft extends Command {
     @Override
     protected void initialize(){
-        Robot.shooter.shootHighLeft();
+        Robot.shooter.shootLowLeft();
     }
     @Override
     protected boolean isFinished() {

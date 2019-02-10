@@ -30,10 +30,10 @@ public class Shooter extends Subsystem {
     boolean left = false;
 
     //If shooting high
-    boolean shootingHigh = true;
+    boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double Rpm =0.2;//TODO: Change the value acording to the vision code
+    public double Rpm =0.8;//TODO: Change the value acording to the vision code
 
     @Override
     protected void initDefaultCommand() {

@@ -33,6 +33,8 @@ public final class OI {
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
 
+        new JoystickButton(driver, 8).whenPressed(new IsShootingHigh());
+
         //Dpad sensor for operator controller
         if (operator.getPOV() == 0){
             new SetCameraForwards();
