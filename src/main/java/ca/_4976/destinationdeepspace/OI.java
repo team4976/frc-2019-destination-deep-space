@@ -15,8 +15,8 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
-        new JoystickButton(driver, 2).whenPressed(new shootRight());
-        new JoystickButton(driver, 3).whenPressed(new shootLeft());
+//        new JoystickButton(driver, 2).whenPressed(new shootRight());
+//        new JoystickButton(driver, 3).whenPressed(new shootLeft());
         //Dpad sensor for operator controller
 
     }

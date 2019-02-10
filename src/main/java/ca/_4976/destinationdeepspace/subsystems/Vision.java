@@ -20,24 +20,11 @@ public class Vision extends Subsystem implements Sendable {
     protected void initDefaultCommand() {}
 
     public void periodicRead(){
-        double x = tx.getDouble(0.0);
-        double y = ty.getDouble(0.0);
-        double area = ta.getDouble(0.0);
+        double area = ta.getDouble(0);
+        //Most accurate value so far 1.365839252
+        //Most second accurate value so far 1.340580252
+        distance = 1.408963807/Math.sqrt(area);
 
-        nx = (1/160.0) * (x - 159.5);
-        ny = (1/120.0) * (119.5 - y);
-
-        vpw = 2.0*Math.tan(27);
-        vph = 2.0*Math.tan(20.5);
-
-        actualX = vpw/2 * nx;
-        actualY = vph/2 * ny;
-
-        angA2 = Math.atan2(1,x);
-
-        distance = ( - 1)/Math.tan(0+angA2);
-
-        System.out.println("Y Value: " + y);
         System.out.println("Distance: " + distance);
     }
 
