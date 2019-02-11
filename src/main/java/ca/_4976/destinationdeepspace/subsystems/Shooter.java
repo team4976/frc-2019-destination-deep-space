@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.*;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
-//TODO: Re add rpm pid
 public class Shooter extends Subsystem {
 
     //Lift the bottom panel of the shooter
@@ -33,7 +32,7 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double Rpm =0.8;//TODO: Change the value acording to the vision code
+    public double Rpm =0.8;//TODO: Change the value acording to the vision code with the actual rpm target
 
     @Override
     protected void initDefaultCommand() {
@@ -50,8 +49,8 @@ public class Shooter extends Subsystem {
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Set speed
-        rightShooter.set(PercentOutput, -Rpm);
-        leftShooter.set(PercentOutput, Rpm);
+        rightShooter.set(Velocity, -Rpm);
+        leftShooter.set(Velocity, Rpm);
         //Delay used to get the shooter up to speed
         if(hoodFlag)hood.set(false);
         hoodFlag = false;
@@ -78,7 +77,7 @@ public class Shooter extends Subsystem {
         //Else continue shooting low
         else {
             //Sets the speed
-            rightShooter.set(PercentOutput, Rpm);
+            rightShooter.set(Velocity, Rpm);
            //Delay used to get the shooter up to speed
             Timer.delay(1.0);
             //Sets the right bannan to shoot low right
@@ -92,8 +91,8 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Sets the speed
-        leftShooter.set(PercentOutput, Rpm);
-        rightShooter.set(PercentOutput, -Rpm);
+        leftShooter.set(Velocity, Rpm);
+        rightShooter.set(Velocity, -Rpm);
         //Sets the hood
         if(!hoodFlag)hood.set(true);
         hoodFlag = true;
@@ -118,7 +117,7 @@ public class Shooter extends Subsystem {
         //Else continues shooting low
         else {
             //Sets the speed
-            leftShooter.set(PercentOutput, -Rpm);
+            leftShooter.set(Velocity, -Rpm);
             Timer.delay(1.0);
             //Sets left bannan to shoot left low
             LeftBanana.set(true);
