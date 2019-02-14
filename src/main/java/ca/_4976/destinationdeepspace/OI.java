@@ -34,28 +34,5 @@ public final class OI {
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
 
         new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
-
-        //Dpad sensor for operator controller
-        if (operator.getPOV() == 0){
-            new SetCameraForwards();
-        }
-        else if (operator.getPOV() == 90){
-            new SetCameraRight();
-        }
-
-        else if (operator.getPOV() == 180){}
-        else if (operator.getPOV() == 270){
-            new SetCameraLeft();
-        }
-
-        //Dpad sensor for driver controller
-        if (driver.getPOV() == 0){
-            //new IsShootingHigh();
-            System.out.println("Dpa worked");
-        }
-        else if (driver.getPOV() == 90){}
-        else if (driver.getPOV() == 180){}
-        else if (driver.getPOV() == 270){}
-
     }
 }

@@ -1,5 +1,8 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.SetCameraForwards;
+import ca._4976.destinationdeepspace.commands.SetCameraLeft;
+import ca._4976.destinationdeepspace.commands.SetCameraRight;
 import ca._4976.destinationdeepspace.subsystems.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -59,14 +62,24 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() { }
-    
+
     @Override
     public void autonomousPeriodic() { }
 
     @Override
     public void teleopPeriodic() {
         vision.periodicRead();
+        //Dpad sensor for operator controller
+        if (Robot.oi.operator.getPOV() == 0){ new SetCameraForwards(); }
+        else if (Robot.oi.operator.getPOV() == 90){ new SetCameraRight(); }
+        else if (Robot.oi.operator.getPOV() == 180){}
+        else if (Robot.oi.operator.getPOV() == 270){ new SetCameraLeft(); }
+
+        //Dpad sensor for driver controller
         if(Robot.oi.driver.getPOV()==0)Robot.shooter.areYouShootingHigh();
+        else if (Robot.oi.driver.getPOV() == 90){}
+        else if (Robot.oi.driver.getPOV() == 180){}
+        else if (Robot.oi.driver.getPOV() == 270){}
     }
 
     @Override
