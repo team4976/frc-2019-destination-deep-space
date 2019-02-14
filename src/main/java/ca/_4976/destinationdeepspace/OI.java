@@ -4,6 +4,7 @@ import ca._4976.destinationdeepspace.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -25,15 +26,14 @@ public final class OI {
 //        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
 //        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup()); //TODO: Re add sensor based movemnt
 //        new JoystickButton(operator, 4).whenPressed(new intakeHome());
-        new JoystickButton(operator, 1).whenPressed(new TempIntakDown());
-        new JoystickButton(operator, 1).whenReleased(new TempIntakeStop());
-        new JoystickButton(operator, 4).whenPressed(new TempIntakeUp());
-        new JoystickButton(operator, 4).whenReleased(new TempIntakeStop());
+        new JoystickButton(operator, 1).whileHeld(new TempIntakDown());
+        new JoystickButton(operator, 2).whenReleased(new TempIntakeStop());
+        new JoystickButton(operator, 4).whileHeld(new TempIntakeUp());
 
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
 
-        new JoystickButton(driver, 8).whenPressed(new IsShootingHigh());
+        new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
 
         //Dpad sensor for operator controller
         if (operator.getPOV() == 0){
@@ -50,7 +50,7 @@ public final class OI {
 
         //Dpad sensor for driver controller
         if (driver.getPOV() == 0){
-
+            //new IsShootingHigh();
             System.out.println("Dpa worked");
         }
         else if (driver.getPOV() == 90){}

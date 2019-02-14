@@ -5,26 +5,24 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 //TODO: add sensor based movment
-public class Intake extends PIDSubsystem {
+public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
     DoubleSolenoid hatchPanelPickUp = new DoubleSolenoid(6,7);
     boolean HP = true;
-    TalonSRX intakeArm = new TalonSRX(43);
+    public TalonSRX intakeArm = new TalonSRX(43);
     TalonSRX intakeArmSlave = new TalonSRX(42);
-    AnalogInput cherrySensor = new AnalogInput(2);
+    public DigitalInput cherrySensor = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
-    double intakeSetpoint;
+    boolean position = true;
 
     @Override
     protected void initDefaultCommand() {
@@ -52,37 +50,9 @@ public class Intake extends PIDSubsystem {
     public void climb(){
 
     }
-    public void disablePID(){intakeController.disable();}
-    public void setSetpointHome(){
-        intakeSetpoint = 172; intakeController.enable();
-        }
-    public void setSetpointHP(){intakeSetpoint = 83; intakeController.enable();}
-    public void setSetpointClimb(){
-        intakeSetpoint = 17; intakeController.enable();
-        }
-    public void moveIntake(double output){
-        intakeArm.set(PercentOutput, output);
-    }
-    public PIDController intakeController;
-    private final PIDOutput intakeOutput = this::usePIDOutput;
-    public Intake(String name, double p, double i, double d){
-        super(name, p, i, d);
-        intakeController = new PIDController(p, i, d, cherrySensor, intakeOutput);
-        intakeController.setSetpoint(intakeSetpoint);
-    }
-    @Override
-    protected double returnPIDInput() {
-        return cherrySensor.getVoltage()*36;
-    }
-
-    @Override
-    protected void usePIDOutput(double output) {
-        moveIntake(output);
-    }
-
     public void tempintakeDown(){
-        intakeArm.set(PercentOutput, 0.3);
-        intakeArmSlave.set(PercentOutput, -0.3);
+        intakeArm.set(PercentOutput, 0.8);
+        intakeArmSlave.set(PercentOutput, -0.8);
     }
     public void tempIntakeUp() {
         intakeArm.set(PercentOutput, -0.3);
@@ -91,5 +61,29 @@ public class Intake extends PIDSubsystem {
     public void tempIntakeStop() {
         intakeArm.set(PercentOutput, 0);
         intakeArmSlave.set(PercentOutput, 0);
+    }
+    public void homePosition(){
+        intakeArm.set(PercentOutput, -0.3);
+        intakeArmSlave.set(PercentOutput, 0.3);
+        position = true;
+    }
+    public void pickupPosition(){
+        if(!position) {
+            intakeArm.set(PercentOutput, -0.3);
+            intakeArmSlave.set(PercentOutput, 0.3);
+        }
+        else if(position){
+            intakeArm.set(PercentOutput, 0.3);
+            intakeArmSlave.set(PercentOutput, -0.3);
+        }
+    }
+    public void climbPostition(){
+        intakeArm.set(PercentOutput, 0.3);
+        intakeArmSlave.set(PercentOutput, -0.3);
+        position = false;
+    }
+    public void hold() {
+        intakeArm.set(PercentOutput, -0.04);
+        intakeArmSlave.set(PercentOutput, 0.04);
     }
 }

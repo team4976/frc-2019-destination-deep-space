@@ -10,6 +10,10 @@ public class TempIntakDown extends Command {
     }
     @Override
     protected boolean isFinished() {
-        return true;
+        return false;
+        //return Robot.intake.intakeArm.getOutputCurrent() > 0.125;
+    }
+    protected void end(){
+        Robot.intake.hold();
     }
 }

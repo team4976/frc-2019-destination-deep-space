@@ -15,7 +15,7 @@ public class Shooter extends Subsystem {
     Solenoid RightBanana = new Solenoid(40, 0);
 
     //Shoot left or right by switching hood pos while shooting high
-    Solenoid hood = new Solenoid(40, 4);
+    Solenoid hood = new Solenoid(40, 3);
 
     //Shooter talons
     TalonSRX rightShooter = new TalonSRX(47);

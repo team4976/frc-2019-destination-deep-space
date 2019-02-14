@@ -3,10 +3,10 @@ package ca._4976.destinationdeepspace.commands;
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class intakeHPPickup extends Command {
+public class CompressorToggle extends Command {
     @Override
     protected void initialize(){
-        Robot.intake.setSetpointHP();
+        Robot.compressorSwitch.compressorOn();
     }
     @Override
     protected boolean isFinished() {
@@ -14,6 +14,6 @@ public class intakeHPPickup extends Command {
     }
     @Override
     protected void end(){
-        Robot.intake.disablePID();
+        Robot.compressorSwitch.compressorOff();
     }
 }

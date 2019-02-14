@@ -6,10 +6,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TempIntakeStop extends Command {
     @Override
     protected void initialize(){
-        Robot.intake.tempIntakeStop();
+        Robot.intake.pickupPosition();
     }
     @Override
     protected boolean isFinished() {
-        return true;
+        System.out.println(Robot.intake.cherrySensor.get());
+        return !Robot.intake.cherrySensor.get();
+    }
+    protected void end(){
+        Robot.intake.hold();
     }
 }
