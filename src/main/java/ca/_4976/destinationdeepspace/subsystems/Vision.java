@@ -11,13 +11,14 @@ public class Vision extends Subsystem implements Sendable {
 
     double distance, angA2, nx, ny, vpw, vph, actualX, actualY, k;
 
-    NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
+NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableEntry tx = visionValues.getEntry("tx");
     NetworkTableEntry ty = visionValues.getEntry("ty");
     NetworkTableEntry ta = visionValues.getEntry("ta");
 
-    Servo camera = new Servo(1);
+    // Declaring new servo
+    Servo camera = new Servo(0);
 
     @Override
     protected void initDefaultCommand() {}
@@ -54,14 +55,17 @@ public class Vision extends Subsystem implements Sendable {
 //        return x;
 //    }
 
+    // Turns the camera to the left
     public void cameraLeft() {
         camera.setAngle(0);
     }
 
+    // Turns the camera to the forwards position
     public void cameraForwards() {
         camera.setAngle(90);
     }
 
+    // Turns the camera to the right
     public void cameraRight() {
         camera.setAngle(180);
     }

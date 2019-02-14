@@ -1,11 +1,6 @@
 package ca._4976.destinationdeepspace;
 
-import ca._4976.destinationdeepspace.commands.SetCameraForwards;
-import ca._4976.destinationdeepspace.commands.SetCameraLeft;
-import ca._4976.destinationdeepspace.commands.SetCameraRight;
 import ca._4976.destinationdeepspace.subsystems.*;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -70,18 +65,32 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         vision.periodicRead();
         //Dpad sensor for operator controller
-        if (Robot.oi.operator.getPOV() == 0){ new SetCameraForwards(); }
-        else if (Robot.oi.operator.getPOV() == 90){ new SetCameraRight(); }
-        else if (Robot.oi.operator.getPOV() == 180){}
-        else if (Robot.oi.operator.getPOV() == 270){ new SetCameraLeft(); }
+        if (Robot.oi.operator.getPOV() == 0) {
+            // Calls the move camera forwards method
+            Robot.vision.cameraForwards();
+        }
+        else if (Robot.oi.operator.getPOV() == 90) {
+            // Calls the move camera right method
+            Robot.vision.cameraRight();
+        }
+        else if (Robot.oi.operator.getPOV() == 180) {
+        }
+        else if (Robot.oi.operator.getPOV() == 270) {
+            // Calls the move camera left method
+            Robot.vision.cameraLeft();
+        }
 
         //Dpad sensor for driver controller
-        if(Robot.oi.driver.getPOV()==0)Robot.shooter.areYouShootingHigh();
-        else if (Robot.oi.driver.getPOV() == 90){}
-        else if (Robot.oi.driver.getPOV() == 180){}
-        else if (Robot.oi.driver.getPOV() == 270){}
+        if (Robot.oi.driver.getPOV() == 0) {
+            Robot.shooter.areYouShootingHigh();
+        }
+        else if (Robot.oi.driver.getPOV() == 90) {
+        }
+        else if (Robot.oi.driver.getPOV() == 180) {
+        }
+        else if (Robot.oi.driver.getPOV() == 270) {
+        }
     }
-
     @Override
     public void testPeriodic() { }
 }
