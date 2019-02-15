@@ -50,7 +50,10 @@ public class Robot extends TimedRobot {
     public void autonomousInit() { }
 
     @Override
-    public void teleopInit() { }
+    public void teleopInit() {
+        Robot.climber.climberLeg.setSelectedSensorPosition(0);
+
+    }
 
     @Override
     public void testInit() { }
@@ -63,6 +66,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        System.out.println(Robot.climber.climberLeg.getSelectedSensorPosition(0));
         vision.periodicRead();
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {

@@ -47,13 +47,10 @@ NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limeligh
 
     }
 
-//    public double readXValue(){
-//        double x = tx.getDouble(0);
-//        return x;
-//    public double readXValue(){
-//        double x = tx.getDouble(0);
-//        return x;
-//    }
+    public double readXValue(){
+        double x = tx.getDouble(0);
+        return x;
+    }
 
     // Turns the camera to the left
     public void cameraLeft() {

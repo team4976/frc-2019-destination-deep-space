@@ -7,5 +7,11 @@ public class ClimberLeg extends Command {
 
     @Override protected void execute() { Robot.climber.moveLeg();}
 
-    @Override protected boolean isFinished() { return Robot.climber.moveLeg(); }
+    @Override protected boolean isFinished() {
+        return Robot.climber.moveLeg();
+    }
+    @Override
+    protected void end(){
+        Robot.climber.isClimberLegDown = !Robot.climber.isClimberLegDown;
+    }
 }
