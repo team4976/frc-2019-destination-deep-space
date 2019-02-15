@@ -34,7 +34,7 @@ public class Drive extends Subsystem {
     // Variables used in the drive calculations
     double throttle, turn, leftOutput, rightOutput;
     // Control flags
-    public boolean userControlEnabled = true, visonOveride = false;
+    public boolean userControlEnabled = true, visonOveride = false, isAtTarget = false;
     //Error range
     public double errorRange = 0.05;
 
@@ -114,7 +114,7 @@ public class Drive extends Subsystem {
     // Used to create looping joystick input
 
     //Drives to an encoder position
-    public boolean driveToEncoderPos(double RightPos, double LeftPos) {
+    public void driveToEncoderPos(double RightPos, double LeftPos) {
         setUserControlEnabled(false);
         RF.set(Position, RightPos);
         RB.set(Position, RightPos);
@@ -124,10 +124,10 @@ public class Drive extends Subsystem {
             if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
                 stop();
                 setUserControlEnabled(true);
-                return true;
+                isAtTarget = true;
             }
         }
-        return false;
+        isAtTarget = false;
     }
 
     @Override
