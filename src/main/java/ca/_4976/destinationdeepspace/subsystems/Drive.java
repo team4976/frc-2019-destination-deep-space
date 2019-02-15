@@ -81,6 +81,10 @@ public class Drive extends Subsystem {
             // Save the left stick value
             turn = applyDeadband(joy.getRawAxis(0));
 
+            // Saves the left and right outputs as the throttle and turn values combined
+            leftOutput = regularize(-throttle + turn);
+            rightOutput = regularize(throttle + turn);
+
             drive(leftOutput, rightOutput);
         }
     }
@@ -99,6 +103,7 @@ public class Drive extends Subsystem {
 
     //Drives to an encoder position
     public void driveToEncoderPos(double RightPos, double LeftPos) {
+        //disables user control
         setUserControlEnabled(false);
         RF.set(Position, RightPos);
         RB.set(Position, RightPos);

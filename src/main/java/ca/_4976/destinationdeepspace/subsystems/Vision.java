@@ -9,47 +9,43 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class Vision extends Subsystem implements Sendable {
 
-    double distance, angA2, nx, ny, vpw, vph, actualX, actualY, k;
+    double distance, angA2, nx, ny, vpw, vph, actualX, actualY, x;
 
-NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableEntry tx = visionValues.getEntry("tx");
     NetworkTableEntry ty = visionValues.getEntry("ty");
     NetworkTableEntry ta = visionValues.getEntry("ta");
+    NetworkTableEntry ts = visionValues.getEntry("ts");
 
-    // Declaring new servo
     Servo camera = new Servo(0);
 
     @Override
     protected void initDefaultCommand() {}
 
+    //distance calculations
     public void periodicRead(){
-        double x = tx.getDouble(0.0);
-        double y = ty.getDouble(0.0);
-        double area = ta.getDouble(0.0);
 
-//        nx = (1/160.0) * (x - 159.5);
-//        ny = (1/120.0) * (119.5 - y);
-//
-//        vpw = 2.0*Math.tan(27);
-//        vph = 2.0*Math.tan(20.5);
-//
-//        actualX = vpw/2 * nx;
-//        actualY = vph/2 * ny;
-//
-//        angA2 = Math.atan2(1,x);
-//
-//        distance = (1-.36)/Math.tan(0.959931+angA2);
-//
-//        System.out.println("Y Value: " + Math.toDegrees(angA2));
+        double area = ta.getDouble(0);
+        //Most accurate value so far 1.365839252
+        //Most second accurate value so far 1.340580252
+        distance = 1.36589252/Math.sqrt(area);
 
-        distance = 1.5/Math.sqrt(area);
-
+        System.out.println("Distance: " + distance);
+    }
+    //constantly reading x values from the Limelight
+    public double readXValue(){
+        x = tx.getDouble(0);
+        return x;
     }
 
-    public double readXValue(){
-        double x = tx.getDouble(0);
-        return x;
+    //looks for a vision target then returns true
+    public boolean stopWithVision(){
+        readXValue();
+        if (x != 0){
+            return true;
+        }
+        return false;
     }
 
     // Turns the camera to the left
@@ -66,4 +62,5 @@ NetworkTable visionValues = NetworkTableInstance.getDefault().getTable("limeligh
     public void cameraRight() {
         camera.setAngle(180);
     }
+
 }
