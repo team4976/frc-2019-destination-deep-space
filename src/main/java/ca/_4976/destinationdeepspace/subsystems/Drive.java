@@ -34,7 +34,7 @@ public class Drive extends Subsystem {
     // Variables used in the drive calculations
     double throttle, turn, leftOutput, rightOutput;
     // Control flags
-    public boolean userControlEnabled = true, visonOveride = false, isAtTarget = false;
+    public boolean userControlEnabled = true;
     //Error range
     public double errorRange = 0.05;
 
@@ -81,17 +81,6 @@ public class Drive extends Subsystem {
             // Save the left stick value
             turn = applyDeadband(joy.getRawAxis(0));
 
-            // Save the throttle values as the left and right outputs
-            if (visonOveride) {
-                leftOutput = regularize(-throttle);
-                rightOutput = regularize(throttle);
-            }
-            // Save the combined turn and throttle values as the left and right outputs
-            else {
-                leftOutput = regularize(-throttle + turn);
-                rightOutput = regularize(throttle + turn);
-            }
-
             drive(leftOutput, rightOutput);
         }
     }
@@ -99,11 +88,6 @@ public class Drive extends Subsystem {
     // Sets the drive outputs to zero
     public void stop() {
         drive(0, 0);
-    }
-
-    // Set vision override enabled or disabled
-    public void setVisonOveride(boolean enabled) {
-        visonOveride = enabled;
     }
 
     //Set user control enabled or disabled
@@ -120,14 +104,6 @@ public class Drive extends Subsystem {
         RB.set(Position, RightPos);
         LF.set(Position, LeftPos);
         LB.set(Position, LeftPos);
-        if (LF.getClosedLoopError() >= LeftPos * (1 - errorRange) && LF.getClosedLoopError() <= LeftPos * (1 + errorRange)) {
-            if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
-                stop();
-                setUserControlEnabled(true);
-                isAtTarget = true;
-            }
-        }
-        isAtTarget = false;
     }
 
     @Override
