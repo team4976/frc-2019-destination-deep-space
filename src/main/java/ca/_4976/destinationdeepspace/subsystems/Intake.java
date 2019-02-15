@@ -47,9 +47,7 @@ public class Intake extends Subsystem {
     public void releaseGear(){
         hatchPanelPickUp.set(DoubleSolenoid.Value.kReverse);
     }
-    public void climb(){
 
-    }
     public void tempintakeDown(){
         intakeArm.set(PercentOutput, 0.8);
         intakeArmSlave.set(PercentOutput, -0.8);

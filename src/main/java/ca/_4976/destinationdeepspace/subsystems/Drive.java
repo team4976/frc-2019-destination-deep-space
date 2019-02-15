@@ -114,19 +114,18 @@ public class Drive extends Subsystem {
     // Used to create looping joystick input
 
     //Drives to an encoder position
-    public void driveToEncoderPos(double RightPos, double LeftPos) {
+    public boolean driveToEncoderPos(double RightPos, double LeftPos) {
         setUserControlEnabled(false);
         RF.set(Position, RightPos);
         LF.set(Position, LeftPos);
         if (LF.getClosedLoopError() >= LeftPos * (1 - errorRange) && LF.getClosedLoopError() <= LeftPos * (1 + errorRange)) {
             if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
-                LF.set(PercentOutput, 0);
-                LB.set(PercentOutput, 0);
-                RF.set(PercentOutput, 0);
-                RB.set(PercentOutput, 0);
+                stop();
                 setUserControlEnabled(true);
+                return true;
             }
         }
+        return false;
     }
 
     @Override
