@@ -117,7 +117,9 @@ public class Drive extends Subsystem {
     public boolean driveToEncoderPos(double RightPos, double LeftPos) {
         setUserControlEnabled(false);
         RF.set(Position, RightPos);
+        RB.set(Position, RightPos);
         LF.set(Position, LeftPos);
+        LB.set(Position, LeftPos);
         if (LF.getClosedLoopError() >= LeftPos * (1 - errorRange) && LF.getClosedLoopError() <= LeftPos * (1 + errorRange)) {
             if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)) {
                 stop();
