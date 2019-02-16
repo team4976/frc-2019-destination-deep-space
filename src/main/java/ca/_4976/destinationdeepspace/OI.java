@@ -21,30 +21,17 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
+        new JoystickButton(operator, 1).whileHeld(new IntakeDown()); //1
+        new JoystickButton(operator, 2).whenPressed(new IntakeToBallLevel());
+        new JoystickButton(operator, 4).whileHeld(new IntakeUp());//4
 
-        new JoystickButton(driver,4).whileHeld(new intakeFromGround());
+
         new JoystickButton(driver, 1).whenPressed(new HP());
-
-//        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
-//        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup()); //TODO: Re add sensor based movemnt
-//        new JoystickButton(operator, 4).whenPressed(new intakeHome());
-
-
-//        new JoystickButton(operator, 1).whileHeld(new TempIntakDown()); //1
-        new JoystickButton(operator, 2).whenPressed(new TempIntakeStop());
-        new JoystickButton(operator, 4).whileHeld(new TempIntakeUp());//4
-
         new JoystickButton(driver, 2).whenPressed(new shootRight());
         new JoystickButton(driver, 3).whenPressed(new shootLeft());
-
+        new JoystickButton(driver,4).whileHeld(new intakeFromGround());
+        new JoystickButton(driver,7).whenPressed(new ClimberLeg());
         new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
-        new JoystickButton(driver,7).whenPressed(new ClimberLeg()); //2,6
-        new JoystickButton(driver,6).whenPressed(new ClimberLegLock());//3,5
-
-        new JoystickButton(operator, 1).whenPressed(new HorizontalCenter());
-        new JoystickButton(operator, 3).whenPressed(new DriveForwardsFromGroundToLeftSide());
-
-
 
 
     }

@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double Rpm =0.8;//TODO: Change the value acording to the vision code with the actual rpm target
+    public double Rpm =60;//TODO: Change the value acording to the vision code with the actual rpm target
 
     @Override
     protected void initDefaultCommand() {

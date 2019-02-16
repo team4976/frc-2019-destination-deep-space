@@ -13,9 +13,6 @@ public class Climber extends Subsystem {
     //Motor controller for the climbing leg
     public TalonSRX climberLeg = new TalonSRX(50);
 
-    //Solenoid for locking the leg
-    DoubleSolenoid climberLegLock = new DoubleSolenoid(0,1); //TODO: Change these values
-
     int climberLegTarget = -6250;
 
     public boolean isClimberLegDown = false;
@@ -49,19 +46,6 @@ public class Climber extends Subsystem {
                 return false;
             }
         }
-    }
-
-    //Moves the climber leg lock
-    public boolean legLock() {
-        //Unlocking
-        if (isLegLocked) {
-            climberLegLock.set(DoubleSolenoid.Value.kReverse); //TODO: Change these values
-            }
-        //Locking
-        else {
-            climberLegLock.set(DoubleSolenoid.Value.kForward); //TODO: Change these values
-        }
-        return false;
     }
 
     @Override

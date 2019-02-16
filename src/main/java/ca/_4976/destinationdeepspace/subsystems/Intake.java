@@ -19,7 +19,7 @@ public class Intake extends Subsystem {
     boolean HP = true;
     public TalonSRX intakeArm = new TalonSRX(43);
     TalonSRX intakeArmSlave = new TalonSRX(42);
-    public DigitalInput cherrySensor = new DigitalInput(2);
+    public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
     boolean position = true;
@@ -48,37 +48,17 @@ public class Intake extends Subsystem {
         hatchPanelPickUp.set(DoubleSolenoid.Value.kReverse);
     }
 
-    public void tempintakeDown(){
+    public void IntakeDown(){
         intakeArm.set(PercentOutput, 0.3);
         intakeArmSlave.set(PercentOutput, -0.3);
     }
-    public void tempIntakeUp() {
+    public void intakeUp() {
         intakeArm.set(PercentOutput, -0.3);
         intakeArmSlave.set(PercentOutput, 0.3);
-    }
-    public void tempIntakeStop() {
-        intakeArm.set(PercentOutput, 0);
-        intakeArmSlave.set(PercentOutput, 0);
-    }
-    public void homePosition(){
-        intakeArm.set(PercentOutput, -0.3);
-        intakeArmSlave.set(PercentOutput, 0.3);
-        position = true;
     }
     public void pickupPosition(){
-        if(!position) {
-            intakeArm.set(PercentOutput, -0.3);
-            intakeArmSlave.set(PercentOutput, 0.3);
-        }
-        else if(position){
             intakeArm.set(PercentOutput, 0.3);
             intakeArmSlave.set(PercentOutput, -0.3);
-        }
-    }
-    public void climbPostition(){
-        intakeArm.set(PercentOutput, 0.3);
-        intakeArmSlave.set(PercentOutput, -0.3);
-        position = false;
     }
     public void hold() {
         intakeArm.set(PercentOutput, -0.04);

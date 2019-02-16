@@ -40,16 +40,16 @@ public class Vision extends Subsystem implements Sendable {
     }
 
     public void center() {
-        if (readXValue() < 0){
-            Robot.drive.drive(0.3, -0.3);
+        if (readXValue() < 10){
+            Robot.drive.drive(0.6, -0.6);
         }
         else {
-            Robot.drive.drive(-0.3 , 0.3);
+            Robot.drive.drive(-0.6 , 0.6);
         }
     }
 
     public boolean isCentered() {
-        if (readXValue() > -9 && readXValue() < 1){
+        if (readXValue() > 5 && readXValue() < 15){
             return true;
         }
         else {
