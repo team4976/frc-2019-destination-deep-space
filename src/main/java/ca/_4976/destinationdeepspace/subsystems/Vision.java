@@ -31,7 +31,6 @@ public class Vision extends Subsystem implements Sendable {
         //Most second accurate value so far 1.340580252
         distance = 1.36589252/Math.sqrt(area);
 
-        System.out.println("Distance: " + distance);
     }
     //constantly reading x values from the Limelight
     public double readXValue(){
@@ -41,6 +40,7 @@ public class Vision extends Subsystem implements Sendable {
 
     //looks for a vision target then returns true
     public boolean stopWithVision(){
+        System.out.println("is done");
         readXValue();
         if (x != 0){
             return true;

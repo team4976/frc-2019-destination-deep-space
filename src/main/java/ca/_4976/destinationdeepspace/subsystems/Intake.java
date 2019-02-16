@@ -49,8 +49,8 @@ public class Intake extends Subsystem {
     }
 
     public void tempintakeDown(){
-        intakeArm.set(PercentOutput, 0.8);
-        intakeArmSlave.set(PercentOutput, -0.8);
+        intakeArm.set(PercentOutput, 0.3);
+        intakeArmSlave.set(PercentOutput, -0.3);
     }
     public void tempIntakeUp() {
         intakeArm.set(PercentOutput, -0.3);

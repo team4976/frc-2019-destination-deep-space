@@ -19,7 +19,8 @@ public class DriveForwardsFromGroundToLeftSide extends Command {
     //upon seeing a vision target, stops the robot
     @Override
     protected boolean isFinished() {
-        return Robot.vision.stopWithVision() || Robot.drive.isAtTarget();
+        return Robot.vision.stopWithVision();
+//                || Robot.drive.isAtTarget();
     }
 
     //stops the drive PID and re-enables user control

@@ -18,8 +18,8 @@ public class Shooter extends Subsystem {
     Solenoid hood = new Solenoid(40, 3);
 
     //Shooter talons
-    TalonSRX rightShooter = new TalonSRX(47);
-    TalonSRX leftShooter = new TalonSRX(48);
+    public TalonSRX rightShooter = new TalonSRX(47);
+    public TalonSRX leftShooter = new TalonSRX(48);
 
     //Is the hood left or right
     boolean hoodFlag = false;
