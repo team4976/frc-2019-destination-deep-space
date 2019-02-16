@@ -21,9 +21,6 @@ public class Shooter extends Subsystem {
     public TalonSRX rightShooter = new TalonSRX(47);
     public TalonSRX leftShooter = new TalonSRX(48);
 
-    //Is the hood left or right
-    boolean hoodFlag = false;
-
     //Left and right for the bannanas
     boolean right = false;
     boolean left = false;
@@ -32,7 +29,7 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double Rpm =60;//TODO: Change the value acording to the vision code with the actual rpm target
+    public double Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
 
     @Override
     protected void initDefaultCommand() {
@@ -50,10 +47,9 @@ public class Shooter extends Subsystem {
     public void shootHighRight(){
         //Set speed
         rightShooter.set(Velocity, -Rpm);
-        leftShooter.set(Velocity, Rpm);
+//        leftShooter.set(Velocity, Rpm);
         //Delay used to get the shooter up to speed
-        if(hoodFlag)hood.set(false);
-        hoodFlag = false;
+        hood.set(false);
 
         Timer.delay(1.0);
         //Set all the timgs to shoot right
@@ -92,10 +88,9 @@ public class Shooter extends Subsystem {
     public void shootHighLeft(){
         //Sets the speed
         leftShooter.set(Velocity, Rpm);
-        rightShooter.set(Velocity, -Rpm);
+//        rightShooter.set(Velocity, -Rpm);
         //Sets the hood
-        if(!hoodFlag)hood.set(true);
-        hoodFlag = true;
+        hood.set(true);
         //Delay used to spin motor before shoot
         Timer.delay(1.0);
         //Sets all of the bannas to shoot hight left

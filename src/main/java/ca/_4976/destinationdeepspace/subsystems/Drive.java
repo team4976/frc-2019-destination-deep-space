@@ -3,6 +3,7 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
