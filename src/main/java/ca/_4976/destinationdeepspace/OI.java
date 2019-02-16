@@ -2,6 +2,7 @@ package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
 import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
+import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -27,7 +28,9 @@ public final class OI {
 //        new JoystickButton(operator, 1).whenPressed(new intakeClimb());
 //        new JoystickButton(operator, 2).whenPressed(new intakeHPPickup()); //TODO: Re add sensor based movemnt
 //        new JoystickButton(operator, 4).whenPressed(new intakeHome());
-        new JoystickButton(operator, 1).whileHeld(new TempIntakDown()); //1
+
+
+//        new JoystickButton(operator, 1).whileHeld(new TempIntakDown()); //1
         new JoystickButton(operator, 2).whenPressed(new TempIntakeStop());
         new JoystickButton(operator, 4).whileHeld(new TempIntakeUp());//4
 
@@ -38,6 +41,7 @@ public final class OI {
         new JoystickButton(driver,7).whenPressed(new ClimberLeg()); //2,6
         new JoystickButton(driver,6).whenPressed(new ClimberLegLock());//3,5
 
+        new JoystickButton(operator, 1).whenPressed(new HorizontalCenter());
         new JoystickButton(operator, 3).whenPressed(new DriveForwardsFromGroundToLeftSide());
 
 

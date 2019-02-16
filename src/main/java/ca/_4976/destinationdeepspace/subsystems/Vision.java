@@ -1,5 +1,6 @@
 package ca._4976.destinationdeepspace.subsystems;
 
+import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Servo;
@@ -38,9 +39,26 @@ public class Vision extends Subsystem implements Sendable {
         return x;
     }
 
+    public void center() {
+        if (readXValue() < 0){
+            Robot.drive.drive(0.3, -0.3);
+        }
+        else {
+            Robot.drive.drive(-0.3 , 0.3);
+        }
+    }
+
+    public boolean isCentered() {
+        if (readXValue() > -9 && readXValue() < 1){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     //looks for a vision target then returns true
     public boolean stopWithVision(){
-        System.out.println("is done");
         readXValue();
         if (x != 0){
             return true;
