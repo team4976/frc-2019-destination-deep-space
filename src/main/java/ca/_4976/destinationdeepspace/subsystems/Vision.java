@@ -34,7 +34,13 @@ public class Vision extends Subsystem implements Sendable {
 
         System.out.println("Distance: " + distance);
     }
-    //constantly reading x values from the Limelight
+
+    public double getDistance(){
+        double area = ta.getDouble(0);
+        distance = 1.408963807/Math.sqrt(area);
+        return distance;
+    }
+
     public double readXValue(){
         x = tx.getDouble(0);
         return x;
