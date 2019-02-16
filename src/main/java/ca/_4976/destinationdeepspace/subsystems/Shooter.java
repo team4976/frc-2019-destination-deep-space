@@ -3,107 +3,156 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import javafx.scene.transform.Rotate;
 
+import static com.ctre.phoenix.motorcontrol.ControlMode.*;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 public class Shooter extends Subsystem {
 
-    NetworkTable shooter = NetworkTableInstance.getDefault().getTable("Shooter");
-    DoubleSolenoid rightBananna = new DoubleSolenoid(10,1,0);
-    DoubleSolenoid leftBananna = new DoubleSolenoid(10,3,2);
-    DoubleSolenoid hood = new DoubleSolenoid(10,4,5);
-    TalonSRX rightShooter = new TalonSRX(7);
-    TalonSRX leftShooter = new TalonSRX(8);
-    DigitalInput checkIfBall = new DigitalInput(0);//sensor to determine if a ball is in the shooter
+    //Lift the bottom panel of the shooter
+    Solenoid LeftBanana = new Solenoid(40, 1);
+    Solenoid RightBanana = new Solenoid(40, 0);
 
-    //A whole bunch of flags
-    boolean isThereABall = checkIfBall.get();
-    boolean hoodFlag = false;
+    //Shoot left or right by switching hood pos while shooting high
+    Solenoid hood = new Solenoid(40, 3);
+
+    //Shooter talons
+    public TalonSRX rightShooter = new TalonSRX(47);
+    public TalonSRX leftShooter = new TalonSRX(48);
+
+    //Left and right for the bannanas
     boolean right = false;
     boolean left = false;
+
+    //If shooting high
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double replaceWithJakesVisionToSpeedOfMotorCalculationVariable=0.8;
+    public double Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
 
     @Override
     protected void initDefaultCommand() {
-        rightBananna.set(DoubleSolenoid.Value.kReverse);
-        leftBananna.set(DoubleSolenoid.Value.kReverse);
-        hood.set(DoubleSolenoid.Value.kForward);
+        //Sets the start position
+        RightBanana.set(false);
+        LeftBanana.set(false);
+        hood.set(true);
     }
+
     public void areYouShootingHigh(){
         shootingHigh = true;
     }
+
+    //Shoots the ball to the right high
     public void shootHighRight(){
-        rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
-        leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
-        rightBananna.set(DoubleSolenoid.Value.kForward);
+        //Set speed
+        rightShooter.set(Velocity, -Rpm);
+//        leftShooter.set(Velocity, Rpm);
+        //Delay used to get the shooter up to speed
+        hood.set(false);
+
+        Timer.delay(1.0);
+        //Set all the timgs to shoot right
+
+        RightBanana.set(true);
         right = true;
-        leftBananna.set(DoubleSolenoid.Value.kForward);
+        LeftBanana.set(true);
         left = true;
-        if(hoodFlag)hood.set(DoubleSolenoid.Value.kReverse);
-        hoodFlag = false;
-        Timer.delay(1.0);//timer to be used if no sensor is on the shooter
-        //if(!isThereABall)Robot.shooter.reset();
+
+
+        //Delay used to fire ball before reset
+        Timer.delay(1.0);
+        //Resets the shooter
         Robot.shooter.reset();
     }
+
+    //SHoots low to the right
     public void shootLowRight(){
+        //Catch if shooting high
         if(shootingHigh)Robot.shooter.shootHighRight();
+        //Else continue shooting low
         else {
-            rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+            //Sets the speed
+            rightShooter.set(Velocity, Rpm);
+           //Delay used to get the shooter up to speed
             Timer.delay(1.0);
-            rightBananna.set(DoubleSolenoid.Value.kForward);
+            //Sets the right bannan to shoot low right
+            RightBanana.set(true);
             right = true;
+            //Delay used to fire ball before reset
             Timer.delay(1.0);
-            //if (!isThereABall) Robot.shooter.reset();
+            //Resets the shooter
             Robot.shooter.reset();
         }
     }
     public void shootHighLeft(){
-        leftShooter.set(ControlMode.PercentOutput, -replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
-        rightShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
-        rightBananna.set(DoubleSolenoid.Value.kForward);
-        right = true;
-        leftBananna.set(DoubleSolenoid.Value.kForward);
-        left = true;
-        if(!hoodFlag)hood.set(DoubleSolenoid.Value.kForward);
-        hoodFlag = true;
+        //Sets the speed
+        leftShooter.set(Velocity, Rpm);
+//        rightShooter.set(Velocity, -Rpm);
+        //Sets the hood
+        hood.set(true);
+        //Delay used to spin motor before shoot
         Timer.delay(1.0);
-        //if(!isThereABall)Robot.shooter.reset();
+        //Sets all of the bannas to shoot hight left
+        RightBanana.set(true);
+        right = true;
+        LeftBanana.set(true);
+        left = true;
+
+        //Delay used to fire ball before reset
+        Timer.delay(1.0);
+        //Resets the shooter
         Robot.shooter.reset();
     }
+
+    //Shoots low and to the left
     public void shootLowLeft(){
+        //Catch if shooting high
         if(shootingHigh)Robot.shooter.shootHighLeft();
+        //Else continues shooting low
         else {
-            leftBananna.set(DoubleSolenoid.Value.kForward);
-            left = true;
-            leftShooter.set(ControlMode.PercentOutput, replaceWithJakesVisionToSpeedOfMotorCalculationVariable);
+            //Sets the speed
+            leftShooter.set(Velocity, -Rpm);
             Timer.delay(1.0);
-            //if (!isThereABall) Robot.shooter.reset();
+            //Sets left bannan to shoot left low
+            LeftBanana.set(true);
+            left = true;
+          //Delay used to shoot ball before reset
+            Timer.delay(1.0);
+            //Resets the shooter
             Robot.shooter.reset();
         }
     }
+
+    //Resets the hood pos along with the rest of the shooter
     public void reset(){
-        rightShooter.set(ControlMode.PercentOutput, 0.0);
-        leftShooter.set(ControlMode.PercentOutput, 0.0);
-        if(left&&right){
-            leftBananna.set(DoubleSolenoid.Value.kReverse);
+        //Resets the motors
+        rightShooter.set(PercentOutput, 0.0);
+        leftShooter.set(PercentOutput, 0.0);
+
+        //Drops bannanas down from up position
+        if(left && right){
+            LeftBanana.set(false);
             left = false;
-            rightBananna.set(DoubleSolenoid.Value.kReverse);
+            RightBanana.set(false);
             right = false;
         }
+
+        //Resets only left banan
         else if(left&&!right){
-            leftBananna.set(DoubleSolenoid.Value.kReverse);
+            LeftBanana.set(false);
             left = false;
         }
+
+        //Resets only ight banan
         else if(!left&&right){
-            rightBananna.set(DoubleSolenoid.Value.kReverse);
+            RightBanana.set(false);
             right = false;
         }
-        if(shootingHigh)shootingHigh = false;
+
+        //Sets shooting high to false
+        if(shootingHigh){
+            shootingHigh = false;
+        }
     }
 }

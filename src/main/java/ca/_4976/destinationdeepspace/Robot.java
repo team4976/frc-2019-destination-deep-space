@@ -1,8 +1,8 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import ca._4976.destinationdeepspace.subsystems.*;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -19,6 +19,8 @@ public class Robot extends TimedRobot {
     public static Intake intake;
     public static Climber climber;
     public static Vision vision;
+    public static Compressor compressor;
+    public static CompressorSwitch compressorSwitch;
 
     private Scheduler scheduler;
 
@@ -30,6 +32,8 @@ public class Robot extends TimedRobot {
         intake = new Intake();
         climber = new Climber();
         vision = new Vision();
+        compressorSwitch = new CompressorSwitch();
+        compressor = new Compressor(40);
 
         scheduler = Scheduler.getInstance();
     }
@@ -47,20 +51,52 @@ public class Robot extends TimedRobot {
     public void autonomousInit() { }
 
     @Override
-    public void teleopInit() { }
+    public void teleopInit() {
+        Robot.climber.climberLeg.setSelectedSensorPosition(0);
+
+    }
 
     @Override
     public void testInit() { }
 
     @Override
     public void disabledPeriodic() { }
-    
-    @Override
-    public void autonomousPeriodic() { }
 
     @Override
-    public void teleopPeriodic() { vision.periodicRead(); }
+    public void autonomousPeriodic() {
+    }
 
+    @Override
+    public void teleopPeriodic() {
+        vision.periodicRead();
+        System.out.println("The RPM is: " + Robot.shooter.rightShooter.getSelectedSensorVelocity());
+        //Dpad sensor for operator controller
+        if (Robot.oi.operator.getPOV() == 0) {
+            // Calls the move camera forwards method
+            Robot.vision.cameraForwards();
+        }
+        else if (Robot.oi.operator.getPOV() == 90) {
+            // Calls the move camera right method
+            Robot.vision.cameraRight();
+        }
+        else if (Robot.oi.operator.getPOV() == 180) {
+        }
+        else if (Robot.oi.operator.getPOV() == 270) {
+            // Calls the move camera left method
+            Robot.vision.cameraLeft();
+        }
+
+        //Dpad sensor for driver controller
+        if (Robot.oi.driver.getPOV() == 0) {
+            Robot.shooter.areYouShootingHigh();
+        }
+        else if (Robot.oi.driver.getPOV() == 90) {
+        }
+        else if (Robot.oi.driver.getPOV() == 180) {
+        }
+        else if (Robot.oi.driver.getPOV() == 270) {
+        }
+    }
     @Override
     public void testPeriodic() { }
 }

@@ -1,8 +1,15 @@
 package ca._4976.destinationdeepspace;
 
-import ca._4976.destinationdeepspace.commands.shootLeft;
-import ca._4976.destinationdeepspace.commands.shootRight;
+import ca._4976.destinationdeepspace.commands.*;
+import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
+import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenter;
+import ca._4976.destinationdeepspace.commands.autos.DriveShootTest;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 // The operator interface of the robot, it has been simplified from the real
 // robot to allow control with a single Xbox joystick. As a result, not all
@@ -15,9 +22,19 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
-//        new JoystickButton(driver, 2).whenPressed(new shootRight());
-//        new JoystickButton(driver, 3).whenPressed(new shootLeft());
-        //Dpad sensor for operator controller
+        new JoystickButton(operator, 1).whileHeld(new IntakeDown()); //1
+        new JoystickButton(operator, 2).whenPressed(new IntakeToBallLevel());
+        new JoystickButton(operator, 4).whileHeld(new IntakeUp());//4
+
+        new JoystickButton(operator, 3).whenPressed(new DriveShootTest());
+
+        new JoystickButton(driver, 1).whenPressed(new HP());
+        new JoystickButton(driver, 2).whenPressed(new shootRight());
+        new JoystickButton(driver, 3).whenPressed(new shootLeft());
+        new JoystickButton(driver,4).whileHeld(new intakeFromGround());
+        new JoystickButton(driver,7).whenPressed(new ClimberLeg());
+        new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
+
 
     }
 }
