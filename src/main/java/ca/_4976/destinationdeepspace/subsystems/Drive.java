@@ -32,11 +32,9 @@ public class Drive extends Subsystem {
     double deadband = 0.10;
 
     // Variables used in the drive calculations
-    double throttle, turn, leftOutput, rightOutput;
+    double throttle, turn, leftOutput, rightOutput, errorRange = 0.05, RightPos, LeftPos;
     // Control flags
     public boolean userControlEnabled = true;
-    //Error range
-    public double errorRange = 0.05;
 
 
     // Applies the deadband to the joystick outputs
@@ -111,6 +109,22 @@ public class Drive extends Subsystem {
         LB.set(Position, LeftPos);
     }
 
+    // Checks to see if bot is at encoder target
+    public boolean isAtTarget(){
+        if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)
+                && RF.getClosedLoopError() >= LeftPos * (1 - errorRange) && RF.getClosedLoopError() <= LeftPos) {
+
+            setUserControlEnabled(true);
+            RF.set(PercentOutput, 0);
+            RB.set(PercentOutput, 0);
+            LF.set(PercentOutput, 0);
+            LB.set(PercentOutput, 0);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWithJoystick());

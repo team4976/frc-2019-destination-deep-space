@@ -1,6 +1,7 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
+import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -36,6 +37,8 @@ public final class OI {
         new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
         new JoystickButton(driver,1).whenPressed(new ClimberLeg()); //2,6
         new JoystickButton(driver,6).whenPressed(new ClimberLegLock());//3,5
+
+        new JoystickButton(operator, 3).whenPressed(new DriveForwardsFromGroundToLeftSide());
 
 
 

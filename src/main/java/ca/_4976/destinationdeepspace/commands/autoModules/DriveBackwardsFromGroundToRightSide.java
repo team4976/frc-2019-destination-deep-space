@@ -1,4 +1,4 @@
-package ca._4976.destinationdeepspace.autonomous;
+package ca._4976.destinationdeepspace.commands.autoModules;
 
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,7 +22,7 @@ public class DriveBackwardsFromGroundToRightSide extends Command {
     //upon seeing a vision target, stops the robot
     @Override
     protected boolean isFinished() {
-        return Robot.vision.stopWithVision();
+        return Robot.vision.stopWithVision() || Robot.drive.isAtTarget();
     }
 
     //stops the drive PID and re-enables user control

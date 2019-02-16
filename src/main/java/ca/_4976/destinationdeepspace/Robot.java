@@ -1,5 +1,6 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import ca._4976.destinationdeepspace.subsystems.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -62,11 +63,11 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() { }
 
     @Override
-    public void autonomousPeriodic() { }
+    public void autonomousPeriodic() {
+    }
 
     @Override
     public void teleopPeriodic() {
-        System.out.println(Robot.climber.climberLeg.getSelectedSensorPosition(0));
         vision.periodicRead();
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {
