@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
@@ -24,19 +25,22 @@ public class Drive extends Subsystem {
     // Left drive motor controllers
     TalonSRX LF = new TalonSRX(46);
     TalonSRX RF = new TalonSRX(45);
-    //test change
+
     // Right drive motor controllers
     VictorSPX LB = new VictorSPX(49);
     VictorSPX RB = new VictorSPX(44);
+
+    // Gear shift solonid
+    public Solenoid gearShift = new Solenoid(40, 4);
 
     // The deadband percentage value
     double deadband = 0.10;
 
     // Variables used in the drive calculations
     double throttle, turn, leftOutput, rightOutput, errorRange = 0.05, RightPos, LeftPos;
+
     // Control flags
     public boolean userControlEnabled = true;
-
 
     // Applies the deadband to the joystick outputs
     public double applyDeadband(double x) {
@@ -125,6 +129,11 @@ public class Drive extends Subsystem {
         else {
             return false;
         }
+    }
+
+    // Changes the gear
+    public void gearShift() {
+        gearShift.set(!gearShift.get());
     }
     @Override
     protected void initDefaultCommand() {

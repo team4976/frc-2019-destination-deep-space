@@ -34,6 +34,7 @@ public final class OI {
         new JoystickButton(driver,4).whileHeld(new intakeFromGround());
         new JoystickButton(driver,7).whenPressed(new ClimberLeg());
         new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
+        new JoystickButton(driver, 9).whenPressed(new ShiftGear());
 
 
     }
