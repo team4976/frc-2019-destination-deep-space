@@ -72,8 +72,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         vision.periodicRead();
-//        Robot.shooter.rightShooter.set(ControlMode.PercentOutput, -1);
-//        System.out.println(Robot.shooter.rightShooter.getSelectedSensorVelocity());
+//        Robot.shooter.rightShooter.set(ControlMode.PercentOutput, -0.6);
+        System.out.println(Robot.shooter.rightShooter.getSelectedSensorVelocity());
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {
             // Calls the move camera forwards method

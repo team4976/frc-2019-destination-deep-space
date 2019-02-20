@@ -29,8 +29,8 @@ public class Shooter extends Subsystem {
     boolean shootingHigh = false;
 
     //Jakes complicated value
-    public double Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
-
+    public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
+    // Max distance 97 min distance 26
     @Override
     protected void initDefaultCommand() {
         //Sets the start position
@@ -45,8 +45,10 @@ public class Shooter extends Subsystem {
 
     //Shoots the ball to the right high
     public void shootHighRight(){
+        //Calculaytes the rpm
+        rpm = (((distanceInInch-26)*(9800))/(71))+8700;
         //Set speed
-        rightShooter.set(Velocity, -Rpm);
+        rightShooter.set(Velocity, -rpm);
 //        leftShooter.set(Velocity, Rpm);
         //Delay used to get the shooter up to speed
         hood.set(false);
@@ -86,8 +88,10 @@ public class Shooter extends Subsystem {
         }
     }
     public void shootHighLeft(){
+        //Calculaytes the rpm
+        rpm = (((distanceInInch-26)*(9800))/(88))+8700;
         //Sets the speed
-        leftShooter.set(Velocity, Rpm);
+        leftShooter.set(Velocity, rpm);
 //        rightShooter.set(Velocity, -Rpm);
         //Sets the hood
         hood.set(true);
