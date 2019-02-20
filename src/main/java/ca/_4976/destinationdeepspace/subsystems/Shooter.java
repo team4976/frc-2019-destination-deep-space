@@ -18,8 +18,8 @@ public class Shooter extends Subsystem {
     Solenoid hood = new Solenoid(40, 3);
 
     //Shooter talons
-    public TalonSRX rightShooter = new TalonSRX(47);
-    public TalonSRX leftShooter = new TalonSRX(48);
+    public TalonSRX rightShooter = new TalonSRX(48);
+    public TalonSRX leftShooter = new TalonSRX(47);
 
     //Left and right for the bannanas
     boolean right = false;
@@ -48,7 +48,8 @@ public class Shooter extends Subsystem {
         //Calculaytes the rpm
         rpm = (((distanceInInch-26)*(9800))/(71))+8700;
         //Set speed
-        rightShooter.set(Velocity, -rpm);
+//        rightShooter.set(Velocity, -rpm);
+        rightShooter.set(PercentOutput, 0.8);
 //        leftShooter.set(Velocity, Rpm);
         //Delay used to get the shooter up to speed
         hood.set(false);
@@ -91,7 +92,8 @@ public class Shooter extends Subsystem {
         //Calculaytes the rpm
         rpm = (((distanceInInch-26)*(9800))/(88))+8700;
         //Sets the speed
-        leftShooter.set(Velocity, rpm);
+//        leftShooter.set(Velocity, rpm);
+        leftShooter.set(PercentOutput, -0.8);
 //        rightShooter.set(Velocity, -Rpm);
         //Sets the hood
         hood.set(true);

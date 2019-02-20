@@ -3,6 +3,7 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
@@ -18,7 +19,7 @@ public class Intake extends Subsystem {
     DoubleSolenoid hatchPanelPickUp = new DoubleSolenoid(6,7);
     boolean HP = true;
     public TalonSRX intakeArm = new TalonSRX(43);
-    TalonSRX intakeArmSlave = new TalonSRX(42);
+    VictorSPX intakeArmSlave = new VictorSPX(42);
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
@@ -34,7 +35,7 @@ public class Intake extends Subsystem {
         if(!HP)Robot.intake.holdGear();HP = true;
     }
     public void pickUpBall(){
-        intakeMotor1.set(PercentOutput, -1);
+        intakeMotor1.set(PercentOutput, 1);
         intakeMotor2.set(PercentOutput, 1);
     }
     public void end(){
@@ -49,19 +50,19 @@ public class Intake extends Subsystem {
     }
 
     public void IntakeDown(){
-        intakeArm.set(PercentOutput, 0.3);
-        intakeArmSlave.set(PercentOutput, -0.3);
-    }
-    public void intakeUp() {
         intakeArm.set(PercentOutput, -0.3);
         intakeArmSlave.set(PercentOutput, 0.3);
     }
+    public void intakeUp() {
+        intakeArm.set(PercentOutput, 0.3);
+        intakeArmSlave.set(PercentOutput, -0.3);
+    }
     public void pickupPosition(){
-            intakeArm.set(PercentOutput, 0.3);
-            intakeArmSlave.set(PercentOutput, -0.3);
+            intakeArm.set(PercentOutput, -0.3);
+            intakeArmSlave.set(PercentOutput, 0.3);
     }
     public void hold() {
-        intakeArm.set(PercentOutput, -0.04);
-        intakeArmSlave.set(PercentOutput, 0.04);
+        intakeArm.set(PercentOutput, 0.04);
+        intakeArmSlave.set(PercentOutput, -0.04);
     }
 }

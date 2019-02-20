@@ -23,12 +23,12 @@ public class Drive extends Subsystem {
     NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
 
     // Left drive motor controllers
-    TalonSRX LF = new TalonSRX(46);
-    TalonSRX RF = new TalonSRX(45);
+    TalonSRX LF = new TalonSRX(49);
+    TalonSRX RF = new TalonSRX(44);
 
     // Right drive motor controllers
-    VictorSPX LB = new VictorSPX(49);
-    VictorSPX RB = new VictorSPX(44);
+    VictorSPX LB = new VictorSPX(46);
+    VictorSPX RB = new VictorSPX(45);
 
     // Gear shift solonid
     public Solenoid gearShift = new Solenoid(40, 4);
