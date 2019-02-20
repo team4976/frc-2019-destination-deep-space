@@ -2,6 +2,7 @@ package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import ca._4976.destinationdeepspace.subsystems.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -71,7 +72,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         vision.periodicRead();
-        System.out.println("The RPM is: " + Robot.shooter.rightShooter.getSelectedSensorVelocity());
+//        Robot.shooter.rightShooter.set(ControlMode.PercentOutput, -1);
+//        System.out.println(Robot.shooter.rightShooter.getSelectedSensorVelocity());
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {
             // Calls the move camera forwards method

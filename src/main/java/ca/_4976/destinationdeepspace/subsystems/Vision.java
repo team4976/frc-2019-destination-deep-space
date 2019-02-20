@@ -30,7 +30,7 @@ public class Vision extends Subsystem implements Sendable {
         double area = ta.getDouble(0);
         //Most accurate value so far 1.365839252
         //Most second accurate value so far 1.340580252
-        distance = 1.36589252/Math.sqrt(area);
+        distance = 1.319004642/Math.sqrt(area);
 
     }
     //constantly reading x values from the Limelight
@@ -81,4 +81,14 @@ public class Vision extends Subsystem implements Sendable {
         camera.setAngle(180);
     }
 
+    //Turns the bot based on its angle in comparison to the target
+    public void skewCorrection() {
+        if (tx.getDouble(0) < 0){
+            Robot.drive.drive(0.5, 0.5);
+        }
+        else {
+            Robot.drive.drive(-0.5, -0.5);
+        }
+        System.out.println(tx.getDouble(0));
+    }
 }

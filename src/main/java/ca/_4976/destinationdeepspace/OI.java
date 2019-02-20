@@ -1,14 +1,8 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
-import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
-import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenter;
 import ca._4976.destinationdeepspace.commands.autos.DriveShootTest;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.POVButton;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 // The operator interface of the robot, it has been simplified from the real
@@ -25,7 +19,6 @@ public final class OI {
         new JoystickButton(operator, 1).whileHeld(new IntakeDown()); //1
         new JoystickButton(operator, 2).whenPressed(new IntakeToBallLevel());
         new JoystickButton(operator, 4).whileHeld(new IntakeUp());//4
-
         new JoystickButton(operator, 3).whenPressed(new DriveShootTest());
 
         new JoystickButton(driver, 1).whenPressed(new HP());
@@ -35,7 +28,5 @@ public final class OI {
         new JoystickButton(driver,7).whenPressed(new ClimberLeg());
         new JoystickButton(driver, 8).whileHeld(new CompressorToggle());
         new JoystickButton(driver, 9).whenPressed(new ShiftGear());
-
-
     }
 }
