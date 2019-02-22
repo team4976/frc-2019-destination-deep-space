@@ -46,16 +46,12 @@ public class Shooter extends Subsystem {
 
     //Shoots the ball to the right high
     public void shootHighRight(){
-        //Calculaytes the rpm
-        if (Robot.vision.distance == 0){
-            rpm = 13350;
-            // aprox 60 inch
-        }
-        else {
-            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8700;
-        }
+        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         //Set speed
-        rightShooter.set(Velocity, rpm);
+        rightShooter.set(Velocity, -rpm);
+        if (rightShooter.getMotorOutputPercent() < 0.2){
+            rightShooter.set(Velocity, -13350);
+        }
         //Delay used to get the shooter up to speed
         hood.set(false);
         Timer.delay(1.0);
@@ -90,17 +86,13 @@ public class Shooter extends Subsystem {
         }
     }
     public void shootHighLeft(){
-        //Calculaytes the rpm
-        if (Robot.vision.distance == 0){
-            rpm = 13350;
-            // aprox 60 inch
-        }
-        else {
-            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8700;
-        }
+            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         //Sets the speed
 //        leftShooter.set(Velocity, rpm);
-        leftShooter.set(Velocity, -rpm);
+        leftShooter.set(Velocity, rpm);
+        if (leftShooter.getMotorOutputPercent() < 0.2){
+            leftShooter.set(Velocity, 13350);
+        }
         //Sets the hood
         hood.set(true);
         //Delay used to spin motor before shoot

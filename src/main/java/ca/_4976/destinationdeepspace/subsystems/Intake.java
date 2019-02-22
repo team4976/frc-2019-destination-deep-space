@@ -22,6 +22,7 @@ public class Intake extends Subsystem {
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
+    public boolean setPoint = false;
     boolean position = true;
     // The deadband percentage value
     double deadband = 0.10;
@@ -57,8 +58,8 @@ public class Intake extends Subsystem {
         hatchPanelPickUp.set(false);
     }
     public void pickupPosition(){
-            intakeArm.set(PercentOutput, -0.25);
-            intakeArmSlave.set(PercentOutput, 0.25);
+            intakeArm.set(PercentOutput, -0.15);
+            intakeArmSlave.set(PercentOutput, 0.15);
     }
     public void hold() {
         intakeArm.set(PercentOutput, 0.06);
@@ -82,7 +83,7 @@ public class Intake extends Subsystem {
             intakeArm.set(PercentOutput, 0.06);
             intakeArmSlave.set(PercentOutput, -0.06);
         }
-        else {
+        else if (!setPoint){
             intakeArm.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
             intakeArm.set(PercentOutput, -applyDeadband(joy.getRawAxis(5)));
         }
