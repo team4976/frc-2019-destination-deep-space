@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Robot.climber.climberLeg.setSelectedSensorPosition(0);
-
     }
 
     @Override
@@ -97,6 +96,7 @@ public class Robot extends TimedRobot {
         else if (Robot.oi.driver.getPOV() == 270) {
         }
     }
+
     @Override
     public void testPeriodic() { }
 }
