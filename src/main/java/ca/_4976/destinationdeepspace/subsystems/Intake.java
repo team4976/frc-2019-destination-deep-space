@@ -1,12 +1,12 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.Robot;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
+import ca._4976.destinationdeepspace.commands.IntakeWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
@@ -15,26 +15,35 @@ public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
-    DoubleSolenoid hatchPanelPickUp = new DoubleSolenoid(6,7);
-    boolean HP = true;
+    Solenoid hatchPanelPickUp = new Solenoid(40,2);
+    boolean hp = false;
     public TalonSRX intakeArm = new TalonSRX(43);
     TalonSRX intakeArmSlave = new TalonSRX(42);
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
     boolean position = true;
+    // The deadband percentage value
+    double deadband = 0.10;
 
     @Override
     protected void initDefaultCommand() {
-        hatchPanelPickUp.set(DoubleSolenoid.Value.kForward);
+        hatchPanelPickUp.set(true);
 //        intakeArmSlave.follow(intakeArm);
+        setDefaultCommand(new IntakeWithJoystick());
     }
     public void choose(){
-        if(HP) Robot.intake.releaseGear();HP = false;
-        if(!HP)Robot.intake.holdGear();HP = true;
+        if (hp){
+            Robot.intake.releaseGear();
+            hp = false;
+        }
+        else{
+            Robot.intake.holdGear();
+            hp = true;
+        }
     }
     public void pickUpBall(){
-        intakeMotor1.set(PercentOutput, -1);
+        intakeMotor1.set(PercentOutput, 1);
         intakeMotor2.set(PercentOutput, 1);
     }
     public void end(){
@@ -42,26 +51,40 @@ public class Intake extends Subsystem {
         intakeMotor2.set(PercentOutput, 0.0);
     }
     public void holdGear(){
-        hatchPanelPickUp.set(DoubleSolenoid.Value.kForward);
+        hatchPanelPickUp.set(true);
     }
     public void releaseGear(){
-        hatchPanelPickUp.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public void IntakeDown(){
-        intakeArm.set(PercentOutput, 0.3);
-        intakeArmSlave.set(PercentOutput, -0.3);
-    }
-    public void intakeUp() {
-        intakeArm.set(PercentOutput, -0.3);
-        intakeArmSlave.set(PercentOutput, 0.3);
+        hatchPanelPickUp.set(false);
     }
     public void pickupPosition(){
-            intakeArm.set(PercentOutput, 0.3);
-            intakeArmSlave.set(PercentOutput, -0.3);
+            intakeArm.set(PercentOutput, -0.25);
+            intakeArmSlave.set(PercentOutput, 0.25);
     }
     public void hold() {
-        intakeArm.set(PercentOutput, -0.04);
-        intakeArmSlave.set(PercentOutput, 0.04);
+        intakeArm.set(PercentOutput, 0.06);
+        intakeArmSlave.set(PercentOutput, -0.06);
+    }
+    // Applies the deadband to the joystick outputs
+    public double applyDeadband(double x) {
+        if (Math.abs(x) > deadband) {
+            if (x > 0.0) {
+                return (x - deadband) / (1.0 - deadband);
+            } else {
+                return (x + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
+    }
+    // Moves the intake arm based on joystick inputs
+    public void moveIntakeArmWithJoystick(Joystick joy){
+        if (applyDeadband(joy.getRawAxis(5)) == 0){
+            intakeArm.set(PercentOutput, 0.06);
+            intakeArmSlave.set(PercentOutput, -0.06);
+        }
+        else {
+            intakeArm.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
+            intakeArm.set(PercentOutput, -applyDeadband(joy.getRawAxis(5)));
+        }
     }
 }

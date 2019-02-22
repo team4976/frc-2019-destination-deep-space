@@ -2,6 +2,7 @@ package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import ca._4976.destinationdeepspace.subsystems.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
         vision = new Vision();
         compressorSwitch = new CompressorSwitch();
         compressor = new Compressor(40);
+
+        Robot.drive.gearShift.set(true);
 
         scheduler = Scheduler.getInstance();
     }
@@ -68,7 +71,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         vision.periodicRead();
-        System.out.println("The RPM is: " + Robot.shooter.rightShooter.getSelectedSensorVelocity());
+//        Robot.shooter.rightShooter.set(ControlMode.PercentOutput, -0.6);
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {
             // Calls the move camera forwards method
@@ -79,6 +82,7 @@ public class Robot extends TimedRobot {
             Robot.vision.cameraRight();
         }
         else if (Robot.oi.operator.getPOV() == 180) {
+            Robot.shooter.areYouShootingHigh();
         }
         else if (Robot.oi.operator.getPOV() == 270) {
             // Calls the move camera left method
@@ -87,7 +91,6 @@ public class Robot extends TimedRobot {
 
         //Dpad sensor for driver controller
         if (Robot.oi.driver.getPOV() == 0) {
-            Robot.shooter.areYouShootingHigh();
         }
         else if (Robot.oi.driver.getPOV() == 90) {
         }

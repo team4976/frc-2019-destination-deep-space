@@ -1,10 +1,7 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
@@ -16,6 +13,7 @@ public class Climber extends Subsystem {
     int climberLegTarget = -6250;
 
     public boolean isClimberLegDown = false;
+    DigitalInput climberIsDown = new DigitalInput(5);
     public boolean isLegLocked = false;
 
     //Moves the climber leg
@@ -38,7 +36,7 @@ public class Climber extends Subsystem {
         else {
             climberLeg.set(PercentOutput, 0.5);
             System.out.println("Going down");
-            if (climberLeg.getSelectedSensorPosition() < climberLegTarget) {
+            if (climberLeg.getSelectedSensorPosition() < climberLegTarget || climberIsDown.get()) {
                 climberLeg.set(PercentOutput, 0.1);
                 return true;
 
