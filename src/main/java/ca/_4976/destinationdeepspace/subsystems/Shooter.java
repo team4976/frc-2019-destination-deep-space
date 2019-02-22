@@ -31,6 +31,7 @@ public class Shooter extends Subsystem {
     //Jakes complicated value
     public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
     // Max distance 97 min distance 26
+
     @Override
     protected void initDefaultCommand() {
         //Sets the start position
@@ -46,23 +47,23 @@ public class Shooter extends Subsystem {
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Calculaytes the rpm
-        rpm = (((distanceInInch-26)*(9800))/(71))+8700;
+        if (Robot.vision.distance == 0){
+            rpm = 13350;
+            // aprox 60 inch
+        }
+        else {
+            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8700;
+        }
         //Set speed
-//        rightShooter.set(Velocity, -rpm);
-        rightShooter.set(PercentOutput, 0.8);
-//        leftShooter.set(Velocity, Rpm);
+        rightShooter.set(Velocity, rpm);
         //Delay used to get the shooter up to speed
         hood.set(false);
-
         Timer.delay(1.0);
         //Set all the timgs to shoot right
-
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
-
-
         //Delay used to fire ball before reset
         Timer.delay(1.0);
         //Resets the shooter
@@ -90,11 +91,16 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Calculaytes the rpm
-        rpm = (((distanceInInch-26)*(9800))/(88))+8700;
+        if (Robot.vision.distance == 0){
+            rpm = 13350;
+            // aprox 60 inch
+        }
+        else {
+            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8700;
+        }
         //Sets the speed
 //        leftShooter.set(Velocity, rpm);
-        leftShooter.set(PercentOutput, -0.8);
-//        rightShooter.set(Velocity, -Rpm);
+        leftShooter.set(Velocity, -rpm);
         //Sets the hood
         hood.set(true);
         //Delay used to spin motor before shoot
@@ -104,7 +110,6 @@ public class Shooter extends Subsystem {
         right = true;
         LeftBanana.set(true);
         left = true;
-
         //Delay used to fire ball before reset
         Timer.delay(1.0);
         //Resets the shooter
@@ -135,7 +140,6 @@ public class Shooter extends Subsystem {
         //Resets the motors
         rightShooter.set(PercentOutput, 0.0);
         leftShooter.set(PercentOutput, 0.0);
-
         //Drops bannanas down from up position
         if(left && right){
             LeftBanana.set(false);
@@ -143,19 +147,16 @@ public class Shooter extends Subsystem {
             RightBanana.set(false);
             right = false;
         }
-
         //Resets only left banan
         else if(left&&!right){
             LeftBanana.set(false);
             left = false;
         }
-
         //Resets only ight banan
         else if(!left&&right){
             RightBanana.set(false);
             right = false;
         }
-
         //Sets shooting high to false
         if(shootingHigh){
             shootingHigh = false;

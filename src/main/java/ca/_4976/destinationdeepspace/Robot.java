@@ -73,7 +73,6 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         vision.periodicRead();
 //        Robot.shooter.rightShooter.set(ControlMode.PercentOutput, -0.6);
-        System.out.println(Robot.shooter.rightShooter.getSelectedSensorVelocity());
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {
             // Calls the move camera forwards method
@@ -84,6 +83,7 @@ public class Robot extends TimedRobot {
             Robot.vision.cameraRight();
         }
         else if (Robot.oi.operator.getPOV() == 180) {
+            Robot.shooter.areYouShootingHigh();
         }
         else if (Robot.oi.operator.getPOV() == 270) {
             // Calls the move camera left method
@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
 
         //Dpad sensor for driver controller
         if (Robot.oi.driver.getPOV() == 0) {
-            Robot.shooter.areYouShootingHigh();
         }
         else if (Robot.oi.driver.getPOV() == 90) {
         }
