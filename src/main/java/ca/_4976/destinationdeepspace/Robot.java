@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        System.out.println(Robot.intake.intakeLimitSwitch.get());
         vision.periodicRead();
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {

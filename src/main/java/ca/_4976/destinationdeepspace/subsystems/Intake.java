@@ -25,7 +25,8 @@ public class Intake extends Subsystem {
     public boolean setPoint = false;
     boolean position = true;
     // The deadband percentage value
-    double deadband = 0.10;
+    double deadband = 0.15;
+    boolean disableJoystik; //diasbles oystick when arm to ball position is active
 
     @Override
     protected void initDefaultCommand() {
@@ -58,16 +59,19 @@ public class Intake extends Subsystem {
         hatchPanelPickUp.set(false);
     }
     public void pickupPosition(){
-            intakeArm.set(PercentOutput, -0.15);
-            intakeArmSlave.set(PercentOutput, 0.15);
+        disableJoystik = true;
+            intakeArm.set(PercentOutput, -0.25);
+            intakeArmSlave.set(PercentOutput, 0.25);
     }
     public void hold() {
+        disableJoystik = false;
         intakeArm.set(PercentOutput, 0.06);
         intakeArmSlave.set(PercentOutput, -0.06);
     }
     // Applies the deadband to the joystick outputs
     public double applyDeadband(double x) {
         if (Math.abs(x) > deadband) {
+            disableJoystik = false;
             if (x > 0.0) {
                 return (x - deadband) / (1.0 - deadband);
             } else {
@@ -79,6 +83,9 @@ public class Intake extends Subsystem {
     }
     // Moves the intake arm based on joystick inputs
     public void moveIntakeArmWithJoystick(Joystick joy){
+        if(disableJoystik){
+            return;
+        }
         if (applyDeadband(joy.getRawAxis(5)) == 0){
             intakeArm.set(PercentOutput, 0.06);
             intakeArmSlave.set(PercentOutput, -0.06);
