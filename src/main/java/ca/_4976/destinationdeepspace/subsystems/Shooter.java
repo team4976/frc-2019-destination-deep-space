@@ -49,12 +49,13 @@ public class Shooter extends Subsystem {
         rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         //Set speed
         rightShooter.set(Velocity, -rpm);
+        Timer.delay(0.5);
         if (rightShooter.getMotorOutputPercent() < 0.2){
             rightShooter.set(Velocity, -13350);
         }
         //Delay used to get the shooter up to speed
         hood.set(false);
-        Timer.delay(1.0);
+        Timer.delay(0.5);
         //Set all the timgs to shoot right
         RightBanana.set(true);
         right = true;
@@ -90,13 +91,14 @@ public class Shooter extends Subsystem {
         //Sets the speed
 //        leftShooter.set(Velocity, rpm);
         leftShooter.set(Velocity, rpm);
+        Timer.delay(0.5);
         if (leftShooter.getMotorOutputPercent() < 0.2){
             leftShooter.set(Velocity, 13350);
         }
         //Sets the hood
         hood.set(true);
         //Delay used to spin motor before shoot
-        Timer.delay(1.0);
+        Timer.delay(0.5);
         //Sets all of the bannas to shoot hight left
         RightBanana.set(true);
         right = true;

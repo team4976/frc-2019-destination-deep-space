@@ -60,8 +60,8 @@ public class Intake extends Subsystem {
     }
     public void pickupPosition(){
         disableJoystik = true;
-            intakeArm.set(PercentOutput, -0.25);
-            intakeArmSlave.set(PercentOutput, 0.25);
+            intakeArm.set(PercentOutput, -0.15);
+            intakeArmSlave.set(PercentOutput, 0.15);
     }
     public void hold() {
         disableJoystik = false;
