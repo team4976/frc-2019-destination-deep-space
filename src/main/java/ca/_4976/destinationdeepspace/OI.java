@@ -16,14 +16,14 @@ public final class OI {
     public Joystick operator = new Joystick(1);
 
     OI() {
+        new JoystickButton(driver,7).whenPressed(new ClimberLeg());
+        new JoystickButton(driver, 9).whenPressed(new ShiftGear());
+        new JoystickButton(driver, 1).whenPressed(new IntakeToBallLevel());
+        new JoystickButton(driver, 5).whileHeld(new intakeFromGround());
+        new JoystickButton(driver, 4).whenPressed(new HP());
+
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
         new JoystickButton(operator, 2).whenPressed(new shootRight());
         new JoystickButton(operator, 3).whenPressed(new shootLeft());
-        new JoystickButton(operator, 1).whenPressed(new HP());
-
-        new JoystickButton(driver,5).whileHeld(new intakeFromGround());
-        new JoystickButton(driver,7).whenPressed(new ClimberLeg());
-        new JoystickButton(driver, 9).whenPressed(new ShiftGear());
-        new JoystickButton(driver, 2).whenPressed(new IntakeToBallLevel());
     }
 }

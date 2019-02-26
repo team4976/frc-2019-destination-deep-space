@@ -39,7 +39,7 @@ public class Vision extends Subsystem implements Sendable {
     //distance calculations
     double defaultValue [] = new double[0];
 
-    public void skewValue(){
+    public String skewValue(){
         double areaOne, areaTwo;
         double area = ta.getDouble(0);
         double canSeeValue = tv.getDouble(0);
@@ -54,13 +54,14 @@ public class Vision extends Subsystem implements Sendable {
             int threshold = 500;
             //Prints difference in area and the threshold value
             if((differenceArea > threshold || differenceArea < -threshold) && areaOne > areaTwo){
-                System.out.println("Left side closer");
+                return "Turn Right";
             } else if ((differenceArea > threshold || differenceArea < -threshold)  && areaOne < areaTwo){
-                System.out.println("Right side closer");
+                return "Turn Left";
             } else {
-                System.out.println("Threshold met");
+                return "Threshold met";
             }
         }
+        return null;
     }
 
     //constantly reading x values from the Limelight
@@ -112,14 +113,17 @@ public class Vision extends Subsystem implements Sendable {
     }
 
     //Turns the bot based on its angle in comparison to the target
-    public void skewCorrection() {
-        if (tx.getDouble(0) < 0){
+    public boolean skewCorrection() {
+        if (skewValue().equals("Turn Right")){
             Robot.drive.drive(0.5, 0.5);
         }
-        else {
+        else if (skewValue().equals("Turn Left")){
             Robot.drive.drive(-0.5, -0.5);
         }
-        System.out.println(tx.getDouble(0));
+        if (skewValue().equals("Threshold met")){
+            return true;
+        }
+        return false;
     }
 
     //Length of a line formula

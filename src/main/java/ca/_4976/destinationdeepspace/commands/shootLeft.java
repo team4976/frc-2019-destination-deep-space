@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class shootLeft extends Command {
     @Override
     protected void initialize(){
+        Robot.drive.drive(0,0);
         Robot.shooter.shootLowLeft();
     }
     @Override
