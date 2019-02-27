@@ -36,6 +36,8 @@ public class Robot extends TimedRobot {
         compressorSwitch = new CompressorSwitch();
         compressor = new Compressor(40);
 
+        Robot.vision.viewCamera();
+
         Robot.drive.gearShift.set(true);
 
         scheduler = Scheduler.getInstance();

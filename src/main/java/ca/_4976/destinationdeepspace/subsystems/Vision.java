@@ -1,6 +1,7 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.Robot;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Servo;
@@ -130,5 +131,9 @@ public class Vision extends Subsystem implements Sendable {
     public double lengthOfLine(double x1, double y1, double x2, double y2){
         double length = Math.sqrt(Math.pow(x1 - x2, 2) + (Math.pow(y1 - y2, 2)));
         return length;
+    }
+
+    public void viewCamera() {
+        CameraServer.getInstance().startAutomaticCapture();
     }
 }
