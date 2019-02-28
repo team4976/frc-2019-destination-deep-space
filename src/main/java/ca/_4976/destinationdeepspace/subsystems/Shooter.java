@@ -1,13 +1,15 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.Robot;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import ca._4976.destinationdeepspace.commands.autoModules.AimShootLeft;
+import ca._4976.destinationdeepspace.commands.autoModules.AimShootRight;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import static com.ctre.phoenix.motorcontrol.ControlMode.*;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
+import static com.ctre.phoenix.motorcontrol.ControlMode.Velocity;
 public class Shooter extends Subsystem {
 
     //Lift the bottom panel of the shooter
@@ -44,25 +46,43 @@ public class Shooter extends Subsystem {
         shootingHigh = true;
     }
 
+    public void revShooter(boolean side) {
+        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
+        //If side is true shoot right else shoot left
+            if (side){
+                rightShooter.set(Velocity, -rpm);
+                if (rightShooter.getMotorOutputPercent() < 0.2){
+                    rightShooter.set(Velocity, 8300);
+                    shootLowRight();
+                }
+                else {
+                    new AimShootRight();
+                }
+            }
+            else {
+                rightShooter.set(Velocity, rpm);
+                if (leftShooter.getMotorOutputPercent() < 0.2){
+                    leftShooter.set(Velocity, 8300);
+                    shootLowLeft();
+                }
+                else {
+                    new AimShootLeft();
+                }
+            }
+    }
+
     //Shoots the ball to the right high
     public void shootHighRight(){
-        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        //Set speed
-        rightShooter.set(Velocity, -rpm);
-        Timer.delay(0.5);
-        if (rightShooter.getMotorOutputPercent() < 0.2){
-            rightShooter.set(Velocity, -13350);
-        }
         //Delay used to get the shooter up to speed
         hood.set(false);
-        Timer.delay(0.5);
+        Timer.delay(0.1);
         //Set all the timgs to shoot right
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(1.0);
+        Timer.delay(0.1);
         //Resets the shooter
         Robot.shooter.reset();
     }
@@ -73,39 +93,26 @@ public class Shooter extends Subsystem {
         if(shootingHigh)Robot.shooter.shootHighRight();
         //Else continue shooting low
         else {
-            //Sets the speed
-            rightShooter.set(Velocity, Rpm);
-           //Delay used to get the shooter up to speed
-            Timer.delay(1.0);
             //Sets the right bannan to shoot low right
             RightBanana.set(true);
             right = true;
             //Delay used to fire ball before reset
-            Timer.delay(1.0);
+            Timer.delay(0.1);
             //Resets the shooter
             Robot.shooter.reset();
         }
     }
     public void shootHighLeft(){
-            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        //Sets the speed
-//        leftShooter.set(Velocity, rpm);
-        leftShooter.set(Velocity, rpm);
-        Timer.delay(0.5);
-        if (leftShooter.getMotorOutputPercent() < 0.2){
-            leftShooter.set(Velocity, 13350);
-        }
         //Sets the hood
         hood.set(true);
-        //Delay used to spin motor before shoot
-        Timer.delay(0.5);
+        Timer.delay(0.1);
         //Sets all of the bannas to shoot hight left
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(1.0);
+        Timer.delay(0.1);
         //Resets the shooter
         Robot.shooter.reset();
     }
@@ -116,14 +123,11 @@ public class Shooter extends Subsystem {
         if(shootingHigh)Robot.shooter.shootHighLeft();
         //Else continues shooting low
         else {
-            //Sets the speed
-            leftShooter.set(Velocity, -Rpm);
-            Timer.delay(1.0);
             //Sets left bannan to shoot left low
             LeftBanana.set(true);
             left = true;
           //Delay used to shoot ball before reset
-            Timer.delay(1.0);
+            Timer.delay(0.1);
             //Resets the shooter
             Robot.shooter.reset();
         }

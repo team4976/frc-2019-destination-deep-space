@@ -3,11 +3,10 @@ package ca._4976.destinationdeepspace.commands;
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class shootRight extends Command {
+public class RevShooterLeft extends Command {
     @Override
     protected void initialize(){
-        Robot.drive.drive(0,0);
-        Robot.shooter.shootLowRight();
+        Robot.shooter.revShooter(false);
     }
     @Override
     protected boolean isFinished() {
