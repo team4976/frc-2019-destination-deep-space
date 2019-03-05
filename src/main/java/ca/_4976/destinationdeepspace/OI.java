@@ -1,6 +1,9 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
+import ca._4976.destinationdeepspace.commands.autoModules.AimShootRight;
+import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenter;
+import ca._4976.destinationdeepspace.commands.autoModules.SkewCorrection;
 import ca._4976.destinationdeepspace.commands.autos.DriveShootTest;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -25,5 +28,7 @@ public final class OI {
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
         new JoystickButton(operator, 2).whenPressed(new RevShooterRight());
         new JoystickButton(operator, 3).whenPressed(new RevShooterLeft());
+
+        new JoystickButton(operator, 7).whenPressed(new DriveShootTest());
     }
 }

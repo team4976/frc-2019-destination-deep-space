@@ -3,11 +3,11 @@ package ca._4976.destinationdeepspace.commands;
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RevShooterRight extends Command {
+public class rpmRight extends Command {
     @Override
     protected void initialize(){
-        Robot.shooter.revShooter(true);
-        System.out.println("Reving");
+        Robot.shooter.rpmRight();
+        System.out.println("Rpm executed");
     }
     @Override
     protected boolean isFinished() {

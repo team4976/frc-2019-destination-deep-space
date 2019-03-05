@@ -7,7 +7,7 @@ public class HorizontalCenter extends Command {
     @Override protected void execute() {
         // Centers
         Robot.vision.center();
-    } //TODO: change these values
+    }
 
     //upon Reaching set point stop
     @Override
@@ -16,5 +16,7 @@ public class HorizontalCenter extends Command {
     }
 
     //stops the drive PID and re-enables user control
-    @Override protected void end() { Robot.drive.setUserControlEnabled(true); Robot.drive.stop();}
+    @Override protected void end() {
+        System.out.println("Horizontal correction is finished");
+        Robot.drive.setUserControlEnabled(true); Robot.drive.stop();}
 }

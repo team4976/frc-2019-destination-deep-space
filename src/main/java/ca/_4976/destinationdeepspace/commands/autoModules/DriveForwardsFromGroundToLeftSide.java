@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForwardsFromGroundToLeftSide extends Command {
     // Sets the camera servo motor to the right
-    @Override protected void initialize(){ Robot.vision.cameraRight();}
+    @Override protected void initialize(){
+        Robot.drive.setUserControlEnabled(false);
+        Robot.vision.cameraRight();}
 
     //setting the encoder positions for the dive PID
     @Override protected void execute() {
 //        Robot.drive.driveToEncoderPos(0,0); //TODO: change these values
-        Robot.drive.drive(0.5, -0.5);
+        Robot.drive.drive(-0.5, 0.5);
     }
 
     //upon seeing a vision target, stops the robot

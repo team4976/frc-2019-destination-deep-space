@@ -25,6 +25,8 @@ public class Vision extends Subsystem implements Sendable {
 
     Servo camera = new Servo(0);
 
+    private int max = 3;
+    private int min = 0;
     @Override
     protected void initDefaultCommand() {}
 
@@ -55,38 +57,42 @@ public class Vision extends Subsystem implements Sendable {
             int threshold = 500;
             //Prints difference in area and the threshold value
             if((differenceArea > threshold || differenceArea < -threshold) && areaOne > areaTwo){
+                System.out.println("Turn Right");
                 return "Turn Right";
             } else if ((differenceArea > threshold || differenceArea < -threshold)  && areaOne < areaTwo){
+                System.out.println("Turn Left");
                 return "Turn Left";
             } else {
+                System.out.println("Threshhold met");
                 return "Threshold met";
             }
         }
-        return null;
+        return "no";
     }
 
     //constantly reading x values from the Limelight
     public double readXValue(){
         x = tx.getDouble(0);
+        System.out.println(x);
         return x;
     }
 
+    public boolean hasTarget(){
+        System.out.println(((int) tv.getDouble(0)) == 1);
+        return ((int) tv.getDouble(0)) == 1;
+    }
+
     public void center() {
-        if (readXValue() < 10){
-            Robot.drive.drive(0.6, -0.6);
+        if (readXValue() < max){
+            Robot.drive.drive(-0.15, 0.15);
         }
         else {
-            Robot.drive.drive(-0.6 , 0.6);
+            Robot.drive.drive(0.15 , -0.15);
         }
     }
 
     public boolean isCentered() {
-        if (readXValue() > 5 && readXValue() < 15){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return readXValue() > min && readXValue() < max;
     }
 
     //looks for a vision target then returns true
@@ -100,7 +106,7 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the left
     public void cameraLeft() {
-        camera.setAngle(0);
+        camera.setAngle(15);
     }
 
     // Turns the camera to the forwards position
@@ -110,21 +116,19 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the right
     public void cameraRight() {
-        camera.setAngle(180);
+        camera.setAngle(165);
     }
 
     //Turns the bot based on its angle in comparison to the target
     public boolean skewCorrection() {
+        System.out.println("Correcting Skew");
         if (skewValue().equals("Turn Right")){
-            Robot.drive.drive(0.5, 0.5);
-        }
-        else if (skewValue().equals("Turn Left")){
             Robot.drive.drive(-0.5, -0.5);
         }
-        if (skewValue().equals("Threshold met")){
-            return true;
+        else if (skewValue().equals("Turn Left")){
+            Robot.drive.drive(0.5, 0.5);
         }
-        return false;
+        return skewValue().equals("Threshold met");
     }
 
     //Length of a line formula

@@ -3,6 +3,8 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import ca._4976.destinationdeepspace.commands.autoModules.AimShootLeft;
 import ca._4976.destinationdeepspace.commands.autoModules.AimShootRight;
+import ca._4976.destinationdeepspace.commands.autoModules.ShootNoVisionLeft;
+import ca._4976.destinationdeepspace.commands.autoModules.ShootNoVisionRight;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -50,39 +52,87 @@ public class Shooter extends Subsystem {
         rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         //If side is true shoot right else shoot left
             if (side){
-                rightShooter.set(Velocity, -rpm);
-                if (rightShooter.getMotorOutputPercent() < 0.2){
-                    rightShooter.set(Velocity, 8300);
-                    shootLowRight();
+                System.out.println();
+                if (shootingHigh){
+                    rightShooter.set(Velocity, -rpm);
                 }
                 else {
-                    new AimShootRight();
+                    rightShooter.set(Velocity, rpm);
+                }
+
+                System.out.println(rightShooter.getMotorOutputPercent());
+                if (!Robot.vision.hasTarget()){
+                    if (shootingHigh){
+                        rightShooter.set(Velocity, -8300);
+                    }
+                    else {
+                        rightShooter.set(Velocity, 8300);
+                    }
+                    new ShootNoVisionRight().start();
+                }
+                else {
+                    System.out.println("Shooter working");
+                    new AimShootRight().start();
                 }
             }
+
             else {
-                rightShooter.set(Velocity, rpm);
-                if (leftShooter.getMotorOutputPercent() < 0.2){
-                    leftShooter.set(Velocity, 8300);
-                    shootLowLeft();
+                if (shootingHigh){
+                    leftShooter.set(Velocity, -rpm);
                 }
                 else {
-                    new AimShootLeft();
+                    leftShooter.set(Velocity, rpm);
+                }
+
+                if (!Robot.vision.hasTarget() ){
+                    if (shootingHigh){
+                        leftShooter.set(Velocity, 8300);
+                    }
+                    else {
+                        leftShooter.set(Velocity, -8300);
+                    }
+                    new ShootNoVisionLeft().start();
+                }
+                else {
+                    new AimShootLeft().start();
                 }
             }
+    }
+
+    public void rpmLeft() {
+        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
+        rpm = rpm * 1.35;
+        if (shootingHigh){
+            leftShooter.set(Velocity, rpm);
+        }
+        else {
+            leftShooter.set(Velocity, -rpm);
+        }
+    }
+
+    public void rpmRight() {
+        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
+        rpm = rpm * 1.35;
+        if (shootingHigh){
+            rightShooter.set(Velocity, -rpm);
+        }
+        else {
+            rightShooter.set(Velocity, rpm);
+        }
     }
 
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Delay used to get the shooter up to speed
         hood.set(false);
-        Timer.delay(0.1);
+        Timer.delay(0.4);
         //Set all the timgs to shoot right
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(0.1);
+        Timer.delay(0.4);
         //Resets the shooter
         Robot.shooter.reset();
     }
@@ -92,27 +142,25 @@ public class Shooter extends Subsystem {
         //Catch if shooting high
         if(shootingHigh)Robot.shooter.shootHighRight();
         //Else continue shooting low
-        else {
             //Sets the right bannan to shoot low right
             RightBanana.set(true);
             right = true;
             //Delay used to fire ball before reset
-            Timer.delay(0.1);
+            Timer.delay(0.4);
             //Resets the shooter
             Robot.shooter.reset();
-        }
     }
     public void shootHighLeft(){
         //Sets the hood
         hood.set(true);
-        Timer.delay(0.1);
+        Timer.delay(0.4);
         //Sets all of the bannas to shoot hight left
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(0.1);
+        Timer.delay(0.4);
         //Resets the shooter
         Robot.shooter.reset();
     }
@@ -127,7 +175,7 @@ public class Shooter extends Subsystem {
             LeftBanana.set(true);
             left = true;
           //Delay used to shoot ball before reset
-            Timer.delay(0.1);
+            Timer.delay(0.4);
             //Resets the shooter
             Robot.shooter.reset();
         }
