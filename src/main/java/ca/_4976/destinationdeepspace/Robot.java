@@ -41,6 +41,10 @@ public class Robot extends TimedRobot {
         Robot.drive.gearShift.set(true);
 
         scheduler = Scheduler.getInstance();
+
+        Robot.intake.resetIntakeEncoder();
+
+        System.out.println(Robot.intake.intakeEncoder.get());
     }
 
     @Override

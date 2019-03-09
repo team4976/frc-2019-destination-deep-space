@@ -20,7 +20,7 @@ public class Intake extends Subsystem {
     TalonSRX intakeArmSlave = new TalonSRX(42);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
-    Encoder intakeEncoder = new Encoder(0,1);
+    public Encoder intakeEncoder = new Encoder(3,4);
     // The deadband percentage value
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     private double deadband = 0.15;
@@ -80,6 +80,9 @@ public class Intake extends Subsystem {
         } else {
             return 0.0;
         }
+    }
+    public void resetIntakeEncoder(){
+        intakeEncoder.reset();
     }
     // Moves the intake arm based on joystick inputs
     public void moveIntakeArmWithJoystick(Joystick joy){

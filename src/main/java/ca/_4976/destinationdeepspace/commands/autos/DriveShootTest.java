@@ -13,8 +13,10 @@ public class DriveShootTest extends CommandGroup {
         addSequential(new Delay());
         addSequential(new HorizontalCenter());
         addSequential(new Delay());
+//        addSequential(new SkewCorrection());
         addSequential(new IsShootingHigh());
         addSequential(new rpmRight());
+        addSequential(new Delay());
         addSequential(new FireShooterRight());
     }
 }
