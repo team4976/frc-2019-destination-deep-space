@@ -16,18 +16,18 @@ public class Intake extends Subsystem {
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
     Solenoid hatchPanelPickUp = new Solenoid(40,2);
-    boolean hp = false;
-    public TalonSRX intakeArm = new TalonSRX(43);
+    TalonSRX intakeArm = new TalonSRX(43);
     TalonSRX intakeArmSlave = new TalonSRX(42);
-    public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
-    public boolean setPoint = false;
-    boolean position = true;
+    Encoder intakeEncoder = new Encoder(0,1);
     // The deadband percentage value
-    double deadband = 0.15;
-    boolean disableJoystik; //diasbles oystick when arm to ball position is active
-
+    public DigitalInput intakeLimitSwitch = new DigitalInput(2);
+    private double deadband = 0.15;
+    private boolean disableJoystik; //diasbles oystick when arm to ball position is active
+    private boolean setPoint = false;
+    boolean hp = false;
+    private int intakeLowPosition = -500;//TODO set real value
     @Override
     protected void initDefaultCommand() {
         hatchPanelPickUp.set(true);
@@ -91,8 +91,14 @@ public class Intake extends Subsystem {
             intakeArmSlave.set(PercentOutput, -0.06);
         }
         else if (!setPoint){
-            intakeArm.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
-            intakeArm.set(PercentOutput, -applyDeadband(joy.getRawAxis(5)));
+            if (intakeEncoder.get() <= intakeLowPosition){
+                intakeArm.set(PercentOutput, Math.abs(applyDeadband(joy.getRawAxis(5))));
+                intakeArmSlave.set(PercentOutput, -Math.abs(applyDeadband(joy.getRawAxis(5))));
+            }
+            else {
+                intakeArm.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
+                intakeArmSlave.set(PercentOutput, -applyDeadband(joy.getRawAxis(5)));
+            }
         }
     }
 }
