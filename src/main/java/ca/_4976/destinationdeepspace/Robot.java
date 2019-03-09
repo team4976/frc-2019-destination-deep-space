@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class Robot extends TimedRobot {
 
@@ -44,7 +45,8 @@ public class Robot extends TimedRobot {
 
         Robot.intake.resetIntakeEncoder();
 
-        System.out.println(Robot.intake.intakeEncoder.get());
+        Shuffleboard.getTab("Intake").add(intake.intakeEncoder);
+        Shuffleboard.getTab("Climber").add(climber);
     }
 
     @Override

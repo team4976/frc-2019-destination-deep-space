@@ -2,7 +2,10 @@ package ca._4976.destinationdeepspace.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 
@@ -48,4 +51,9 @@ public class Climber extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {}
+
+    @Override
+    public void initSendable(SendableBuilder builder){
+        builder.addDoubleProperty("ClimberEncoder", () -> climberLeg.getSelectedSensorPosition(), (x) -> {});
+    }
 }
