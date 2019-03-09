@@ -91,10 +91,12 @@ public class Intake extends Subsystem {
             intakeArmSlave.set(PercentOutput, -0.06);
         }
         else if (!setPoint){
+            // If the intake is below the minimum position it will only go up
             if (intakeEncoder.get() <= intakeLowPosition){
                 intakeArm.set(PercentOutput, Math.abs(applyDeadband(joy.getRawAxis(5))));
                 intakeArmSlave.set(PercentOutput, -Math.abs(applyDeadband(joy.getRawAxis(5))));
             }
+            //Moves the  intake normaly
             else {
                 intakeArm.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
                 intakeArmSlave.set(PercentOutput, -applyDeadband(joy.getRawAxis(5)));
