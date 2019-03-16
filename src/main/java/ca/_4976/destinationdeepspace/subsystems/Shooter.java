@@ -21,20 +21,20 @@ public class Shooter extends Subsystem {
     private TalonSRX rightShooter = new TalonSRX(48);
     private TalonSRX leftShooter = new TalonSRX(47);
 
-    //Left and right for the bannanas
+    //Left and right for the bananas
     private boolean right = false;
     private boolean left = false;
 
     //If shooting high
     private boolean shootingHigh = false;
 
-    //rpm values for the difforent ranges
-    private double rpmLowMid = 0; //TODO: Set the rpm values once tested
-    private double rpmMidHigh = 0; //TODO: Set the rpm values once tested
-    private double rpmNoVision = 0; //TODO: Set the rpm values once tested
+    //rpm values for the different ranges
+    private double rpmLowMid = 8000; //TODO: Set the rpm values once tested
+    private double rpmMidHigh = 12000; //TODO: Set the rpm values once tested
+    private double rpmNoVision = 10000; //TODO: Set the rpm values once tested
 
     //Mid distance to calibrate rpm with
-    private double middle = 0; //TODO: Set the mid distance once calculated
+    private double middle = 50; //TODO: Set the mid distance once calculated
     // Max distance 97 min distance 26
 
     @Override
@@ -189,19 +189,19 @@ public class Shooter extends Subsystem {
         //Resets the motors
         rightShooter.set(PercentOutput, 0.0);
         leftShooter.set(PercentOutput, 0.0);
-        //Drops bannanas down from up position
+        //Drops bananas down from up position
         if(left && right){
             LeftBanana.set(false);
             left = false;
             RightBanana.set(false);
             right = false;
         }
-        //Resets only left banan
+        //Resets only left banana
         else if(left){
             LeftBanana.set(false);
             left = false;
         }
-        //Resets only ight banan
+        //Resets only Right banana
         else if(right){
             RightBanana.set(false);
             right = false;
