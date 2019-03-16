@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import javafx.geometry.Pos;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 import static com.ctre.phoenix.motorcontrol.ControlMode.Position;
@@ -22,8 +23,8 @@ public class Drive extends Subsystem {
     private VictorSPX RB = new VictorSPX(45);
     // Gear shift solonid
     public Solenoid gearShift = new Solenoid(40, 4);
-    private double RightPos;
-    private double LeftPos;
+    private double rightPos;
+    private double leftPos;
     // Control flags
     private boolean userControlEnabled = true;
 
@@ -88,15 +89,17 @@ public class Drive extends Subsystem {
         //disables user control
         setUserControlEnabled(false);
         RF.set(Position, RightPos);
-        RB.set(Position, RightPos);
         LF.set(Position, LeftPos);
+        RB.set(Position, RightPos);
         LB.set(Position, LeftPos);
+        rightPos = RightPos;
+        leftPos = LeftPos;
     }
     // Checks to see if bot is at encoder target
     public boolean isAtTarget(){
         double errorRange = 0.05;
-        if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)
-                && RF.getClosedLoopError() >= LeftPos * (1 - errorRange) && RF.getClosedLoopError() <= LeftPos) {
+        if (RF.getClosedLoopError() >= rightPos * (1 - errorRange) && RF.getClosedLoopError() <= rightPos * (1 + errorRange)
+                && RF.getClosedLoopError() >= leftPos * (1 - errorRange) && RF.getClosedLoopError() <= leftPos) {
             setUserControlEnabled(true);
             RF.set(PercentOutput, 0);
             RB.set(PercentOutput, 0);
