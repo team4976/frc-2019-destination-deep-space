@@ -2,7 +2,7 @@ package ca._4976.destinationdeepspace.commands;
 
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-
+//The goal of this command is th=o change the state of the shooter from shooting out of the low hole to the high hole
 public class IsShootingHigh extends Command {
     @Override
     protected void initialize(){

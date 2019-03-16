@@ -22,7 +22,7 @@ public final class OI {
         new JoystickButton(driver, 9).whenPressed(new ShiftGear());
         new JoystickButton(driver, 1).whenPressed(new IntakeToBallLevel());
         new JoystickButton(driver, 5).whileHeld(new intakeFromGround());
-        new JoystickButton(driver, 4).whenPressed(new HP());
+        new JoystickButton(driver, 4).whenPressed(new HatchPanel());
 
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
 
