@@ -15,19 +15,17 @@ public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
-    Solenoid hatchPanelPickUp = new Solenoid(40,2);
-    TalonSRX intakeArm = new TalonSRX(43);
-    TalonSRX intakeArmSlave = new TalonSRX(42);
-    TalonSRX intakeMotor1 = new TalonSRX(39);
-    TalonSRX intakeMotor2 = new TalonSRX(38);
+    private Solenoid hatchPanelPickUp = new Solenoid(40,2);
+    private TalonSRX intakeArm = new TalonSRX(43);
+    private TalonSRX intakeArmSlave = new TalonSRX(42);
+    private TalonSRX intakeMotor1 = new TalonSRX(39);
+    private TalonSRX intakeMotor2 = new TalonSRX(38);
     public Encoder intakeEncoder = new Encoder(3,4);
     // The deadband percentage value
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
-    private double deadband = 0.15;
     private boolean disableJoystik; //diasbles oystick when arm to ball position is active
-    private boolean setPoint = false;
-    boolean hp = false;
-    private int intakeLowPosition = -500;//TODO set real value
+    private boolean hp = false;
+
     @Override
     protected void initDefaultCommand() {
         hatchPanelPickUp.set(true);
@@ -52,10 +50,10 @@ public class Intake extends Subsystem {
         intakeMotor1.set(PercentOutput, 0.0);
         intakeMotor2.set(PercentOutput, 0.0);
     }
-    public void holdGear(){
+    private void holdGear(){
         hatchPanelPickUp.set(true);
     }
-    public void releaseGear(){
+    private void releaseGear(){
         hatchPanelPickUp.set(false);
     }
     public void pickupPosition(){
@@ -69,7 +67,8 @@ public class Intake extends Subsystem {
         intakeArmSlave.set(PercentOutput, -0.06);
     }
     // Applies the deadband to the joystick outputs
-    public double applyDeadband(double x) {
+    private double applyDeadband(double x) {
+        double deadband = 0.15;
         if (Math.abs(x) > deadband) {
             disableJoystik = false;
             if (x > 0.0) {
@@ -93,8 +92,10 @@ public class Intake extends Subsystem {
             intakeArm.set(PercentOutput, 0.06);
             intakeArmSlave.set(PercentOutput, -0.06);
         }
-        else if (!setPoint){
+        else{
             // If the intake is below the minimum position it will only go up
+            //TODO set real value
+            int intakeLowPosition = -500;
             if (intakeEncoder.get() <= intakeLowPosition){
                 intakeArm.set(PercentOutput, Math.abs(applyDeadband(joy.getRawAxis(5))));
                 intakeArmSlave.set(PercentOutput, -Math.abs(applyDeadband(joy.getRawAxis(5))));
