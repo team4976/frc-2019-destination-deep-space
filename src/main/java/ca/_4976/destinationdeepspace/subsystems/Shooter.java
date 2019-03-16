@@ -1,10 +1,6 @@
 package ca._4976.destinationdeepspace.subsystems;
 
 import ca._4976.destinationdeepspace.Robot;
-import ca._4976.destinationdeepspace.commands.autoModules.AimShootLeft;
-import ca._4976.destinationdeepspace.commands.autoModules.AimShootRight;
-import ca._4976.destinationdeepspace.commands.autoModules.ShootNoVisionLeft;
-import ca._4976.destinationdeepspace.commands.autoModules.ShootNoVisionRight;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -15,25 +11,30 @@ import static com.ctre.phoenix.motorcontrol.ControlMode.Velocity;
 public class Shooter extends Subsystem {
 
     //Lift the bottom panel of the shooter
-    Solenoid LeftBanana = new Solenoid(40, 1);
-    Solenoid RightBanana = new Solenoid(40, 0);
+    private Solenoid LeftBanana = new Solenoid(40, 1);
+    private Solenoid RightBanana = new Solenoid(40, 0);
 
     //Shoot left or right by switching hood pos while shooting high
-    Solenoid hood = new Solenoid(40, 3);
+    private Solenoid hood = new Solenoid(40, 3);
 
     //Shooter talons
-    public TalonSRX rightShooter = new TalonSRX(48);
-    public TalonSRX leftShooter = new TalonSRX(47);
+    private TalonSRX rightShooter = new TalonSRX(48);
+    private TalonSRX leftShooter = new TalonSRX(47);
 
     //Left and right for the bannanas
-    boolean right = false;
-    boolean left = false;
+    private boolean right = false;
+    private boolean left = false;
 
     //If shooting high
-    boolean shootingHigh = false;
+    private boolean shootingHigh = false;
 
-    //Jakes complicated value
-    public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
+    //rpm values for the difforent ranges
+    private double rpmLowMid = 0; //TODO: Set the rpm values once tested
+    private double rpmMidHigh = 0; //TODO: Set the rpm values once tested
+    private double rpmNoVision = 0; //TODO: Set the rpm values once tested
+
+    //Mid distance to calibrate rpm with
+    private double middle = 0; //TODO: Set the mid distance once calculated
     // Max distance 97 min distance 26
 
     @Override
@@ -44,85 +45,87 @@ public class Shooter extends Subsystem {
         hood.set(true);
     }
 
+    // Tells the bot to shoot high
     public void areYouShootingHigh(){
         shootingHigh = true;
     }
 
-    public void revShooter(boolean side) {
-        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        //If side is true shoot right else shoot left
-            if (side){
-                System.out.println();
-                if (shootingHigh){
-                    rightShooter.set(Velocity, -rpm);
-                }
-                else {
-                    rightShooter.set(Velocity, rpm);
-                }
-
-                System.out.println(rightShooter.getMotorOutputPercent());
-                if (!Robot.vision.hasTarget()){
-                    if (shootingHigh){
-                        rightShooter.set(Velocity, -8300);
-                    }
-                    else {
-                        rightShooter.set(Velocity, 8300);
-                    }
-                    new ShootNoVisionRight().start();
-                }
-                else {
-                    System.out.println("Shooter working");
-                    new AimShootRight().start();
-                }
-            }
-
-            else {
-                if (shootingHigh){
-                    leftShooter.set(Velocity, -rpm);
-                }
-                else {
-                    leftShooter.set(Velocity, rpm);
-                }
-
-                if (!Robot.vision.hasTarget() ){
-                    if (shootingHigh){
-                        leftShooter.set(Velocity, 8300);
-                    }
-                    else {
-                        leftShooter.set(Velocity, -8300);
-                    }
-                    new ShootNoVisionLeft().start();
-                }
-                else {
-                    new AimShootLeft().start();
-                }
-            }
-    }
-
+    // Sets the rpm for the left shooter
     public void rpmLeft() {
-        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        rpm = rpm * 1.35;
-        if (shootingHigh){
-            leftShooter.set(Velocity, rpm);
+        //Checks to see if the robot can see a target
+        if (Robot.vision.hasTarget()) {
+            // Sets the close range rpm
+            if (Robot.vision.readXValue() < middle) {
+                //Checks to see if were shooting high or low
+                if (shootingHigh){
+                    leftShooter.set(Velocity, rpmLowMid);
+                }
+                else {
+                    leftShooter.set(Velocity, -rpmLowMid);
+                }
+            }
+            // Sets the long range rpm
+            else if (Robot.vision.readXValue() > middle) {
+                //Checks to see if were shooting high or low
+                if (shootingHigh){
+                    leftShooter.set(Velocity, rpmMidHigh);
+                }
+                else {
+                    leftShooter.set(Velocity, -rpmMidHigh);
+                }
+            }
         }
+        //Robot cant see a target
         else {
-            leftShooter.set(Velocity, -rpm);
+            //Checks to see if the bot is shooting high or low
+            if (shootingHigh){
+                leftShooter.set(Velocity, rpmNoVision);
+            }
+            else {
+                leftShooter.set(Velocity, -rpmNoVision);
+            }
         }
     }
 
+    //Sets the rpm for the right shooter
     public void rpmRight() {
-        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        rpm = rpm * 1.35;
-        if (shootingHigh){
-            rightShooter.set(Velocity, -rpm);
+        //Checks to see if the robot can see a target
+        if (Robot.vision.hasTarget()) {
+            // Sets the close range rpm
+            if (Robot.vision.readXValue() < middle) {
+                //Checks to see if the robot is shooting high
+                if (shootingHigh){
+                    rightShooter.set(Velocity, -rpmLowMid);
+                }
+                else {
+                    rightShooter.set(Velocity, rpmLowMid);
+                }
+            }
+            //Sets the long range rpm
+            else if (Robot.vision.readXValue() > middle) {
+                //Checks to see if the robot is shooting high or not
+                if (shootingHigh){
+                    rightShooter.set(Velocity, -rpmMidHigh);
+                }
+                else {
+                    rightShooter.set(Velocity, rpmMidHigh);
+                }
+            }
         }
+        // Robot cant see a target
         else {
-            rightShooter.set(Velocity, rpm);
+            //Checks to see if the Robot is shooting high or low
+            if (shootingHigh){
+                rightShooter.set(Velocity, -rpmNoVision);
+            }
+            else {
+                rightShooter.set(Velocity, rpmNoVision);
+            }
         }
     }
 
     //Shoots the ball to the right high
-    public void shootHighRight(){
+    private void shootHighRight(){
         //Delay used to get the shooter up to speed
         hood.set(false);
         Timer.delay(0.4);
@@ -150,7 +153,7 @@ public class Shooter extends Subsystem {
             //Resets the shooter
             Robot.shooter.reset();
     }
-    public void shootHighLeft(){
+    private void shootHighLeft(){
         //Sets the hood
         hood.set(true);
         Timer.delay(0.4);
@@ -182,7 +185,7 @@ public class Shooter extends Subsystem {
     }
 
     //Resets the hood pos along with the rest of the shooter
-    public void reset(){
+    private void reset(){
         //Resets the motors
         rightShooter.set(PercentOutput, 0.0);
         leftShooter.set(PercentOutput, 0.0);
@@ -194,12 +197,12 @@ public class Shooter extends Subsystem {
             right = false;
         }
         //Resets only left banan
-        else if(left&&!right){
+        else if(left){
             LeftBanana.set(false);
             left = false;
         }
         //Resets only ight banan
-        else if(!left&&right){
+        else if(right){
             RightBanana.set(false);
             right = false;
         }

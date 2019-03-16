@@ -1,12 +1,8 @@
 package ca._4976.destinationdeepspace.subsystems;
 
-import ca._4976.destinationdeepspace.Robot;
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,26 +14,24 @@ import static com.ctre.phoenix.motorcontrol.ControlMode.Position;
 // information about it's speed and posit ion.
 
 public class Drive extends Subsystem {
-    // Making a network table
-    NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
     // Left drive motor controllers
-    TalonSRX LF = new TalonSRX(49);
-    TalonSRX RF = new TalonSRX(44);
+    private TalonSRX LF = new TalonSRX(49);
+    private TalonSRX RF = new TalonSRX(44);
     // Right drive motor controllers
-    VictorSPX LB = new VictorSPX(46);
-    VictorSPX RB = new VictorSPX(45);
+    private VictorSPX LB = new VictorSPX(46);
+    private VictorSPX RB = new VictorSPX(45);
     // Gear shift solonid
     public Solenoid gearShift = new Solenoid(40, 4);
-    // The deadband percentage value
-    double deadband = 0.10;
-    // Variables used in the drive calculations
-    double throttle, turn, leftOutput, rightOutput, errorRange = 0.05, RightPos, LeftPos;
+    private double RightPos;
+    private double LeftPos;
     // Control flags
-    public boolean userControlEnabled = true;
+    private boolean userControlEnabled = true;
 
     // Applies the deadband to the joystick outputs
-    public double applyDeadband(double x) {
+    private double applyDeadband(double x) {
 
+        // The deadband percentage value
+        double deadband = 0.10;
         if (Math.abs(x) > deadband) {
             if (x > 0.0) {
                 return (x - deadband) / (1.0 - deadband);
@@ -49,7 +43,7 @@ public class Drive extends Subsystem {
         }
     }
     // Checks if a value is above 1 or below -1 and sets them to 1 and -1 respectively
-    public double regularize(double x) {
+    private double regularize(double x) {
         if (x > 1.0) {
             return 1.0;
         } else if (x < -1.0) {
@@ -69,13 +63,14 @@ public class Drive extends Subsystem {
     public void arcadeDrive(Joystick joy) {
         if (userControlEnabled) {
             // Save the left and right trigger values as a combined value
-            throttle = applyDeadband(joy.getRawAxis(2) - joy.getRawAxis(3));
+            // Variables used in the drive calculations
+            double throttle = applyDeadband(joy.getRawAxis(2) - joy.getRawAxis(3));
             // Save the left stick value
-            turn = applyDeadband(joy.getRawAxis(0));
+            double turn = applyDeadband(joy.getRawAxis(0));
 
             // Saves the left and right outputs as the throttle and turn values combined
-            leftOutput = regularize(throttle + turn);
-            rightOutput = regularize(-throttle + turn);
+            double leftOutput = regularize(throttle + turn);
+            double rightOutput = regularize(-throttle + turn);
 
             drive(leftOutput, rightOutput);
         }
@@ -99,6 +94,7 @@ public class Drive extends Subsystem {
     }
     // Checks to see if bot is at encoder target
     public boolean isAtTarget(){
+        double errorRange = 0.05;
         if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)
                 && RF.getClosedLoopError() >= LeftPos * (1 - errorRange) && RF.getClosedLoopError() <= LeftPos) {
             setUserControlEnabled(true);

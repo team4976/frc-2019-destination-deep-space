@@ -2,8 +2,6 @@ package ca._4976.destinationdeepspace.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
@@ -13,11 +11,8 @@ public class Climber extends Subsystem {
     //Motor controller for the climbing leg
     public TalonSRX climberLeg = new TalonSRX(50);
 
-    int climberLegTarget = -6250;
-
     public boolean isClimberLegDown = false;
-    DigitalInput climberIsDown = new DigitalInput(5);
-    public boolean isLegLocked = false;
+    private DigitalInput climberIsDown = new DigitalInput(5);
 
     //Moves the climber leg
     public boolean moveLeg() {
@@ -39,6 +34,7 @@ public class Climber extends Subsystem {
         else {
             climberLeg.set(PercentOutput, 0.5);
             System.out.println("Going down");
+            int climberLegTarget = -6250;
             if (climberLeg.getSelectedSensorPosition() < climberLegTarget || climberIsDown.get()) {
                 climberLeg.set(PercentOutput, 0.1);
                 return true;

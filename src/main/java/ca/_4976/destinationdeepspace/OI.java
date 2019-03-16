@@ -26,8 +26,9 @@ public final class OI {
         new JoystickButton(driver, 4).whenPressed(new HP());
 
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
-        new JoystickButton(operator, 2).whenPressed(new RevShooterRight());
-        new JoystickButton(operator, 3).whenPressed(new RevShooterLeft());
+
+        new JoystickButton(operator, 2).whenPressed(new AimShootRight());
+        new JoystickButton(operator, 3).whenPressed(new AimShootRight());
 
         new JoystickButton(operator, 7).whenPressed(new DriveShootTest());
     }
