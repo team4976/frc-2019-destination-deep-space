@@ -18,5 +18,7 @@ public class auto_4_6_HP extends CommandGroup {
         addSequential(new DriveForHatch());
         addSequential(new Delay());
         addSequential(new HPRelease());
+        addSequential(new Delay());
+        addSequential(new DriveBackwardsABit());
     }
 }

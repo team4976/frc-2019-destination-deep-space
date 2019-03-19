@@ -1,17 +1,18 @@
 package ca._4976.destinationdeepspace.commands.autos;
 
+import ca._4976.destinationdeepspace.commands.FireShooterRight;
 import ca._4976.destinationdeepspace.commands.HPRelease;
+import ca._4976.destinationdeepspace.commands.IsShootingHigh;
 import ca._4976.destinationdeepspace.commands.autoModules.*;
+import ca._4976.destinationdeepspace.commands.rpmRight;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class auto_4_6_HP_20 extends CommandGroup {
+public class auto_1_8_HP_20 extends CommandGroup {
 
-    public auto_4_6_HP_20(){
-        addSequential(new DriveForwardsFromGround());
-        addSequential(new TurnNinteyDegreesLeft());
-        addSequential(new DriveForwardsABit());
+    public auto_1_8_HP_20(){
+        addSequential(new DriveForwardsFromPlatformToLeftSide());
         addSequential(new Delay());
-        addSequential(new HorizontalCenter());
+        addSequential(new HorizontalCenterShooter());
         addSequential(new Delay());
         addSequential(new TurnNinteyDegreesRight());
         addSequential(new Delay());
@@ -20,7 +21,7 @@ public class auto_4_6_HP_20 extends CommandGroup {
         addSequential(new HPRelease());
         addSequential(new Delay());
         addSequential(new DriveBackwardsABit());
-        addSequential(new TurnFromSixToTwentyToGoBackwards());
-        addSequential(new DriveBackwardsFromSixToTwenty());
+        addSequential(new TurnFromEightToTwentyToGoBackwards());
+        addSequential(new DriveBackwardsFromEightToTwenty());
     }
 }

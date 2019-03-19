@@ -22,6 +22,7 @@ public class auto_1_6_HP_20 extends CommandGroup {
         addSequential(new Delay());
         addSequential(new HPRelease());
         addSequential(new Delay());
+        addSequential(new DriveBackwardsABit());
         addSequential(new TurnFromSixToTwentyToGoBackwards());
         addSequential(new DriveBackwardsFromSixToTwenty());
     }
