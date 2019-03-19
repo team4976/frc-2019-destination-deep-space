@@ -1,9 +1,6 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
-import ca._4976.destinationdeepspace.commands.autoModules.AimShootRight;
-import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenter;
-import ca._4976.destinationdeepspace.commands.autoModules.SkewCorrection;
 import ca._4976.destinationdeepspace.commands.autos.DriveShootTest;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

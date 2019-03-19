@@ -2,18 +2,17 @@ package ca._4976.destinationdeepspace.commands.autoModules;
 
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-
-// The goal of this command is center the bot with the target
-public class HorizontalCenter extends Command {
+// The goal of this command is center the shooter with the target
+public class HorizontalCenterShooter extends Command {
     @Override protected void execute() {
         // Centers
-        Robot.vision.center();
+        Robot.vision.centerShooter();
     }
 
     //upon Reaching set point stop
     @Override
     protected boolean isFinished() {
-        return Robot.vision.isCentered() || Robot.shooter.cancil;
+        return Robot.vision.isCenteredShooter() || Robot.shooter.cancil;
     }
 
     //stops the drive PID and re-enables user control

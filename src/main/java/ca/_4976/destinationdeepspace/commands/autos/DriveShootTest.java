@@ -11,7 +11,7 @@ public class DriveShootTest extends CommandGroup {
     public DriveShootTest(){
         addSequential(new DriveBackwardsFromPlatformToRightSide());
         addSequential(new Delay());
-        addSequential(new HorizontalCenter());
+        addSequential(new HorizontalCenterShooter());
         addSequential(new Delay());
 //        addSequential(new SkewCorrection());
         addSequential(new IsShootingHigh());

@@ -25,8 +25,10 @@ public class Vision extends Subsystem implements Sendable {
 
     Servo camera = new Servo(0);
 
-    private double max = 3.85;
-    private double min = 1.85;
+    private double maxShooter = 3.85;
+    private double minShooter = 1.85;
+    private double max = 1;
+    private double min = -1;
     @Override
     protected void initDefaultCommand() {}
 
@@ -82,6 +84,19 @@ public class Vision extends Subsystem implements Sendable {
         return ((int) tv.getDouble(0)) == 1;
     }
 
+    public void centerShooter() {
+        if (readXValue() < maxShooter){
+            Robot.drive.drive(-0.15, 0.15);
+        }
+        else {
+            Robot.drive.drive(0.15 , -0.15);
+        }
+    }
+
+    public boolean isCenteredShooter() {
+        return readXValue() > minShooter && readXValue() < maxShooter;
+    }
+
     public void center() {
         if (readXValue() < max){
             Robot.drive.drive(-0.15, 0.15);
@@ -94,7 +109,6 @@ public class Vision extends Subsystem implements Sendable {
     public boolean isCentered() {
         return readXValue() > min && readXValue() < max;
     }
-
     //looks for a vision target then returns true
     public boolean stopWithVision(){
         readXValue();
