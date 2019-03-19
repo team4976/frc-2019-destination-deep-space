@@ -14,11 +14,10 @@ public class DriveBackwardsFromPlatformToLeftSide extends Command {
     }
 
     //setting the encoder positions for the dive PID
-    @Override
     protected void execute() {
-        Robot.drive.driveToEncoderPos(0, 0);
-    } //TODO: change these values
-
+        //        Robot.drive.driveToEncoderPos(0,0); //TODO: change these values
+        Robot.drive.drive(0.8, -0.8);
+    }
     //upon seeing a vision target, stops the robot
     @Override
     protected boolean isFinished() {

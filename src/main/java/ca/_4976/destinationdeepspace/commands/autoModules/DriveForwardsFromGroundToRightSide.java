@@ -11,7 +11,10 @@ public class DriveForwardsFromGroundToRightSide extends Command {
     @Override protected void initialize(){ Robot.vision.cameraLeft();}
 
     //setting the encoder positions for the dive PID
-    @Override protected void execute() { Robot.drive.driveToEncoderPos(0,0); } //TODO: change these values
+    protected void execute() {
+        //        Robot.drive.driveToEncoderPos(0,0); //TODO: change these values
+        Robot.drive.drive(-0.5, 0.5);
+    }
 
     //upon seeing a vision target, stops the robot
     @Override
