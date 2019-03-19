@@ -100,8 +100,8 @@ public class Drive extends Subsystem {
     }
     // Checks to see if bot is at encoder target
     public boolean isAtTarget(){
-        if (RF.getClosedLoopError() >= RightPos * (1 - errorRange) && RF.getClosedLoopError() <= RightPos * (1 + errorRange)
-                && RF.getClosedLoopError() >= LeftPos * (1 - errorRange) && RF.getClosedLoopError() <= LeftPos) {
+        if (RF.getSelectedSensorPosition() >= RightPos * (1 - errorRange) && RF.getSelectedSensorPosition() <= RightPos * (1 + errorRange)
+                && LF.getSelectedSensorPosition() >= LeftPos * (1 - errorRange) && LF.getSelectedSensorPosition() <= LeftPos) {
             setUserControlEnabled(true);
             RF.set(PercentOutput, 0);
             RB.set(PercentOutput, 0);

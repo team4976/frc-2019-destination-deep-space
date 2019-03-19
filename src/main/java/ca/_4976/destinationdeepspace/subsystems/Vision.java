@@ -118,6 +118,14 @@ public class Vision extends Subsystem implements Sendable {
         return false;
     }
 
+    public boolean stopForHatchPanel(){
+        readXValue();
+        if (x < 10){
+            return true;
+        }
+        return false;
+    }
+
     // Turns the camera to the left
     public void cameraLeft() {
         camera.setAngle(15);
