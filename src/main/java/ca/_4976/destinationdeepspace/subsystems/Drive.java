@@ -22,11 +22,11 @@ public class Drive extends Subsystem {
     // Making a network table
     NetworkTable drive = NetworkTableInstance.getDefault().getTable("Drive");
     // Left drive motor controllers
-    TalonSRX LF = new TalonSRX(49);
-    TalonSRX RF = new TalonSRX(44);
+    public TalonSRX LF = new TalonSRX(49);
+    public TalonSRX RF = new TalonSRX(44);
     // Right drive motor controllers
-    VictorSPX LB = new VictorSPX(46);
-    VictorSPX RB = new VictorSPX(45);
+    public VictorSPX LB = new VictorSPX(46);
+    public VictorSPX RB = new VictorSPX(45);
     // Gear shift solonid
     public Solenoid gearShift = new Solenoid(40, 4);
     // The deadband percentage value

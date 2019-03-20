@@ -4,6 +4,7 @@ import ca._4976.destinationdeepspace.Robot;
 import ca._4976.destinationdeepspace.commands.DriveWithJoystick;
 import ca._4976.destinationdeepspace.commands.IntakeWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
@@ -17,7 +18,7 @@ public class Intake extends Subsystem {
 
     Solenoid hatchPanelPickUp = new Solenoid(40,2);
     TalonSRX intakeArm = new TalonSRX(43);
-    TalonSRX intakeArmSlave = new TalonSRX(42);
+    VictorSPX intakeArmSlave = new VictorSPX(42);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
     public Encoder intakeEncoder = new Encoder(3,4);

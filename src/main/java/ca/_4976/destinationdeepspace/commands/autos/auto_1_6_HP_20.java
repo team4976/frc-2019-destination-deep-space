@@ -12,7 +12,7 @@ public class auto_1_6_HP_20 extends CommandGroup {
     public auto_1_6_HP_20(){
         addSequential(new DriveForwardsOffPlatform());
         addSequential(new TurnNinteyDegreesRight());
-        addSequential(new DriveForwardsFromGroundToLeftSide());
+        addSequential(new DriveForwardsFromGroundToRightSide());
         addSequential(new Delay());
         addSequential(new HorizontalCenter());
         addSequential(new Delay());

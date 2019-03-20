@@ -48,15 +48,21 @@ public class Robot extends TimedRobot {
 
         Shuffleboard.getTab("Intake").add(intake.intakeEncoder);
         Shuffleboard.getTab("Climber").add(climber);
+
+        Robot.drive.LF.setInverted(true);
+        Robot.drive.RF.setInverted(true);
+        Robot.drive.LB.setInverted(true);
+        Robot.drive.RB.setInverted(true);
     }
 
     @Override
     public void robotPeriodic(){
         scheduler.run();
 //        System.out.println("Climber encoder val:" + Robot.climber.climberLeg.getSelectedSensorPosition());
-        System.out.println("Intake encoder val:" + Robot.intake.intakeEncoder.get());
 //        System.out.println("Shooter speed val:" + Robot.vision.distance);
         //controls climber leg by operator triggers (probably should be moved to climber class)
+        System.out.println("Right shoot" + Robot.shooter.rightShooter.getSelectedSensorPosition());
+        System.out.println("Left shoot" + Robot.shooter.leftShooter.getSelectedSensorPosition());
         Robot.climber.climberLeg.set(ControlMode.PercentOutput, Robot.oi.operator.getRawAxis(3)-Robot.oi.operator.getRawAxis(2));
 
     }
