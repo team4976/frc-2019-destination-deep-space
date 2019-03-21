@@ -17,11 +17,10 @@ public class Intake extends Subsystem {
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
     Solenoid hatchPanelPickUp = new Solenoid(40,2);
-    TalonSRX intakeArm = new TalonSRX(43);
+    public TalonSRX intakeArm = new TalonSRX(43);
     VictorSPX intakeArmSlave = new VictorSPX(42);
     TalonSRX intakeMotor1 = new TalonSRX(39);
     TalonSRX intakeMotor2 = new TalonSRX(38);
-    public Encoder intakeEncoder = new Encoder(3,4);
     // The deadband percentage value
     public DigitalInput intakeLimitSwitch = new DigitalInput(2);
     private double deadband = 0.25;
@@ -60,22 +59,22 @@ public class Intake extends Subsystem {
     //TODO: Figure out why the intake encoder is returning values that do not make sense while the arm is not moving
     //runs the intake to a position close to the ideal position for cargo
     public void pickupPosition(){
-        if(intakeEncoder.get()<-1040){//up
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-1040){//up
             intakeArm.set(PercentOutput, 0.25);
             intakeArmSlave.set(PercentOutput, -0.25);
         }
-        else if(intakeEncoder.get()>-1020){//down
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-1020){//down
             intakeArm.set(PercentOutput, -0.05);
             intakeArmSlave.set(PercentOutput, 0.05);
         }
     }
     //runs the intake to a position close to the ideal position for hatch panels
     public void HPPositiion(){
-        if(intakeEncoder.get()<-740){
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-740){
             intakeArm.set(PercentOutput, 0.25);
             intakeArmSlave.set(PercentOutput, -0.25);
         }
-        else if(intakeEncoder.get()>-720){
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-720){
             intakeArm.set(PercentOutput, -0.05);
             intakeArmSlave.set(PercentOutput, 0.05);
         }
@@ -119,7 +118,7 @@ public class Intake extends Subsystem {
         }
     }
     public void resetIntakeEncoder(){
-        intakeEncoder.reset();
+        Robot.intake.intakeArm.setSelectedSensorPosition(0);
     }
     // Moves the intake arm based on joystick inputs
 

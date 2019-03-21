@@ -11,7 +11,7 @@ public class IntakeToBallLevel extends Command {
     }
     @Override
     protected boolean isFinished() {
-        return Robot.intake.intakeEncoder.get()<-1000&&Robot.intake.intakeEncoder.get()>-1040;
+        return Robot.intake.intakeArm.getSelectedSensorPosition()<-1000&&Robot.intake.intakeArm.getSelectedSensorPosition()>-1040;
 //        return !Robot.intake.intakeLimitSwitch.get();
     }
     @Override

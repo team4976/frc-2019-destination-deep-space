@@ -46,7 +46,6 @@ public class Robot extends TimedRobot {
 
         Robot.intake.resetIntakeEncoder();
 
-        Shuffleboard.getTab("Intake").add(intake.intakeEncoder);
         Shuffleboard.getTab("Climber").add(climber);
 
         Robot.drive.LF.setInverted(true);
@@ -75,7 +74,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Robot.climber.climberLeg.setSelectedSensorPosition(0);
-        Robot.intake.intakeEncoder.reset();
+        Robot.intake.intakeArm.setSelectedSensorPosition(0);
     }
 
     @Override
