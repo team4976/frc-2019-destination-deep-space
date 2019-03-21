@@ -12,6 +12,7 @@ public class DriveBackwardsFromGroundToRightSide extends Command {
     protected void initialize() {
         Robot.drive.setUserControlEnabled(false);
         Robot.vision.cameraRight();
+        Robot.drive.resetEncoders();
     }
 
 

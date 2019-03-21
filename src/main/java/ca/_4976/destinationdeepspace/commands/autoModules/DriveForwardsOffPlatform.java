@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 // a specific encoder value is reached
 
 public class DriveForwardsOffPlatform extends Command {
+    @Override
+    protected void initialize(){Robot.drive.resetEncoders();}
     //setting the encoder positions for the dive PID
     @Override
     protected void execute() {

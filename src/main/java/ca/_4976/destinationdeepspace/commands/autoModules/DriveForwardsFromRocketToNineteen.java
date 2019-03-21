@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveForwardsFromRocketToNineteen extends Command {
     @Override protected void initialize(){
         Robot.drive.setUserControlEnabled(false);
-        Robot.vision.cameraLeft();}
+        Robot.vision.cameraLeft();
+        Robot.drive.resetEncoders();
+    }
     //setting the encoder positions for the dive PID
     @Override
     protected void execute() {

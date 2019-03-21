@@ -11,6 +11,7 @@ public class DriveForwardsFromOneToTwelve extends Command {
     @Override
     protected void initialize() {
         Robot.vision.cameraRight();
+        Robot.drive.resetEncoders();
     }
 
     //setting the encoder positions for the dive PID

@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.command.Command;
 // The goal of this command is to turn 90 degrees to the left
 public class TurnNinteyDegreesLeft extends Command {
     // Sets the camera servo motor forwards
-    @Override protected void initialize(){ Robot.vision.cameraForwards();}
+    @Override protected void initialize(){ Robot.vision.cameraForwards();
+    Robot.drive.resetEncoders();
+    }
 
     //setting the encoder positions for the dive PID
     @Override protected void execute() { Robot.drive.driveToEncoderPos(0,0); } //TODO: change these values

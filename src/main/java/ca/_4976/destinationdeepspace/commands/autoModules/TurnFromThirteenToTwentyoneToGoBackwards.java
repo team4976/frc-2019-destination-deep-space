@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 // The goal of this command is to turn from Twelve to twenty
 public class TurnFromThirteenToTwentyoneToGoBackwards extends Command {
-
+    @Override
+    protected void initialize(){Robot.drive.resetEncoders();}
     //setting the encoder positions for the dive PID
     @Override protected void execute() { Robot.drive.driveToEncoderPos(0,0); } //TODO: change these values
 

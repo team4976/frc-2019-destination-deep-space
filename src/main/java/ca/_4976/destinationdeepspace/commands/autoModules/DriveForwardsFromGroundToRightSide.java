@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForwardsFromGroundToRightSide extends Command {
     // Sets the camera servo motor to the left
-    @Override protected void initialize(){ Robot.vision.cameraLeft();}
+    @Override protected void initialize(){ Robot.vision.cameraLeft();
+    Robot.drive.resetEncoders();
+    }
 
     //setting the encoder positions for the dive PID
     protected void execute() {

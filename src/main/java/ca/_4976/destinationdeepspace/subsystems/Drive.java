@@ -117,6 +117,10 @@ public class Drive extends Subsystem {
     public void gearShift() {
         gearShift.set(!gearShift.get());
     }
+    public void resetEncoders(){
+        LF.setSelectedSensorPosition(0);
+        RF.setSelectedSensorPosition(0);
+    }
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWithJoystick());

@@ -10,7 +10,8 @@ public class DriveForwardsFromGroundToLeftSide extends Command {
     // Sets the camera servo motor to the right
     @Override protected void initialize(){
         Robot.drive.setUserControlEnabled(false);
-        Robot.vision.cameraRight();}
+        Robot.vision.cameraRight();
+    Robot.drive.resetEncoders();}
 
     //setting the encoder positions for the dive PID
     protected void execute() {

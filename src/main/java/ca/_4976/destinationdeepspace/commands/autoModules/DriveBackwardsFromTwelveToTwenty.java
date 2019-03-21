@@ -4,7 +4,8 @@ import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 // The goal of this command is to drive from Twelve to twenty
 public class DriveBackwardsFromTwelveToTwenty extends Command {
-
+    @Override
+    protected void initialize(){Robot.drive.resetEncoders();}
     //setting the encoder positions for the dive PID
     @Override protected void execute() { Robot.drive.driveToEncoderPos(0,0); } //TODO: change these values
 

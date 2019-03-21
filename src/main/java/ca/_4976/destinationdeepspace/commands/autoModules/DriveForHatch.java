@@ -11,6 +11,7 @@ public class DriveForHatch extends Command {
     @Override
     protected void initialize() {
         Robot.vision.cameraForwards();
+        Robot.drive.resetEncoders();
     }
 
     //setting the encoder positions for the dive PID

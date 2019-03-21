@@ -11,6 +11,7 @@ public class DriveBackwardsFromGroundToLeftSide extends Command {
     @Override
     protected void initialize() {
         Robot.vision.cameraLeft();
+        Robot.drive.resetEncoders();
     }
 
     //setting the encoder positions for the dive PID
