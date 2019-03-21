@@ -129,8 +129,8 @@ public class Intake extends Subsystem {
         }
         else if (applyDeadband(joy.getRawAxis(5)) == 0){
 //            double holdingSpeed = Math.abs(intakeEncoder.get()/-1000)-0.89;
-            intakeArm.set(PercentOutput, 0.1);
-            intakeArmSlave.set(PercentOutput, -0.1);
+            intakeArm.set(PercentOutput, -0.1);
+            intakeArmSlave.set(PercentOutput, 0.1);
         }
         else if (!setPoint && !controlledSlam){
              //If the intake is above the maximum position it will only go down

@@ -4,12 +4,12 @@ import ca._4976.destinationdeepspace.commands.HPRelease;
 import ca._4976.destinationdeepspace.commands.autoModules.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class auto_1_18_HP_20 extends CommandGroup {
+public class auto_4_7_HP_20 extends CommandGroup {
 
-    public auto_1_18_HP_20(){
-        addSequential(new DriveForwardsFromOneToRocket());
-        addSequential(new TurnFromRocketToEighteen());
-        addSequential(new DriveForwardsFromRocketToEighteen());
+    public auto_4_7_HP_20(){
+        addSequential(new DriveForwardsFromGround());
+        addSequential(new TurnNinteyDegreesRight());
+        addSequential(new DriveForwardsABit());
         addSequential(new Delay());
         addSequential(new HorizontalCenter());
         addSequential(new Delay());
@@ -20,7 +20,7 @@ public class auto_1_18_HP_20 extends CommandGroup {
         addSequential(new HPRelease());
         addSequential(new Delay());
         addSequential(new DriveBackwardsABit());
-        addSequential(new TurnFromEighteenToTwentyToGoForwards());
-        addSequential(new DriveForwardsFromEighteenToTwenty());
+        addSequential(new TurnFromSevenToTwentyoneToGoBackwards());
+        addSequential(new DriveBackwardsFromSevenToTwentyone());
     }
 }

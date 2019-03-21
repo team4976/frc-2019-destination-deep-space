@@ -75,8 +75,8 @@ public class Drive extends Subsystem {
             turn = applyDeadband(joy.getRawAxis(0))*Math.abs(applyDeadband(joy.getRawAxis(0)));
 
             // Saves the left and right outputs as the throttle and turn values combined
-            leftOutput = regularize(throttle + turn);
-            rightOutput = regularize(-throttle + turn);
+            leftOutput = regularize(throttle - turn);
+            rightOutput = regularize(-throttle - turn);
 
             drive(leftOutput, rightOutput);
         }
