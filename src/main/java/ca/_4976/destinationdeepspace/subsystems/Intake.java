@@ -35,7 +35,7 @@ public class Intake extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        hatchPanelPickUp.set(true);
+        hatchPanelPickUp.set(false);
 //        intakeArmSlave.follow(intakeArm);
         setDefaultCommand(new IntakeWithJoystick());
         controlledSlam = false;
@@ -51,20 +51,20 @@ public class Intake extends Subsystem {
         }
     }
     public void holdGear(){
-        hatchPanelPickUp.set(false);
+        hatchPanelPickUp.set(true);
     } //redundant
     public void releaseGear(){
-        hatchPanelPickUp.set(true);
+        hatchPanelPickUp.set(false);
     }
     //TODO: Figure out why the intake encoder is returning values that do not make sense while the arm is not moving
     //runs the intake to a position close to the ideal position for cargo
     public void pickupPosition(){
-        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-2247){//up
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-2280){//up
 //            System.out.println("One");
             intakeArm.set(PercentOutput, -0.25);
             intakeArmSlave.set(PercentOutput, 0.25);
         }
-        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-2200){//down
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-2240){//down
 //            System.out.println("two");
             intakeArm.set(PercentOutput, 0.05);
             intakeArmSlave.set(PercentOutput, -0.05);
@@ -72,11 +72,11 @@ public class Intake extends Subsystem {
     }
     //runs the intake to a position close to the ideal position for hatch panels
     public void HPPositiion(){
-        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-1344){
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-1550-25){
             intakeArm.set(PercentOutput, -0.25);
             intakeArmSlave.set(PercentOutput, 0.25);
         }
-        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-1300){
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-1550+5){
             intakeArm.set(PercentOutput, 0.05);
             intakeArmSlave.set(PercentOutput, -0.05);
         }
@@ -142,8 +142,8 @@ public class Intake extends Subsystem {
 //            }
             //Moves the  intake normaly
 //            else {
-                intakeArm.set(PercentOutput, 0.3 * (applyDeadband(joy.getRawAxis(5))));
-                intakeArmSlave.set(PercentOutput, -0.3 * (applyDeadband(joy.getRawAxis(5))));
+                intakeArm.set(PercentOutput, 0.4 * (applyDeadband(joy.getRawAxis(5))));
+                intakeArmSlave.set(PercentOutput, -0.4 * (applyDeadband(joy.getRawAxis(5))));
 //            }
         }
         //removes limiter on intake in order to climb

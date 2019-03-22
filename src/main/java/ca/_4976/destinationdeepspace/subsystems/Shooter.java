@@ -35,6 +35,7 @@ public class Shooter extends Subsystem {
     //Stops the aim
     public boolean cancil = false;
 
+    public boolean manCont = false;
     //Jakes complicated value
     public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
     // Max distance 97 min distance 26
@@ -44,7 +45,7 @@ public class Shooter extends Subsystem {
         //Sets the start position
         RightBanana.set(false);
         LeftBanana.set(false);
-        hood.set(true);
+        hood.set(false);
     }
 
     public void areYouShootingHigh(){
@@ -52,54 +53,73 @@ public class Shooter extends Subsystem {
     }
 
     public void revShooter(boolean side) {
-        rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
-        //If side is true shoot right else shoot left
-            if (side){
-                System.out.println();
-                if (shootingHigh){
+        if (manCont){
+            rpm = 8800; //TODO: Change this to somthing valid
+            Timer.delay(0.2);
+            if (side) {
+                if (shootingHigh) {
                     rightShooter.set(Velocity, -rpm);
+                } else {
+                    rightShooter.set(Velocity, 10000);
                 }
-                else {
-                    rightShooter.set(Velocity, rpm);
+                new ShootNoVisionRight().start();
+            }
+            else{
+                if (shootingHigh) {
+                    leftShooter.set(Velocity, rpm);
+                } else {
+                    leftShooter.set(Velocity, -10000);
+                }
+                new ShootNoVisionLeft().start();
+            }
+
+        }
+        else {
+            rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
+            //If side is true shoot right else shoot left
+            if (side) {
+                System.out.println();
+                if (shootingHigh) {
+                    rightShooter.set(Velocity, -rpm);
+                } else {
+                    rightShooter.set(Velocity, 10000);
                 }
 
                 System.out.println(rightShooter.getMotorOutputPercent());
-                if (!Robot.vision.hasTarget()){
-                    if (shootingHigh){
-                        rightShooter.set(Velocity, -10000);
-                    }
-                    else {
+                if (!Robot.vision.hasTarget()) {
+                    if (shootingHigh) {
+                        rightShooter.set(Velocity, -8800);
+                    } else {
                         rightShooter.set(Velocity, 10000);
                     }
                     new ShootNoVisionRight().start();
-                }
-                else {
+                } else {
                     System.out.println("Shooter working");
                     new AimShootRight().start();
                 }
-            }
-
-            else {
-                if (shootingHigh){
-                    leftShooter.set(Velocity, -rpm);
-                }
-                else {
+            } else {
+                if (shootingHigh) {
                     leftShooter.set(Velocity, rpm);
+                } else {
+                    leftShooter.set(Velocity, -10000);
                 }
 
-                if (!Robot.vision.hasTarget() ){
-                    if (shootingHigh){
-                        leftShooter.set(Velocity, 8300);
-                    }
-                    else {
-                        leftShooter.set(Velocity, -8300);
+                if (!Robot.vision.hasTarget()) {
+                    if (shootingHigh) {
+                        leftShooter.set(Velocity, 8800);
+                    } else {
+                        leftShooter.set(Velocity, -10000);
                     }
                     new ShootNoVisionLeft().start();
-                }
-                else {
+                } else {
                     new AimShootLeft().start();
                 }
             }
+        }
+    }
+
+    public void swapControllMode(){
+        manCont = !manCont;
     }
 
     public void rpmLeft() {
@@ -109,7 +129,7 @@ public class Shooter extends Subsystem {
             leftShooter.set(Velocity, rpm);
         }
         else {
-            leftShooter.set(Velocity, -16000);
+            leftShooter.set(Velocity, -10000);
         }
     }
 
@@ -120,14 +140,14 @@ public class Shooter extends Subsystem {
             rightShooter.set(Velocity, -rpm);
         }
         else {
-            rightShooter.set(Velocity, 16000);
+            rightShooter.set(Velocity, 10000);
         }
     }
 
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Delay used to get the shooter up to speed
-        hood.set(false);
+        hood.set(true);
         Timer.delay(0.5);
         //Set all the timgs to shoot right
         RightBanana.set(true);
@@ -155,7 +175,7 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Sets the hood
-        hood.set(true);
+        hood.set(false);
         Timer.delay(0.4);
         //Sets all of the bannas to shoot hight left
         RightBanana.set(true);

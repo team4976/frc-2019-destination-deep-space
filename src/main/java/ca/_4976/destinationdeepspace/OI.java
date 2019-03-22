@@ -33,5 +33,7 @@ public final class OI {
 
         new JoystickButton(operator, 4).whileHeld(new StoptheShooterAim());
         new JoystickButton(operator, 5).whenPressed(new IntakeOverride());
+
+        new JoystickButton(operator, 1).whenPressed(new switchShooterControlmode());
     }
 }

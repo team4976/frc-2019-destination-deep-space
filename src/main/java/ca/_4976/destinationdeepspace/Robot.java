@@ -61,9 +61,12 @@ public class Robot extends TimedRobot {
         scheduler.run();
 //        System.out.println("Climber encoder val:" + Robot.climber.climberLeg.getSelectedSensorPosition());
 //        System.out.println("Shooter speed val:" + Robot.vision.distance);
-//        System.out.println("Intake encoder: " + Robot.intake.intakeArm.getSelectedSensorPosition());
+        System.out.println("Intake encoder: " + Robot.intake.intakeArm.getSelectedSensorPosition());
         //controls climber leg by operator triggers (probably should be moved to climber class)
-        Robot.climber.climberLeg.set(ControlMode.PercentOutput, Robot.oi.operator.getRawAxis(3)-Robot.oi.operator.getRawAxis(2));
+
+        if (Robot.oi.operator.getRawAxis(5) > 0.1 || Robot.oi.operator.getRawAxis(5) < -0.1){
+            Robot.climber.climberLeg.set(ControlMode.PercentOutput, -Robot.drive.applyDeadband(Robot.oi.operator.getRawAxis(5)));
+        }
 
     }
 
