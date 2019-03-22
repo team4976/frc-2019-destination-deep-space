@@ -16,7 +16,7 @@ public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
-    Solenoid hatchPanelPickUp = new Solenoid(40,2);
+    public Solenoid hatchPanelPickUp = new Solenoid(40,2);
     public TalonSRX intakeArm = new TalonSRX(43);
     VictorSPX intakeArmSlave = new VictorSPX(42);
     TalonSRX intakeMotor1 = new TalonSRX(39);
@@ -35,7 +35,7 @@ public class Intake extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        hatchPanelPickUp.set(false);
+        hatchPanelPickUp.set(true);
 //        intakeArmSlave.follow(intakeArm);
         setDefaultCommand(new IntakeWithJoystick());
         controlledSlam = false;
@@ -51,32 +51,34 @@ public class Intake extends Subsystem {
         }
     }
     public void holdGear(){
-        hatchPanelPickUp.set(true);
+        hatchPanelPickUp.set(false);
     } //redundant
     public void releaseGear(){
-        hatchPanelPickUp.set(false);
+        hatchPanelPickUp.set(true);
     }
     //TODO: Figure out why the intake encoder is returning values that do not make sense while the arm is not moving
     //runs the intake to a position close to the ideal position for cargo
     public void pickupPosition(){
-        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-1040){//up
-            intakeArm.set(PercentOutput, 0.25);
-            intakeArmSlave.set(PercentOutput, -0.25);
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-2247){//up
+//            System.out.println("One");
+            intakeArm.set(PercentOutput, -0.25);
+            intakeArmSlave.set(PercentOutput, 0.25);
         }
-        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-1020){//down
-            intakeArm.set(PercentOutput, -0.05);
-            intakeArmSlave.set(PercentOutput, 0.05);
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-2200){//down
+//            System.out.println("two");
+            intakeArm.set(PercentOutput, 0.05);
+            intakeArmSlave.set(PercentOutput, -0.05);
         }
     }
     //runs the intake to a position close to the ideal position for hatch panels
     public void HPPositiion(){
-        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-740){
-            intakeArm.set(PercentOutput, 0.25);
-            intakeArmSlave.set(PercentOutput, -0.25);
+        if(Robot.intake.intakeArm.getSelectedSensorPosition()<-1344){
+            intakeArm.set(PercentOutput, -0.25);
+            intakeArmSlave.set(PercentOutput, 0.25);
         }
-        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-720){
-            intakeArm.set(PercentOutput, -0.05);
-            intakeArmSlave.set(PercentOutput, 0.05);
+        else if(Robot.intake.intakeArm.getSelectedSensorPosition()>-1300){
+            intakeArm.set(PercentOutput, 0.05);
+            intakeArmSlave.set(PercentOutput, -0.05);
         }
     }
     public void stop() {
@@ -128,8 +130,8 @@ public class Intake extends Subsystem {
         }
         else if (applyDeadband(joy.getRawAxis(5)) == 0){
 //            double holdingSpeed = Math.abs(intakeEncoder.get()/-1000)-0.89;
-            intakeArm.set(PercentOutput, -0.1);
-            intakeArmSlave.set(PercentOutput, 0.1);
+            intakeArm.set(PercentOutput, -0.06);
+            intakeArmSlave.set(PercentOutput, 0.06);
         }
         else if (!setPoint && !controlledSlam){
              //If the intake is above the maximum position it will only go down
@@ -140,14 +142,14 @@ public class Intake extends Subsystem {
 //            }
             //Moves the  intake normaly
 //            else {
-                intakeArm.set(PercentOutput, -0.3 * (applyDeadband(joy.getRawAxis(5))));
-                intakeArmSlave.set(PercentOutput, 0.3 * (applyDeadband(joy.getRawAxis(5))));
+                intakeArm.set(PercentOutput, 0.3 * (applyDeadband(joy.getRawAxis(5))));
+                intakeArmSlave.set(PercentOutput, -0.3 * (applyDeadband(joy.getRawAxis(5))));
 //            }
         }
         //removes limiter on intake in order to climb
         else if(!setPoint && controlledSlam){
-            intakeArm.set(PercentOutput, -(applyDeadband(joy.getRawAxis(5))));
-            intakeArmSlave.set(PercentOutput, (applyDeadband(joy.getRawAxis(5))));
+            intakeArm.set(PercentOutput, (applyDeadband(joy.getRawAxis(5))));
+            intakeArmSlave.set(PercentOutput, -(applyDeadband(joy.getRawAxis(5))));
         }
     }
 }

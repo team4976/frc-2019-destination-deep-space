@@ -19,7 +19,7 @@ public final class OI {
         new JoystickButton(driver, 9).whenPressed(new ShiftGear());
         new JoystickButton(driver, 1).whenPressed(new IntakeToBallLevel());
         new JoystickButton(driver, 5).whenPressed(new intakeFromGround());
-        new JoystickButton(driver, 4).whileHeld(new HP());
+        new JoystickButton(driver, 4).whenPressed(new HP());
         new JoystickButton(driver, 4).whenReleased(new HPRelease());
         new JoystickButton(driver, 3).whenPressed(new HPDeliveryLevel());
 

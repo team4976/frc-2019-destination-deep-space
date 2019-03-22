@@ -52,6 +52,8 @@ public class Robot extends TimedRobot {
         Robot.drive.RF.setInverted(true);
         Robot.drive.LB.setInverted(true);
         Robot.drive.RB.setInverted(true);
+
+        Robot.intake.intakeArm.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -59,6 +61,7 @@ public class Robot extends TimedRobot {
         scheduler.run();
 //        System.out.println("Climber encoder val:" + Robot.climber.climberLeg.getSelectedSensorPosition());
 //        System.out.println("Shooter speed val:" + Robot.vision.distance);
+//        System.out.println("Intake encoder: " + Robot.intake.intakeArm.getSelectedSensorPosition());
         //controls climber leg by operator triggers (probably should be moved to climber class)
         Robot.climber.climberLeg.set(ControlMode.PercentOutput, Robot.oi.operator.getRawAxis(3)-Robot.oi.operator.getRawAxis(2));
 
@@ -74,7 +77,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Robot.climber.climberLeg.setSelectedSensorPosition(0);
-        Robot.intake.intakeArm.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -84,11 +86,39 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() { }
 
     @Override
-    public void autonomousPeriodic() {
+    public void autonomousPeriodic() {   vision.periodicRead();
+        //Dpad sensor for operator controller
+        if (Robot.oi.operator.getPOV() == 0) {
+            // Calls the move camera forwards method
+            Robot.vision.cameraForwards();
+        }
+        else if (Robot.oi.operator.getPOV() == 90) {
+            // Calls the move camera right method
+            Robot.vision.cameraRight();
+        }
+        else if (Robot.oi.operator.getPOV() == 180) {
+            Robot.shooter.areYouShootingHigh();
+        }
+        else if (Robot.oi.operator.getPOV() == 270) {
+            // Calls the move camera left method
+            Robot.vision.cameraLeft();
+        }
+
+        //Dpad sensor for driver controller
+        if (Robot.oi.driver.getPOV() == 0) {
+        }
+        else if (Robot.oi.driver.getPOV() == 90) {
+        }
+        else if (Robot.oi.driver.getPOV() == 180) {
+        }
+        else if (Robot.oi.driver.getPOV() == 270) {
+        }
     }
 
     @Override
     public void teleopPeriodic() {
+        System.out.println("Intake: "+Robot.intake.intakeArm.getSelectedSensorPosition());
+
         vision.periodicRead();
         //Dpad sensor for operator controller
         if (Robot.oi.operator.getPOV() == 0) {

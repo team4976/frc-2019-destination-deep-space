@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveShootTest extends CommandGroup {
 
     public DriveShootTest(){
-        addSequential(new DriveBackwardsFromPlatformToRightSide());
+        addSequential(new DriveForwardsFromGroundToLeftSide());
         addSequential(new Delay());
         addSequential(new HorizontalCenterShooter());
         addSequential(new Delay());
