@@ -36,6 +36,8 @@ public class Shooter extends Subsystem {
     public boolean cancil = false;
 
     public boolean manCont = false;
+
+    boolean rightLeft = false;
     //Jakes complicated value
     public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
     // Max distance 97 min distance 26
@@ -52,6 +54,16 @@ public class Shooter extends Subsystem {
         shootingHigh = true;
     }
 
+    //Fires the ba;ll out of the reved shooter
+    public void FirePneumatics(){
+        if (rightLeft){
+            new ShootNoVisionRight().start();
+        } else {
+            new ShootNoVisionLeft().start();
+        }
+    }
+
+    //Starts the wheels in motion for the shooter
     public void revShooter(boolean side) {
         if (manCont){
             rpm = 8800; //TODO: Change this to somthing valid
@@ -62,7 +74,8 @@ public class Shooter extends Subsystem {
                 } else {
                     rightShooter.set(Velocity, 10000);
                 }
-                new ShootNoVisionRight().start();
+                rightLeft = true;
+//                new ShootNoVisionRight().start();
             }
             else{
                 if (shootingHigh) {
@@ -70,7 +83,8 @@ public class Shooter extends Subsystem {
                 } else {
                     leftShooter.set(Velocity, -10000);
                 }
-                new ShootNoVisionLeft().start();
+                rightLeft = false;
+//                new ShootNoVisionLeft().start();
             }
 
         }

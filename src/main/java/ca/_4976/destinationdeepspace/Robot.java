@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
+import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
+
 public class Robot extends TimedRobot {
 
     public static void main(String... args) {
@@ -62,12 +64,16 @@ public class Robot extends TimedRobot {
 //        System.out.println("Climber encoder val:" + Robot.climber.climberLeg.getSelectedSensorPosition());
 //        System.out.println("Shooter speed val:" + Robot.vision.distance);
 //        System.out.println("Intake encoder: " + Robot.intake.intakeArm.getSelectedSensorPosition());
-        //controls climber leg by operator triggers (probably should be moved to climber class)
 
-        if (Robot.oi.operator.getRawAxis(5) > 0.1 || Robot.oi.operator.getRawAxis(5) < -0.1){
-            Robot.climber.climberLeg.set(ControlMode.PercentOutput, -Robot.drive.applyDeadband(Robot.oi.operator.getRawAxis(5)));
+        //controls climber leg by operator triggers (probably should be moved to climber class)
+        if (Robot.oi.operator.getRawAxis(5) > 0.2 || Robot.oi.operator.getRawAxis(5) < -0.2){
+            Robot.climber.climberLeg.set(PercentOutput, -Robot.oi.operator.getRawAxis(5));
+        }
+        else {
+            Robot.climber.climberLeg.set(PercentOutput, 0);
         }
 
+        System.out.println(Robot.oi.operator.getRawAxis(5));
     }
 
     @Override

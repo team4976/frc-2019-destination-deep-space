@@ -128,18 +128,19 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the left
     public void cameraLeft() {
-        camera.setAngle(15);
+        camera.setAngle(35);
     }
 
     // Turns the camera to the forwards position
     public void cameraForwards() {
-        camera.setAngle(90);
+        camera.setAngle(100);
     }
 
     // Turns the camera to the right
     public void cameraRight() {
-        camera.setAngle(165);
+        camera.setAngle(175);
     }
+
 
     //Turns the bot based on its angle in comparison to the target
     public boolean skewCorrection() {

@@ -45,10 +45,10 @@ public class Intake extends Subsystem {
         controlledSlam = false;
     }
 
-    public void pickUpBall() {
+    public void pickUpBall(int i) {
         if (!runnig) { //checks to see if the intake is running
-            intakeMotor1.set(PercentOutput, 1);
-            intakeMotor2.set(PercentOutput, 1);
+            intakeMotor1.set(PercentOutput, i*1);
+            intakeMotor2.set(PercentOutput, i*1);
         } else {
             intakeMotor1.set(PercentOutput, 0.0);
             intakeMotor2.set(PercentOutput, 0);
