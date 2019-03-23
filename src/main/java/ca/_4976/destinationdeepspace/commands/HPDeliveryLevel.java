@@ -7,10 +7,12 @@ public class HPDeliveryLevel extends Command {
     @Override protected void initialize(){
         Robot.intake.HPPositiion();
         Robot.intake.changeuserControll(true);
+//        Robot.intake.intakeArmToHachPanel();
     }
     @Override
     protected boolean isFinished() {
         return Robot.intake.intakeArm.getSelectedSensorPosition()<-1550+5 && Robot.intake.intakeArm.getSelectedSensorPosition()>-1550-25;
+//        return Robot.intake.intakeArmIsAtTargetHatch();
     }
     protected void end(){
         Robot.intake.stop();

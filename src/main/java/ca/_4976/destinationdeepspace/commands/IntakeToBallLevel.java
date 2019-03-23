@@ -8,11 +8,12 @@ public class IntakeToBallLevel extends Command {
     protected void initialize(){
         Robot.intake.pickupPosition();
         Robot.intake.changeuserControll(true);
+//        Robot.intake.intakeArmToBall();
     }
     @Override
     protected boolean isFinished() {
         return Robot.intake.intakeArm.getSelectedSensorPosition()>-2280&&Robot.intake.intakeArm.getSelectedSensorPosition()<-2240;
-//        return !Robot.intake.intakeLimitSwitch.get();
+//        return Robot.intake.intakeArmIsAtTargetBall();
     }
     @Override
     protected void end() {
