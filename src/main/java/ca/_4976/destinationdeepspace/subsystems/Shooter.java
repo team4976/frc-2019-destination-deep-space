@@ -29,13 +29,19 @@ public class Shooter extends Subsystem {
     boolean right = false;
     boolean left = false;
 
+    public Shooter() {
+        rightShooter.setSensorPhase(true);
+        leftShooter.setSensorPhase(true);
+    }
+
+
     //If shooting high
     boolean shootingHigh = false;
 
     //Stops the aim
     public boolean cancil = false;
 
-    public boolean manCont = false;
+    public boolean manCont = true;
 
     boolean rightLeft = false;
     //Jakes complicated value
@@ -66,10 +72,9 @@ public class Shooter extends Subsystem {
     //Starts the wheels in motion for the shooter
     public void revShooter(boolean side) {
         if (manCont){
-            rpm = 8800; //TODO: Change this to somthing valid
-            Timer.delay(0.2);
+            rpm = 5000; //TODO: Change this to somthing valid
             if (side) {
-                if (shootingHigh) {
+                if (!shootingHigh) {
                     rightShooter.set(Velocity, -rpm);
                 } else {
                     rightShooter.set(Velocity, 10000);
@@ -78,7 +83,7 @@ public class Shooter extends Subsystem {
 //                new ShootNoVisionRight().start();
             }
             else{
-                if (shootingHigh) {
+                if (!shootingHigh) {
                     leftShooter.set(Velocity, rpm);
                 } else {
                     leftShooter.set(Velocity, -10000);
@@ -93,7 +98,7 @@ public class Shooter extends Subsystem {
             //If side is true shoot right else shoot left
             if (side) {
                 System.out.println();
-                if (shootingHigh) {
+                if (!shootingHigh) {
                     rightShooter.set(Velocity, -rpm);
                 } else {
                     rightShooter.set(Velocity, 10000);
@@ -101,7 +106,7 @@ public class Shooter extends Subsystem {
 
                 System.out.println(rightShooter.getMotorOutputPercent());
                 if (!Robot.vision.hasTarget()) {
-                    if (shootingHigh) {
+                    if (!shootingHigh) {
                         rightShooter.set(Velocity, -8800);
                     } else {
                         rightShooter.set(Velocity, 10000);
@@ -112,14 +117,14 @@ public class Shooter extends Subsystem {
                     new AimShootRight().start();
                 }
             } else {
-                if (shootingHigh) {
+                if (!shootingHigh) {
                     leftShooter.set(Velocity, rpm);
                 } else {
                     leftShooter.set(Velocity, -10000);
                 }
 
                 if (!Robot.vision.hasTarget()) {
-                    if (shootingHigh) {
+                    if (!shootingHigh) {
                         leftShooter.set(Velocity, 8800);
                     } else {
                         leftShooter.set(Velocity, -10000);
@@ -139,7 +144,7 @@ public class Shooter extends Subsystem {
     public void rpmLeft() {
         rpm = ((((Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         rpm = rpm * 1.55;
-        if (shootingHigh){
+        if (!shootingHigh){
             leftShooter.set(Velocity, rpm);
         }
         else {
@@ -150,7 +155,7 @@ public class Shooter extends Subsystem {
     public void rpmRight() {
         rpm = (((Math.abs(Robot.vision.distance * 39.37) - 26) * (9800)) / (71)) + 8300;
         rpm = rpm * 1.55;
-        if (shootingHigh){
+        if (!shootingHigh){
             rightShooter.set(Velocity, -rpm);
         }
         else {
@@ -177,7 +182,7 @@ public class Shooter extends Subsystem {
     //SHoots low to the right
     public void shootLowRight(){
         //Catch if shooting high
-        if(shootingHigh)Robot.shooter.shootHighRight();
+        if(!shootingHigh)Robot.shooter.shootHighRight();
         //Else continue shooting low
             //Sets the right bannan to shoot low right
             RightBanana.set(true);
@@ -205,7 +210,7 @@ public class Shooter extends Subsystem {
     //Shoots low and to the left
     public void shootLowLeft(){
         //Catch if shooting high
-        if(shootingHigh)Robot.shooter.shootHighLeft();
+        if(!shootingHigh)Robot.shooter.shootHighLeft();
         //Else continues shooting low
         else {
             //Sets left bannan to shoot left low

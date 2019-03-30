@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
             Robot.vision.cameraRight();
         }
         else if (Robot.oi.operator.getPOV() == 180) {
-            Robot.shooter.areYouShootingHigh();
+//            Robot.shooter.areYouShootingHigh();
         }
         else if (Robot.oi.operator.getPOV() == 270) {
             // Calls the move camera left method

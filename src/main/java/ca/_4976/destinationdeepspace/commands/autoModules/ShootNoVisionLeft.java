@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShootNoVisionLeft extends CommandGroup {
 
     public ShootNoVisionLeft(){
-        addSequential(new Delay());
         addSequential(new FireShooterLeft());
     }
 }

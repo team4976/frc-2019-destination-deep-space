@@ -23,6 +23,7 @@ public class Vision extends Subsystem implements Sendable {
     NetworkTableEntry tcornx = visionValues.getEntry("tcornx");
     NetworkTableEntry tcorny = visionValues.getEntry("tcorny");
 
+
     Servo camera = new Servo(0);
 
     private double maxShooter = 3.85;
@@ -88,7 +89,7 @@ public class Vision extends Subsystem implements Sendable {
         if (readXValue() < maxShooter){
             Robot.drive.drive(-0.15, 0.15);
         }
-        else {
+        else if(readXValue() > minShooter){
             Robot.drive.drive(0.15 , -0.15);
         }
     }
@@ -128,12 +129,12 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the left
     public void cameraLeft() {
-        camera.setAngle(35);
+        camera.setAngle(5);
     }
 
     // Turns the camera to the forwards position
     public void cameraForwards() {
-        camera.setAngle(100);
+        camera.setAngle(90);
     }
 
     // Turns the camera to the right

@@ -1,6 +1,7 @@
 package ca._4976.destinationdeepspace;
 
 import ca._4976.destinationdeepspace.commands.*;
+import ca._4976.destinationdeepspace.commands.autoModules.HorizontalCenterShooter;
 import ca._4976.destinationdeepspace.commands.autos.DriveShootTest;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,7 +23,8 @@ public final class OI {
         new JoystickButton(driver, 4).whenPressed(new HP());
         new JoystickButton(driver, 4).whenReleased(new HPRelease());
         new JoystickButton(driver, 3).whenPressed(new HPDeliveryLevel());
-
+        new JoystickButton(driver, 2).whenPressed(new HPForksForward());
+        new JoystickButton(driver, 2).whenReleased(new HPForksReverse());
 
 
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
@@ -35,9 +37,14 @@ public final class OI {
         new JoystickButton(operator, 7).whenPressed(new IntakeReverse());
 
 //        new JoystickButton(operator, 4).whileHeld(new StoptheShooterAim()); TODO: Dont need this right now as we disables the camera
-        new JoystickButton(operator, 4).whenPressed(new FireShooterPistons());
+
+        new JoystickButton(operator, 2).whenReleased(new FireShooterPistons());
+        new JoystickButton(operator, 3).whenReleased(new FireShooterPistons());
+
         new JoystickButton(operator, 5).whenPressed(new IntakeOverride());
 
         new JoystickButton(operator, 1).whenPressed(new switchShooterControlmode());
+
+        new JoystickButton(driver, 2).whenPressed(new HorizontalCenterShooter());
     }
 }

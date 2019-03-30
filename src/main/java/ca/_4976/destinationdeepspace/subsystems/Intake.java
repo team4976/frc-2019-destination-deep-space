@@ -10,14 +10,15 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
-import static com.ctre.phoenix.motorcontrol.ControlMode.Position;
 
 //TODO: add sensor based movment
 public class Intake extends Subsystem {
 
     NetworkTable intake = NetworkTableInstance.getDefault().getTable("Intake");
 
-    public Solenoid hatchPanelPickUp = new Solenoid(40, 2);
+    public Solenoid hatchPanelEgecter = new Solenoid(40, 2);
+    public Solenoid hatchPanelPickUp = new Solenoid(40, 5);
+
     public TalonSRX intakeArm = new TalonSRX(43);
     VictorSPX intakeArmSlave = new VictorSPX(42);
     TalonSRX intakeMotor1 = new TalonSRX(39);
@@ -39,10 +40,11 @@ public class Intake extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        hatchPanelPickUp.set(false);
+        hatchPanelEgecter.set(false);
 //        intakeArmSlave.follow(intakeArm);
         setDefaultCommand(new IntakeWithJoystick());
         controlledSlam = false;
+        hatchPanelPickUp.set(false);
     }
 
     public void pickUpBall(int i) {
@@ -56,11 +58,11 @@ public class Intake extends Subsystem {
     }
 
     public void holdGear() {
-        hatchPanelPickUp.set(true);
+        hatchPanelEgecter.set(true);
     } //redundant
 
     public void releaseGear() {
-        hatchPanelPickUp.set(false);
+        hatchPanelEgecter.set(false);
     }
 
     //TODO: Figure out why the intake encoder is returning values that do not make sense while the arm is not moving
@@ -92,7 +94,12 @@ public class Intake extends Subsystem {
         intakeArm.set(PercentOutput, 0);
         intakeArmSlave.set(PercentOutput, -0);
     }
-
+    public void extendHatchPanelForks(){
+        hatchPanelPickUp.set(true);
+    }
+    public void retractHatchPanelForks(){
+        hatchPanelPickUp.set(false);
+    }
     public void changeuserControll(boolean x) {
         noUserControll = x;
     }
