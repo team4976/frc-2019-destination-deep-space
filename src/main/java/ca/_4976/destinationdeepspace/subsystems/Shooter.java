@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     Solenoid RightBanana = new Solenoid(40, 0);
 
     //Shoot left or right by switching hood pos while shooting high
-    Solenoid hood = new Solenoid(40, 3);
+    public Solenoid hood = new Solenoid(40, 3);
 
     //Shooter talons
     public TalonSRX rightShooter = new TalonSRX(48);
@@ -41,11 +41,11 @@ public class Shooter extends Subsystem {
     //Stops the aim
     public boolean cancil = false;
 
-    public boolean manCont = true;
+    private boolean manCont = true;
 
     boolean rightLeft = false;
     //Jakes complicated value
-    public double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
+    private double distanceInInch = 97, rpm = 0, Rpm = 12000;//TODO: Change the value acording to the vision code with the actual rpm target
     // Max distance 97 min distance 26
 
     @Override
@@ -72,7 +72,7 @@ public class Shooter extends Subsystem {
     //Starts the wheels in motion for the shooter
     public void revShooter(boolean side) {
         if (manCont){
-            rpm = 5000; //TODO: Change this to somthing valid
+            rpm = 6500; //TODO: Change this to somthing valid
             if (side) {
                 if (!shootingHigh) {
                     rightShooter.set(Velocity, -rpm);
@@ -166,15 +166,14 @@ public class Shooter extends Subsystem {
     //Shoots the ball to the right high
     public void shootHighRight(){
         //Delay used to get the shooter up to speed
-        hood.set(true);
-        Timer.delay(0.5);
+
         //Set all the timgs to shoot right
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(1);
+        Timer.delay(1.5);
         //Resets the shooter
         Robot.shooter.reset();
     }
@@ -194,15 +193,13 @@ public class Shooter extends Subsystem {
     }
     public void shootHighLeft(){
         //Sets the hood
-        hood.set(false);
-        Timer.delay(0.4);
         //Sets all of the bannas to shoot hight left
         RightBanana.set(true);
         right = true;
         LeftBanana.set(true);
         left = true;
         //Delay used to fire ball before reset
-        Timer.delay(0.4);
+        Timer.delay(1.5);
         //Resets the shooter
         Robot.shooter.reset();
     }

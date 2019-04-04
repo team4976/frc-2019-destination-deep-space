@@ -1,5 +1,9 @@
 package ca._4976.destinationdeepspace;
 
+import ca._4976.destinationdeepspace.commands.HP;
+import ca._4976.destinationdeepspace.commands.HPForksForward;
+import ca._4976.destinationdeepspace.commands.HPForksReverse;
+import ca._4976.destinationdeepspace.commands.HPRelease;
 import ca._4976.destinationdeepspace.commands.autoModules.DriveForwardsFromGroundToLeftSide;
 import ca._4976.destinationdeepspace.subsystems.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -122,11 +126,22 @@ public class Robot extends TimedRobot {
         }
         else if (Robot.oi.driver.getPOV() == 270) {
         }
+
+        if (Robot.oi.operator.getRawAxis(2) > 0.6){
+            new HP();
+        } else {
+            new HPRelease();
+        }
+        if (Robot.oi.operator.getRawAxis(3) > 0.6){
+            new HPForksForward();
+        } else {
+            new HPForksReverse();
+        }
     }
 
     @Override
     public void teleopPeriodic() {
-        System.out.println("Intake: "+Robot.intake.intakeArm.getSelectedSensorPosition());
+        System.out.println(Robot.shooter.leftShooter.getClosedLoopError());
 
         vision.periodicRead();
         //Dpad sensor for operator controller
@@ -154,6 +169,17 @@ public class Robot extends TimedRobot {
         else if (Robot.oi.driver.getPOV() == 180) {
         }
         else if (Robot.oi.driver.getPOV() == 270) {
+        }
+
+        if (Robot.oi.operator.getRawAxis(2) > 0.6){
+            new HP();
+        } else {
+            new HPRelease();
+        }
+        if (Robot.oi.operator.getRawAxis(3) > 0.6){
+            new HPForksForward();
+        } else {
+            new HPForksReverse();
         }
     }
     @Override

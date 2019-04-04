@@ -94,9 +94,12 @@ public class Intake extends Subsystem {
         intakeArm.set(PercentOutput, 0);
         intakeArmSlave.set(PercentOutput, -0);
     }
+
+    // Extends the hatchpanel solonids out
     public void extendHatchPanelForks(){
         hatchPanelPickUp.set(true);
     }
+    //Retracts the hatchpanel soloniods
     public void retractHatchPanelForks(){
         hatchPanelPickUp.set(false);
     }

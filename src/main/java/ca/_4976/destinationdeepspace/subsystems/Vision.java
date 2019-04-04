@@ -26,10 +26,12 @@ public class Vision extends Subsystem implements Sendable {
 
     Servo camera = new Servo(0);
 
-    private double maxShooter = 3.85;
-    private double minShooter = 1.85;
+    private double maxShooter = 9.5;
+    private double minShooter = 9;
     private double max = 1;
     private double min = -1;
+
+    private boolean side = false;
     @Override
     protected void initDefaultCommand() {}
 
@@ -86,11 +88,18 @@ public class Vision extends Subsystem implements Sendable {
     }
 
     public void centerShooter() {
-        if (readXValue() < maxShooter){
-            Robot.drive.drive(-0.15, 0.15);
-        }
-        else if(readXValue() > minShooter){
-            Robot.drive.drive(0.15 , -0.15);
+        if (side) {
+            if (readXValue() < maxShooter) {
+                Robot.drive.drive(-0.15, 0.15);
+            } else if (readXValue() > minShooter) {
+                Robot.drive.drive(0.15, -0.15);
+            }
+        } else {
+            if (readXValue() < maxShooter) {
+                Robot.drive.drive(0.15, -0.15);
+            } else if (readXValue() > minShooter) {
+                Robot.drive.drive(-0.15, 0.15);
+            }
         }
     }
 
@@ -129,7 +138,8 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the left
     public void cameraLeft() {
-        camera.setAngle(5);
+        side = false;
+        camera.setAngle(15);
     }
 
     // Turns the camera to the forwards position
@@ -139,7 +149,8 @@ public class Vision extends Subsystem implements Sendable {
 
     // Turns the camera to the right
     public void cameraRight() {
-        camera.setAngle(175);
+        side = true;
+        camera.setAngle(160);
     }
 
 
