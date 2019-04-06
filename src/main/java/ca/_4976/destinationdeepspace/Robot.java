@@ -77,7 +77,6 @@ public class Robot extends TimedRobot {
             Robot.climber.climberLeg.set(PercentOutput, 0);
         }
 
-        System.out.println(Robot.oi.operator.getRawAxis(5));
     }
 
     @Override
@@ -141,7 +140,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        System.out.println(Robot.shooter.leftShooter.getClosedLoopError());
+
 
         vision.periodicRead();
         //Dpad sensor for operator controller
@@ -172,14 +171,14 @@ public class Robot extends TimedRobot {
         }
 
         if (Robot.oi.operator.getRawAxis(2) > 0.6){
-            new HP();
+            Robot.intake.holdGear();
         } else {
-            new HPRelease();
+            Robot.intake.releaseGear();
         }
         if (Robot.oi.operator.getRawAxis(3) > 0.6){
-            new HPForksForward();
+            Robot.intake.extendHatchPanelForks();
         } else {
-            new HPForksReverse();
+            Robot.intake.retractHatchPanelForks();
         }
     }
     @Override

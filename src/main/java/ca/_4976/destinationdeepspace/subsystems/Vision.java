@@ -3,8 +3,7 @@ package ca._4976.destinationdeepspace.subsystems;
 import ca._4976.destinationdeepspace.Robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -87,24 +86,32 @@ public class Vision extends Subsystem implements Sendable {
         return ((int) tv.getDouble(0)) == 1;
     }
 
+    //Centers the bot relative to the shooter
     public void centerShooter() {
-        if (side) {
-            if (readXValue() < maxShooter) {
+        if (side) { //For the right side shot
+            if (readXValue() < 9.5) {
                 Robot.drive.drive(-0.15, 0.15);
-            } else if (readXValue() > minShooter) {
+            } else if (readXValue() > 9) {
                 Robot.drive.drive(0.15, -0.15);
             }
-        } else {
-            if (readXValue() < maxShooter) {
+        }
+        else { //For the left side shot
+            if (readXValue() < 2) {
                 Robot.drive.drive(0.15, -0.15);
-            } else if (readXValue() > minShooter) {
+            } else if (readXValue() > -2) {
                 Robot.drive.drive(-0.15, 0.15);
             }
         }
     }
 
     public boolean isCenteredShooter() {
-        return readXValue() > minShooter && readXValue() < maxShooter;
+        //Checks to see if the shooter is centered relativre to the shooter
+        if (side){ // For the right side shot
+            return readXValue() > 9 && readXValue() < 9.5;
+        } else { //For the left side shot
+            return readXValue() < -2 && readXValue() > 2; // TODO: Not sure if this works
+        }
+
     }
 
     public void center() {
@@ -174,5 +181,12 @@ public class Vision extends Subsystem implements Sendable {
 
     public void viewCamera() {
         CameraServer.getInstance().startAutomaticCapture();
+    }
+
+    public void rumbleController(Joystick controller) {
+        controller.setRumble(GenericHID.RumbleType.kRightRumble, 1.0);
+    }
+    public void stopRumbleController(Joystick controller) {
+        controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
     }
 }

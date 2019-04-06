@@ -11,7 +11,7 @@ public class HPDeliveryLevel extends Command {
     }
     @Override
     protected boolean isFinished() {
-        return Robot.intake.intakeArm.getSelectedSensorPosition()<-1550+5 && Robot.intake.intakeArm.getSelectedSensorPosition()>-1550-25;
+        return Robot.intake.intakeArm.getSelectedSensorPosition()<-2227+5 && Robot.intake.intakeArm.getSelectedSensorPosition()>-2227-25;
 //        return Robot.intake.intakeArmIsAtTargetHatch();
     }
     protected void end(){

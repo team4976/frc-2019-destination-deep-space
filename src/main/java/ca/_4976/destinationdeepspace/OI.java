@@ -22,7 +22,11 @@ public final class OI {
         new JoystickButton(driver, 1).whenPressed(new IntakeToBallLevel());
         new JoystickButton(driver, 5).whenPressed(new intakeFromGround());
 
-        new JoystickButton(driver, 3).whenPressed(new HPDeliveryLevel());
+        new JoystickButton(driver, 4).whenReleased(new HorizontalCenterShooter());
+
+        new JoystickButton(driver, 2).whileHeld(new StoptheShooterAim());
+
+        new JoystickButton(driver, 3).whileHeld(new HPDeliveryLevel());
         new JoystickButton(operator, 8).whileHeld(new CompressorToggle());
         new JoystickButton(operator, 2).whenPressed(new RevShooterRight());
         new JoystickButton(operator, 3).whenPressed(new RevShooterLeft());
@@ -36,7 +40,7 @@ public final class OI {
 
         new JoystickButton(operator, 2).whenReleased(new FireShooterPistons());
         new JoystickButton(operator, 3).whenReleased(new FireShooterPistons());
-        new JoystickButton(operator, 1).whenPressed(new switchShooterControlmode());
+//        new JoystickButton(operator, 1).whenPressed(new switchShooterControlmode()); //TODO: DONT EVER UNDO THIS WITH OUT AAVIN
         new JoystickButton(driver, 2).whenPressed(new HorizontalCenterShooter());
 
         new JoystickButton(operator, 5).whenPressed(new IntakeOverride());

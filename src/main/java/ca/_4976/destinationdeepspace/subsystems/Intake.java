@@ -72,21 +72,24 @@ public class Intake extends Subsystem {
 //            System.out.println("One");
             intakeArm.set(PercentOutput, -0.25);
             intakeArmSlave.set(PercentOutput, 0.25);
-        } else if (Robot.intake.intakeArm.getSelectedSensorPosition() > -2240) {//down
+        } else if (Robot.intake.intakeArm.getSelectedSensorPosition() > -2260) {//down
 //            System.out.println("two");
-            intakeArm.set(PercentOutput, 0.05);
-            intakeArmSlave.set(PercentOutput, -0.05);
+            intakeArm.set(PercentOutput, 0.07);
+            intakeArmSlave.set(PercentOutput, -0.07);
         }
     }
 
     //runs the intake to a position close to the ideal position for hatch panels
     public void HPPositiion() {
-        if (Robot.intake.intakeArm.getSelectedSensorPosition() < -1550 - 25) {
+        if (Robot.intake.intakeArm.getSelectedSensorPosition() < -2227 - 10) {
             intakeArm.set(PercentOutput, -0.25);
             intakeArmSlave.set(PercentOutput, 0.25);
-        } else if (Robot.intake.intakeArm.getSelectedSensorPosition() > -1550 + 5) {
-            intakeArm.set(PercentOutput, 0.05);
-            intakeArmSlave.set(PercentOutput, -0.05);
+        } else if (Robot.intake.intakeArm.getSelectedSensorPosition() > -2227 + 10) {
+            intakeArm.set(PercentOutput, 0.07);
+            intakeArmSlave.set(PercentOutput, -0.07);
+        } else {
+            intakeArm.set(PercentOutput, -0.07);
+            intakeArmSlave.set(PercentOutput, 0.07);
         }
     }
 
