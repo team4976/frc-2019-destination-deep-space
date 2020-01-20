@@ -1,59 +1,35 @@
 package ca._4976.destinationdeepspace.subsystems;
 
+import ca._4976.destinationdeepspace.commands.Climber.MoveClimberWithJoystick;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 import static com.ctre.phoenix.motorcontrol.ControlMode.PercentOutput;
 
 public class Climber extends Subsystem {
-    //Motor controller for the climbing leg
     public TalonSRX climberLeg = new TalonSRX(50);
 
-    int climberLegTarget = -8000;
+    public void moveClimberWithJoystick(Joystick joy) {
+        climberLeg.set(PercentOutput, applyDeadband(joy.getRawAxis(5)));
+    }
 
-    public boolean isClimberLegDown = false;
-    DigitalInput climberIsDown = new DigitalInput(5);
-    public boolean isLegLocked = false;
-
-    //Moves the climber leg
-    public boolean moveLeg() {
-        //Going up
-        if (isClimberLegDown){
-            climberLeg.set(PercentOutput, -0.8);
-            System.out.println("Going up");
-            if (climberLeg.getSelectedSensorPosition() >= 0){
-                climberLeg.set(PercentOutput, 0);
-                return true;
-            }
-
-            else {
-                return false;
-            }
-
-        }
-        //Going down
-        else {
-            climberLeg.set(PercentOutput, 0.8);
-            System.out.println("Going down");
-            if (climberLeg.getSelectedSensorPosition() < climberLegTarget || climberIsDown.get()) {
-                climberLeg.set(PercentOutput, 0.0);
-                return true;
-
+    public double applyDeadband(double x) {
+        double deadband = 0.25;
+        if (Math.abs(x) > deadband) {
+            if (x > 0.0) {
+                return (x - deadband) / (1.0 - deadband);
             } else {
-                return false;
+                return (x + deadband) / (1.0 - deadband);
             }
+        } else {
+            return 0.0;
         }
     }
 
     @Override
-    protected void initDefaultCommand() {}
-
-    @Override
-    public void initSendable(SendableBuilder builder){
-        builder.addDoubleProperty("ClimberEncoder", () -> climberLeg.getSelectedSensorPosition(), (x) -> {});
+    protected void initDefaultCommand() {
+        climberLeg.setInverted(true);
+        setDefaultCommand(new MoveClimberWithJoystick());
     }
 }
